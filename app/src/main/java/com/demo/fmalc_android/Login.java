@@ -1,18 +1,18 @@
 package com.demo.fmalc_android;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.roboto);
         setContentView(R.layout.activity_login);
-
+//        TextView t2 = findViewById(R.id.forgotPassLink);
+//        t2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
