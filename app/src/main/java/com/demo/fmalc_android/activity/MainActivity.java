@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.roboto);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_driver_home);
 
     }
 }
