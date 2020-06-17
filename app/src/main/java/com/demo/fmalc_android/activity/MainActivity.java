@@ -1,10 +1,12 @@
-package com.demo.fmalc_android;
+package com.demo.fmalc_android.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+
+import com.demo.fmalc_android.R;
 
 public class MainActivity extends AppCompatActivity {
 

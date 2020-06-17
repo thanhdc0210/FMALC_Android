@@ -3,6 +3,7 @@
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.NoActionBar">
 
         <item name="colorPrimary">#FF834F</item>
+        <item name="fontFamily">@font/roboto</item>
 <!--        <item name="colorPrimaryVariant">#4D4D4D</item>-->
 
 <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
