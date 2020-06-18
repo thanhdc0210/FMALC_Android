@@ -22,11 +22,8 @@ public class Consignment implements Serializable {
     @SerializedName("ownerName")
     private String ownerName;
 
-    @SerializedName("receivedPlace")
-    private ReceivedPlace receivedPlace = new ReceivedPlace();
-
-    @SerializedName("deliveredPlaces")
-    private List<DeliveredPlace> deliveredPlaces;
+    @SerializedName("places")
+    private List<Place> places;
 
     @SerializedName("licensePlates")
     private String licensePlates; // Biển số xe

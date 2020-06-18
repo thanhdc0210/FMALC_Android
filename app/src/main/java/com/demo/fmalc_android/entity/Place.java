@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReceivedPlace implements Serializable {
+public class Place implements Serializable {
 
     @SerializedName("planned_received_time")
     private Timestamp plannedReceivedTime;
@@ -31,7 +31,7 @@ public class ReceivedPlace implements Serializable {
     @SerializedName("latitude")
     private Double latitude;
 
-    public ReceivedPlace(Timestamp plannedReceivedTime, String receivedPlaceName, String receivedPlaceAddress) {
+    public Place(Timestamp plannedReceivedTime, String receivedPlaceName, String receivedPlaceAddress) {
         this.plannedReceivedTime = plannedReceivedTime;
         this.receivedPlaceName = receivedPlaceName;
         this.receivedPlaceAddress = receivedPlaceAddress;

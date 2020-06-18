@@ -1,4 +1,4 @@
-package com.demo.fmalc_android;
+package com.demo.fmalc_android.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.google.android.material.badge.BadgeDrawable;
+//import com.google.android.material.badge.BadgeDrawable;
+import com.demo.fmalc_android.fragment.CompleteFragment;
+import com.demo.fmalc_android.fragment.PrepareFragment;
+import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.fragment.WorkingFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -50,10 +54,10 @@ public class DriverHomeActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(completeFragment, "Hoàn thành");
         viewPager.setAdapter(viewPagerAdapter);
 
-        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-        badgeDrawable.setVisible(true);
-        //set tổng số cho tab đó
-        badgeDrawable.setNumber(12);
+//        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
+//        badgeDrawable.setVisible(true);
+//        //set tổng số cho tab đó
+//        badgeDrawable.setNumber(12);
 
     }
 

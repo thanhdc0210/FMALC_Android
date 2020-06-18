@@ -62,7 +62,7 @@
 					android:text="CÔNG TY CỔ PHẦN TÂN CẢNG CÁI MÉP"
 					android:textAllCaps="true"
 					android:textColor="@color/colorPrimary"
-					android:textStyle="bold" />
+					android:textStyle="bold"/>
 
 		</LinearLayout>
 
@@ -159,7 +159,9 @@
 					android:gravity="center"
 					android:text="51A-203.88 | 10 Tấn | Huynhdai"
 					android:textColor="#000"
-					android:textStyle="bold" />
+					android:textStyle="bold"
+					android:id="@+id/txt_schedule"
+				/>
 
 		</LinearLayout>
 
@@ -177,7 +179,8 @@
 					android:gravity="center"
 					android:text="Còn 8 giờ"
 					android:textStyle="italic"
-					android:textColor="#000" />
+					android:textColor="#000"
+					android:id="@+id/txt_time_out"/>
 
 		</LinearLayout>
 	</LinearLayout>

@@ -22,12 +22,12 @@ public class DetailedConsignment implements Serializable {
     @SerializedName("licensePlates")
     private String licensePlates;
 
-    @SerializedName("deliveredPlaces")
-    private List<DeliveredPlace> deliveredPlaces;
-
-    @SerializedName("receivedPlaces")
-    private List<ReceivedPlace> receivedPlaces;
+    @SerializedName("places")
+    private List<Place> places;
 
     @SerializedName("ownerNote")
     private String ownerNote;
+
+    @SerializedName("status")
+    private String status;
 }
