@@ -1,4 +1,4 @@
-package com.demo.fmalc_android;
+package com.demo.fmalc_android.fragment;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.demo.fmalc_android.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +48,8 @@ public class PrepareFragment extends Fragment {
         return fragment;
     }
 
+//    @BindView(R.id.txt_code_consignment)
+//    TextView code;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,24 @@ public class PrepareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_prepare, container, false);
     }
+
+//    @OnClick(R.id.card_view_item)
+//    public void onClickViewDetail(View view){
+//        Intent intent = new Intent(getActivity().getBaseContext(), DriverHomeActivity.class);
+//        TextView user = (TextView) view.findViewById(R.id.txt_code_consignment);
+//        intent.putExtra("message", user.toString());
+//        new DriverHomeActivity().getDataFromPrepareFragment();
+//        getActivity().startActivity(intent);
+//        Intent myIntent = new Intent(, ConsignmentDetailActivity.class);
+//        LayoutInflater factory = getLayoutInflater();
+//        View regisText = factory.inflate(R.layout.view_card,container );
+//        TextView user = (TextView) regisText.findViewById(R.id.txt_code_consignment);
+//        String usr = user.getText().toString();
+//        myIntent.putExtra("consignmentNo",user.getText().toString() );
+//        myIntent.putExtra("vehicleNo",user.getText().toString() );
+//        DriverHomeActivity.this.startActivity(myIntent);
+
 }

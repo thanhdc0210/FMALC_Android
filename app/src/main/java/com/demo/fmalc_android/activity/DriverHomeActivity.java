@@ -1,4 +1,4 @@
-package com.demo.fmalc_android;
+package com.demo.fmalc_android.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,13 +9,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.fragment.CompleteFragment;
+import com.demo.fmalc_android.fragment.PrepareFragment;
+import com.demo.fmalc_android.fragment.WorkingFragment;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class DriverHomeActivity extends AppCompatActivity {
@@ -27,6 +39,13 @@ public class DriverHomeActivity extends AppCompatActivity {
     private PrepareFragment prepareFragment;
     private WorkingFragment workingFragment;
     private CompleteFragment completeFragment;
+
+    @BindView(R.id.txt_code_consignment)
+    TextView codeConsignment;
+    @BindView(R.id.txt_vehicle_info)
+    TextView vehicleInfor;
+    @BindView(R.id.card_view_item)
+    LinearLayout cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +73,29 @@ public class DriverHomeActivity extends AppCompatActivity {
         badgeDrawable.setVisible(true);
         //set tổng số cho tab đó
         badgeDrawable.setNumber(12);
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                Toast.makeText(DriverHomeActivity.this, "tao day ne", Toast.LENGTH_SHORT).show();
+//               LinearLayout viewItem = tab.view.findViewById(R.id.card_view_item);
+//                viewItem.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
     }
 
@@ -87,5 +129,37 @@ public class DriverHomeActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return fragmentTitle.get(position);
         }
+    }
+
+    @OnClick(R.id.card_view_item)
+    public void onClickViewDetail(View view) {
+        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+
+        TextView user = (TextView) view.findViewById(R.id.txt_code_consignment);
+
+//        user.setText("sadsahd");
+        Toast.makeText(DriverHomeActivity.this, user.getText().toString(), Toast.LENGTH_SHORT).show();
+        intent.putExtra("message", user.getText().toString());
+        //Create the bundle
+        Bundle bundle = new Bundle();
+//Add your data from getFactualResults method to bundle
+        bundle.putString("giangg", user.getText().toString());
+//Add the bundle to the intent
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+//        new DriverHomeActivity().getDataFromPrepareFragment();
+    }
+
+
+
+    public void getDataFromPrepareFragment(){
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("message");
+
+        Intent intent2 = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+        intent.putExtra("message", message);
+
     }
 }

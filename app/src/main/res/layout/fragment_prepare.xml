@@ -6,7 +6,7 @@
 
 		android:background="#FFFFFF"
 		android:backgroundTint="#FFFFFF"
-		tools:context=".PrepareFragment">
+		tools:context=".fragment.PrepareFragment">
 
 	<!-- TODO: Update blank fragment layout -->
 	<ScrollView
@@ -22,13 +22,7 @@
 
 			<include layout="@layout/view_card" />
 
-			<include layout="@layout/view_card" />
 
-			<include layout="@layout/view_card" />
-
-			<include layout="@layout/view_card" />
-
-			<include layout="@layout/view_card" />
 		</LinearLayout>
 	</ScrollView>
 </FrameLayout>
