@@ -23,24 +23,26 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 
-
-@AllArgsConstructor
-class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<ConsignmentViewCardAdapter.ViewHolder> {
+public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<ConsignmentViewCardAdapter.ViewHolder> {
     private List<Consignment> consignmentList;
     private Context context;
+
+    public ConsignmentViewCardAdapter(List<Consignment> consignmentList, Context context) {
+        this.consignmentList = consignmentList;
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.view_card , parent, false);
+        View view;
+        view =LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConsignmentViewCardAdapter.ViewHolder holder, int position) {
-        final Consignment consignment = consignmentList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Consignment consignment = consignmentList.get(position);
         holder.txtId.setText(consignment.getConsignmentId().toString());
         holder.txtCompanyName.setText(consignment.getOwnerName());
         holder.txtStartTime.setText(consignment.getPlaces().get(0).getPlannedTime().toString());
@@ -73,7 +75,7 @@ class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<ConsignmentViewCa
 
     @Override
     public int getItemCount() {
-        return 0;
+        return consignmentList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

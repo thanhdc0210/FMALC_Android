@@ -1,11 +1,14 @@
 package com.demo.fmalc_android.contract;
 
+import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.StatusRequest;
+
+import java.util.List;
 
 public interface ConsignmentContract {
     interface View{
-        void loginSuccess();
-        void loginFailure(String message);
+        void findByConsignmentStatusAndUsernameForFleetManagerSuccess(List<Consignment> consignmentList);
+        void findByConsignmentStatusAndUsernameForFleetManagerFailure(String message);
     }
 
     interface Presenter{

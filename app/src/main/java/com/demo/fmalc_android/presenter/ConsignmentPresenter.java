@@ -30,15 +30,16 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
             @Override
             public void onResponse(Call<List<Consignment>> call, Response<List<Consignment>> response) {
                 if(!response.isSuccessful()){
-                    view.loginFailure("Không thể lấy danh sách");
+                    view.findByConsignmentStatusAndUsernameForFleetManagerFailure("Không thể lấy danh sách");
                 }else {
                     List<Consignment> consignmentList = response.body();
+                    view.findByConsignmentStatusAndUsernameForFleetManagerSuccess(consignmentList);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Consignment>> call, Throwable t) {
-                view.loginFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
+                view.findByConsignmentStatusAndUsernameForFleetManagerFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
             }
         });
     }

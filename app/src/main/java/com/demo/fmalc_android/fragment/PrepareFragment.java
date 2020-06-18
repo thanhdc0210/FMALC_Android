@@ -3,84 +3,88 @@ package com.demo.fmalc_android.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.adapter.ConsignmentViewCardAdapter;
+import com.demo.fmalc_android.contract.ConsignmentContract;
+import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.entity.StatusRequest;
+import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PrepareFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class PrepareFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import butterknife.BindView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class PrepareFragment extends Fragment implements ConsignmentContract.View {
+
+    @BindView(R.id.rvConsignment)
+    RecyclerView consignmentRecyclerView;
+    LinearLayout consignmentRecyclerViewLayout;
+    ConsignmentViewCardAdapter consignmentViewCardAdapter;
+    private ConsignmentPresenter consignmentPresenter;
+    private String token;
+    private StatusRequest statusRequest;
+    List<Consignment> consignmentList;
 
     public PrepareFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PrepareFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PrepareFragment newInstance(String param1, String param2) {
-        PrepareFragment fragment = new PrepareFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-//    @BindView(R.id.txt_code_consignment)
-//    TextView code;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_prepare, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_prepare, container, false);
+
+        init();
+
+        // Adapter init and setup
+
+        consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
+
+
+
+        StatusRequest statusRequest = new StatusRequest();
+        statusRequest.setUsername("manager1");
+        List<Integer> status = new ArrayList<>();
+        status.add(0);
+        statusRequest.setStatus(status);
+        consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(statusRequest);
+        return view;
+
     }
 
-//    @OnClick(R.id.card_view_item)
-//    public void onClickViewDetail(View view){
-//        Intent intent = new Intent(getActivity().getBaseContext(), DriverHomeActivity.class);
-//        TextView user = (TextView) view.findViewById(R.id.txt_code_consignment);
-//        intent.putExtra("message", user.toString());
-//        new DriverHomeActivity().getDataFromPrepareFragment();
-//        getActivity().startActivity(intent);
-//        Intent myIntent = new Intent(, ConsignmentDetailActivity.class);
-//        LayoutInflater factory = getLayoutInflater();
-//        View regisText = factory.inflate(R.layout.view_card,container );
-//        TextView user = (TextView) regisText.findViewById(R.id.txt_code_consignment);
-//        String usr = user.getText().toString();
-//        myIntent.putExtra("consignmentNo",user.getText().toString() );
-//        myIntent.putExtra("vehicleNo",user.getText().toString() );
-//        DriverHomeActivity.this.startActivity(myIntent);
+    private void init(){
+        consignmentPresenter = new ConsignmentPresenter();
+        consignmentPresenter.setView(this);
+    }
+
+    private void getConsignmentList(List<Consignment> consignmentList){
+        this.consignmentList = consignmentList;
+    }
+
+    @Override
+    public void findByConsignmentStatusAndUsernameForFleetManagerSuccess(List<Consignment> consignmentList) {
+        consignmentViewCardAdapter = new ConsignmentViewCardAdapter(consignmentList, getActivity());
+
+        consignmentRecyclerView.setAdapter(consignmentViewCardAdapter);
+        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        getConsignmentList(consignmentList);
+    }
+
+    @Override
+    public void findByConsignmentStatusAndUsernameForFleetManagerFailure(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
 }
