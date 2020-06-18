@@ -22,13 +22,7 @@
 
 			<include layout="@layout/view_card" />
 
-			<include layout="@layout/view_card" />
 
-			<include layout="@layout/view_card" />
-
-			<include layout="@layout/view_card" />
-
-			<include layout="@layout/view_card" />
 		</LinearLayout>
 	</ScrollView>
 </FrameLayout>

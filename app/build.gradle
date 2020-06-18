@@ -26,6 +26,12 @@ android {
         }
     }
 }
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -46,6 +52,11 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation 'org.conscrypt:conscrypt-android:2.4.0'
+
+    // Butter knife
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.12'

@@ -9,17 +9,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-//import com.google.android.material.badge.BadgeDrawable;
+import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.fragment.CompleteFragment;
 import com.demo.fmalc_android.fragment.PrepareFragment;
-import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.fragment.WorkingFragment;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class DriverHomeActivity extends AppCompatActivity {
@@ -31,6 +39,13 @@ public class DriverHomeActivity extends AppCompatActivity {
     private PrepareFragment prepareFragment;
     private WorkingFragment workingFragment;
     private CompleteFragment completeFragment;
+
+    @BindView(R.id.txtConsignmentId)
+    TextView codeConsignment;
+    @BindView(R.id.txtVehicleInfo)
+    TextView vehicleInfor;
+    @BindView(R.id.card_view_item)
+    LinearLayout cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +69,11 @@ public class DriverHomeActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(completeFragment, "Hoàn thành");
         viewPager.setAdapter(viewPagerAdapter);
 
-//        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-//        badgeDrawable.setVisible(true);
-//        //set tổng số cho tab đó
-//        badgeDrawable.setNumber(12);
+        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
+        badgeDrawable.setVisible(true);
+        //set tổng số cho tab đó
+        badgeDrawable.setNumber(12);
+
 
     }
 
@@ -91,5 +107,37 @@ public class DriverHomeActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return fragmentTitle.get(position);
         }
+    }
+
+    @OnClick(R.id.card_view_item)
+    public void onClickViewDetail(View view) {
+        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+
+        TextView user = (TextView) view.findViewById(R.id.txtConsignmentId);
+
+//        user.setText("sadsahd");
+        Toast.makeText(DriverHomeActivity.this, user.getText().toString(), Toast.LENGTH_SHORT).show();
+        intent.putExtra("message", user.getText().toString());
+        //Create the bundle
+        Bundle bundle = new Bundle();
+//Add your data from getFactualResults method to bundle
+        bundle.putString("giangg", user.getText().toString());
+//Add the bundle to the intent
+        intent.putExtras(bundle);
+
+        startActivity(intent);
+//        new DriverHomeActivity().getDataFromPrepareFragment();
+    }
+
+
+
+    public void getDataFromPrepareFragment(){
+        Intent intent = getIntent();
+        String message = intent.getStringExtra("message");
+
+        Intent intent2 = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+        intent.putExtra("message", message);
+
     }
 }

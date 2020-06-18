@@ -17,9 +17,14 @@ public interface ConsignmentService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/consignments/fleetManager")
-    Call<List<Consignment>> findByConsignmentStatusAndUsernameForFleetManager(@Query("allParams") StatusRequest allParams, @Header("authorization") String token);
+    Call<List<Consignment>> findByConsignmentStatusAndUsernameForFleetManager(@Query("allParams") StatusRequest allParams);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/consignments/id/{id}")
     Call<DetailedConsignment> findByConsignmentId(@Path("id") Integer id);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("api/v1.0/consignments/driver")
+    Call<List<Consignment>> findByConsignmentStatusAndUsernameForDriver(@Query("allParams") StatusRequest allParams
+    );
 }
