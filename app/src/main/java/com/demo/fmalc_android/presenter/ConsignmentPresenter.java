@@ -24,8 +24,8 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
     ConsignmentService consignmentService = NetworkingUtils.getConsignmentService();
 
     @Override
-    public void findByConsignmentStatusAndUsernameForFleetManager(StatusRequest statusRequest) {
-        Call<List<Consignment>> call = consignmentService.findByConsignmentStatusAndUsernameForFleetManager(statusRequest);
+    public void findByConsignmentStatusAndUsernameForFleetManager(List<Integer> status, String username) {
+        Call<List<Consignment>> call = consignmentService.findByConsignmentStatusAndUsernameForFleetManager(status, username);
         call.enqueue(new Callback<List<Consignment>>() {
             @Override
             public void onResponse(Call<List<Consignment>> call, Response<List<Consignment>> response) {
@@ -34,6 +34,7 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
                 }else {
                     List<Consignment> consignmentList = response.body();
                     view.findByConsignmentStatusAndUsernameForFleetManagerSuccess(consignmentList);
+                    System.out.println(consignmentList.size()+"----------------------------");
                 }
             }
 

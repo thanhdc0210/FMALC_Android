@@ -17,7 +17,7 @@ public interface ConsignmentService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/consignments/fleetManager")
-    Call<List<Consignment>> findByConsignmentStatusAndUsernameForFleetManager(@Query("allParams") StatusRequest allParams);
+    Call<List<Consignment>> findByConsignmentStatusAndUsernameForFleetManager(@Query("status") List<Integer> status, @Query("username") String username);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/consignments/id/{id}")

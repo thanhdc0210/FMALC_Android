@@ -26,7 +26,7 @@ import butterknife.BindView;
 
 public class PrepareFragment extends Fragment implements ConsignmentContract.View {
 
-    @BindView(R.id.rvConsignment)
+
     RecyclerView consignmentRecyclerView;
     LinearLayout consignmentRecyclerViewLayout;
     ConsignmentViewCardAdapter consignmentViewCardAdapter;
@@ -51,15 +51,11 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
-
-
-
-        StatusRequest statusRequest = new StatusRequest();
-        statusRequest.setUsername("manager1");
-        List<Integer> status = new ArrayList<>();
+        consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
+                List<Integer> status = new ArrayList<>();
         status.add(0);
-        statusRequest.setStatus(status);
-        consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(statusRequest);
+
+        consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(status, "manager1");
         return view;
 
     }
@@ -75,6 +71,7 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
 
     @Override
     public void findByConsignmentStatusAndUsernameForFleetManagerSuccess(List<Consignment> consignmentList) {
+
         consignmentViewCardAdapter = new ConsignmentViewCardAdapter(consignmentList, getActivity());
 
         consignmentRecyclerView.setAdapter(consignmentViewCardAdapter);

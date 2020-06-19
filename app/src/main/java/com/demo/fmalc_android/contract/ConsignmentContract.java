@@ -12,6 +12,6 @@ public interface ConsignmentContract {
     }
 
     interface Presenter{
-        void findByConsignmentStatusAndUsernameForFleetManager(StatusRequest statusRequest);
+        void findByConsignmentStatusAndUsernameForFleetManager(List<Integer> status, String username);
     }
 }

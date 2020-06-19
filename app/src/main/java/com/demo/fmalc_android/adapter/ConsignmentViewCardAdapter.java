@@ -18,6 +18,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Place;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,20 +46,30 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
         Consignment consignment = consignmentList.get(position);
         holder.txtId.setText(consignment.getConsignmentId().toString());
         holder.txtCompanyName.setText(consignment.getOwnerName());
-        holder.txtStartTime.setText(consignment.getPlaces().get(0).getPlannedTime().toString());
+        //Giờ làm
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        holder.txtStartTime.setText(format.format(consignment.getPlaces().get(0).getPlannedTime()));
+
         Place finishPlace = consignment.getPlaces().get(consignment.getPlaces().size()-1);
         holder.txtFinishTime.setText(finishPlace.getPlannedTime().toString());
         holder.txtReceivedPlace.setText(finishPlace.getName());
         holder.txtDeliveryPlace.setText(consignment.getPlaces().get(0).getName());
         holder.txtWeight.setText(consignment.getWeight().toString());
         holder.txtVehicleInfo.setText(consignment.getLicensePlates()+"|"+consignment.getDriverName());
-        Date now = new Date();
-        String remaining = DateUtils.formatElapsedTime ((finishPlace.getPlannedTime().getTime() - now.getTime())/1000); // Remaining time to seconds
-        int time = new Date(remaining).getHours();
-        if(time <= 0){
-            holder.txtTimeCountDown.setText("Trễ "+time+ "giờ");
-        } else if (time >0){
-            holder.txtTimeCountDown.setText("Còn "+time+ "giờ");
+
+
+        Long plannedTime = finishPlace.getPlannedTime().getTime();
+        Long nowTime = new Date().getTime();
+        long diff = plannedTime - nowTime;
+        long remaining = diff / (60 * 60 * 1000) % 24;
+//        Date now = new Date();
+//        String remaining = DateUtils.formatElapsedTime (( now.getTime()-finishPlace.getPlannedTime().getTime() )/1000); // Remaining time to seconds
+//        System.out.println(remaining);
+//        int time  = (Integer.valueOf(remaining) % 3600) / 60;
+        if(remaining <= 0){
+            holder.txtTimeCountDown.setText("Trễ "+remaining+ "giờ");
+        } else if (remaining >0){
+            holder.txtTimeCountDown.setText("Còn "+remaining+ "giờ");
         }
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
