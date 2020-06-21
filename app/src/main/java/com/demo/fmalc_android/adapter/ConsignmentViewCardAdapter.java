@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.DriverHomeActivity;
 import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Place;
 
@@ -113,7 +114,7 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("consignment_id", consignment.getConsignmentId());
-                intent.putExtra("data", bundle);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });

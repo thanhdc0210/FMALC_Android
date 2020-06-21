@@ -31,12 +31,14 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
                     view.findByConsignmentStatusAndUsernameForFailure("Không thể lấy danh sách");
                 }else {
                     List<Consignment> consignmentList = response.body();
+
                     view.findByConsignmentStatusAndUsernameForSuccess(consignmentList);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Consignment>> call, Throwable t) {
+
                 view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
             }
         });

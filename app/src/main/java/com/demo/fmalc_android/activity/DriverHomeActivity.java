@@ -111,13 +111,13 @@ public class DriverHomeActivity extends AppCompatActivity {
 
     @OnClick(R.id.card_view_item)
     public void onClickViewDetail(View view) {
-        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
 
         TextView user = (TextView) view.findViewById(R.id.txtConsignmentId);
 
 //        user.setText("sadsahd");
-        Toast.makeText(DriverHomeActivity.this, user.getText().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(DriverHomeActivity.this, user.getText().toString(), Toast.LENGTH_SHORT).show();
         intent.putExtra("message", user.getText().toString());
         //Create the bundle
         Bundle bundle = new Bundle();
