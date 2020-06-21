@@ -54,7 +54,6 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
                 List<Integer> status = new ArrayList<>();
         status.add(0);
-
         consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(status, "manager1");
         return view;
 

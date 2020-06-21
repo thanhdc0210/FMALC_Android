@@ -79,10 +79,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
 //        ConsignmentService consignmentService = NetworkingUtils.getConsignmentService();
 //
-//        Call<DetailedConsignment> call = consignmentService.findByConsignmentId(1);
-//        call.enqueue(new Callback<DetailedConsignment>() {
+//        Call<ConsignmentDetail> call = consignmentService.findByConsignmentId(1);
+//        call.enqueue(new Callback<ConsignmentDetail>() {
 //            @Override
-//            public void onResponse(Call<DetailedConsignment> call, Response<DetailedConsignment> response) {
+//            public void onResponse(Call<ConsignmentDetail> call, Response<ConsignmentDetail> response) {
 //                try{
 //                    Log.e("FAIL", " Successfully " + response.body().getConsignmentId());
 //                }catch (Throwable t){
@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 //            }
 //
 //            @Override
-//            public void onFailure(Call<DetailedConsignment> call, Throwable t) {
+//            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
 //                Log.e("FAIL", " Unsuccessfully" + t.getMessage());
 //            }
 //        });

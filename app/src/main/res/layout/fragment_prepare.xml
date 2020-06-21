@@ -5,7 +5,6 @@
 		android:layout_height="match_parent"
 
 		android:background="#FFFFFF"
-		android:backgroundTint="#FFFFFF"
 		tools:context=".fragment.PrepareFragment">
 
 	<!-- TODO: Update blank fragment layout -->

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetailedConsignment implements Serializable {
+public class ConsignmentDetail implements Serializable {
 
     @SerializedName("consignmentId")
     private Integer consignmentId;

@@ -34,13 +34,14 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
                 }else {
                     List<Consignment> consignmentList = response.body();
                     view.findByConsignmentStatusAndUsernameForFleetManagerSuccess(consignmentList);
-                    System.out.println(consignmentList.size()+"----------------------------");
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<Consignment>> call, Throwable t) {
                 view.findByConsignmentStatusAndUsernameForFleetManagerFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
+                System.out.println(t.getMessage()+"PPPPPPPPPPPPPP");
             }
         });
     }
