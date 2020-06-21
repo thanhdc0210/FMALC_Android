@@ -16,4 +16,5 @@ import lombok.Setter;
 public class GlobalVariable extends Application {
     private String token;
     private String username;
+    private String role;
 }

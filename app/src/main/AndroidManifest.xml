@@ -12,7 +12,9 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApp">
 
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity">
+
+        </activity>
         <activity android:name=".activity.ConsignmentDetailActivity"></activity>
         <activity android:name=".activity.DriverHomeActivity">
             <intent-filter>

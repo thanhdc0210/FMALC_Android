@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Place;
 
@@ -23,27 +22,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-
-public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<ConsignmentViewCardAdapter.ViewHolder> {
+public class CompletedConsignmentViewCardAdapter extends  RecyclerView.Adapter<CompletedConsignmentViewCardAdapter.ViewHolder>{
     private List<Consignment> consignmentList;
     private Context context;
 
-    public ConsignmentViewCardAdapter(List<Consignment> consignmentList, Context context) {
+    public CompletedConsignmentViewCardAdapter(List<Consignment> consignmentList, Context context) {
         this.consignmentList = consignmentList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CompletedConsignmentViewCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view =LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
-        return new ViewHolder(view);
+        view = LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
+        return new CompletedConsignmentViewCardAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CompletedConsignmentViewCardAdapter.ViewHolder holder, int position) {
         Consignment consignment = consignmentList.get(position);
         holder.txtId.setText(consignment.getConsignmentId().toString());
         holder.txtCompanyName.setText(consignment.getOwnerName());
@@ -57,55 +54,7 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
         holder.txtDeliveryPlace.setText(consignment.getPlaces().get(0).getName());
         holder.txtWeight.setText(consignment.getWeight().toString() + " kg ");
         holder.txtVehicleInfo.setText(consignment.getLicensePlates()+" | "+consignment.getDriverName());
-
-        // Kiểm tra còn bao nhiêu thời gian
-        Long plannedTime = finishPlace.getPlannedTime().getTime();
-        Long nowTime = new Date().getTime();
-        long diff = plannedTime - nowTime;
-        int diffDays = (int) diff / (24 * 60 * 60 * 1000);
-        int diffHours = (int) diff / (60 * 60 *1000) % 24;
-        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
-        
-        String s = "";
-
-        if (diffDays > 0 && diffHours > 0 && diffMinutes >= 0){
-            s = "Còn ";
-        }else{
-            s = "Trễ ";
-        }
-
-        if (diffDays < 0){
-            s = s + Math.abs(diffDays) + " ngày ";
-            holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
-        }
-
-        if (diffHours < 0){
-            s = s + Math.abs(diffHours) + " giờ ";
-            holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
-        }
-
-        if (diffMinutes <= 0){
-            s = s + Math.abs(diffMinutes) + " phút";
-            holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
-        }
-
-        if (diffDays > 0){
-            s = s + Math.abs(diffDays) + " ngày ";
-            holder.txtTimeCountDown.setText(s);
-        }
-
-        if (diffHours > 0){
-            s = s + Math.abs(diffHours) + " giờ ";
-            holder.txtTimeCountDown.setText(s);
-        }
-
-        if (diffMinutes >= 0){
-            s = s + Math.abs(diffMinutes) + " phút";
-            holder.txtTimeCountDown.setText(s);
-        }
+        holder.txtTimeCountDown.setText("Hoàn thành lúc:" + finishPlace.getActualTime());
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
