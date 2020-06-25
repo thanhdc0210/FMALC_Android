@@ -42,6 +42,10 @@ public class HomeFragment extends Fragment {
     private WorkingFragment workingFragment;
     private CompleteFragment completeFragment;
 
+    private boolean isVisible;
+    private boolean isStarted;
+
+
     @BindView(R.id.txtConsignmentId)
     TextView codeConsignment;
     @BindView(R.id.txtVehicleInfo)
@@ -125,6 +129,7 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
 
 
+
         BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
         badgeDrawable.setVisible(true);
         //set tổng số cho tab đó
@@ -133,27 +138,25 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+        if (isVisible)
+            getFragmentManager().beginTransaction().detach(prepareFragment).attach(prepareFragment).commit();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStop() {
+        super.onStop();
+        isStarted = false;
+    }
 
-        prepareFragment =  new PrepareFragment();
-        workingFragment = new WorkingFragment();
-        completeFragment = new CompleteFragment();
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        ViewPagerAdapter viewPagerAdapter = new  ViewPagerAdapter(getFragmentManager());
-        viewPagerAdapter.addFragment(prepareFragment, "Chuẩn bị");
-        viewPagerAdapter.addFragment(workingFragment, "Đang làm");
-        viewPagerAdapter.addFragment(completeFragment, "Đĩ Lương");
-        viewPager.setAdapter(viewPagerAdapter);
-        Toast.makeText(getContext(), "reloadddd", Toast.LENGTH_SHORT).show();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isVisible = isVisibleToUser;
+        if (isVisible && isStarted)
+            getFragmentManager().beginTransaction().detach(prepareFragment).attach(prepareFragment).commit();
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {

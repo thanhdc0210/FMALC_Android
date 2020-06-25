@@ -47,10 +47,6 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         View view = inflater.inflate(R.layout.fragment_prepare, container, false);
 
         init();
-
-//        onStart();
-        Toast.makeText(getContext(), "ahahahahaahaha", Toast.LENGTH_SHORT).show();
-
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
@@ -63,11 +59,13 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     }
 
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
 
     private void init(){
         consignmentPresenter = new ConsignmentPresenter();

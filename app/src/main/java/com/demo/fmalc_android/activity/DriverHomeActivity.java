@@ -34,7 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class DriverHomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener{
+public class DriverHomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     private Toolbar toolbar;
     private ViewPager viewPager;
@@ -55,46 +55,12 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home);
-//        toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        viewPager =(ViewPager) findViewById(R.id.view_pager);
-//        tabLayout = findViewById(R.id.tab_layout);
-//
-//        prepareFragment =  new PrepareFragment();
-//        workingFragment = new WorkingFragment();
-//        completeFragment = new CompleteFragment();
-//
-//        tabLayout.setupWithViewPager(viewPager);
-//
-//        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        viewPagerAdapter.addFragment(prepareFragment, "Chuẩn bị");
-//        viewPagerAdapter.addFragment(workingFragment, "Đang làm");
-//        viewPagerAdapter.addFragment(completeFragment, "Hoàn thành");
-//        viewPager.setAdapter(viewPagerAdapter);
-//
-//        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-//        badgeDrawable.setVisible(true);
-//        //set tổng số cho tab đó
-//        badgeDrawable.setNumber(12);
-
-
-        //Bottom navigation
-
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-//
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setOnNavigationItemReselectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        HomeFragment fgm= new HomeFragment();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container, fgm).detach(fgm).attach(fgm).commit();
-//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -105,16 +71,9 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 item.setChecked(true);
                 HomeFragment fgm= new HomeFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, fgm).detach(fgm).attach(fgm).commit();
-//                return true;
-//                finish();
-//                startActivity(getIntent());
                 break;
             case R.id.navigation_inspection:
                 item.setChecked(true);
-//                intent = new Intent(this, InspectionActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-//                startActivity(intent);
-//                this.finish();
                 break;
             case  R.id.navigation_noti:
                 item.setChecked(true);
@@ -133,34 +92,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
         return false;
     }
 
-    @Override
-    public void onNavigationItemReselected(@NonNull MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.navigation_home:
-                item.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-//                return true;
-//                finish();
-//                startActivity(getIntent());
-                break;
-            case R.id.navigation_inspection:
-                intent = new Intent(this, InspectionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-                startActivity(intent);
-                this.finish();
-                break;
-            case  R.id.navigation_noti:
-                item.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new InspectionFragment()).commit();
-                break;
-            case R.id.navigation_search:
-                break;
-            case R.id.navigation_account:
-                break;
 
-        }
-    }
 
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -199,6 +131,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
     public void onClickViewDetail(View view) {
 //        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+
 
         TextView user = (TextView) view.findViewById(R.id.txtConsignmentId);
 
