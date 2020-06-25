@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,9 +19,12 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.fragment.CompleteFragment;
+import com.demo.fmalc_android.fragment.HomeFragment;
+import com.demo.fmalc_android.fragment.InspectionFragment;
 import com.demo.fmalc_android.fragment.PrepareFragment;
 import com.demo.fmalc_android.fragment.WorkingFragment;
 import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -30,15 +34,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class DriverHomeActivity extends AppCompatActivity {
+public class DriverHomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private PrepareFragment prepareFragment;
-    private WorkingFragment workingFragment;
-    private CompleteFragment completeFragment;
+
 
     @BindView(R.id.txtConsignmentId)
     TextView codeConsignment;
@@ -47,37 +49,53 @@ public class DriverHomeActivity extends AppCompatActivity {
     @BindView(R.id.card_view_item)
     LinearLayout cardView;
 
+    BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_home);
-//        toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-        viewPager =(ViewPager) findViewById(R.id.view_pager);
-        tabLayout = findViewById(R.id.tab_layout);
-
-        prepareFragment = new PrepareFragment();
-        workingFragment = new WorkingFragment();
-        completeFragment = new CompleteFragment();
-
-        tabLayout.setupWithViewPager(viewPager);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(prepareFragment, "Chuẩn bị");
-        viewPagerAdapter.addFragment(workingFragment, "Đang làm");
-        viewPagerAdapter.addFragment(completeFragment, "Hoàn thành");
-        viewPager.setAdapter(viewPagerAdapter);
-
-        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-        badgeDrawable.setVisible(true);
-        //set tổng số cho tab đó
-        badgeDrawable.setNumber(12);
-
+        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.navigation_home:
+                item.setChecked(true);
+                HomeFragment fgm= new HomeFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, fgm).detach(fgm).attach(fgm).commit();
+                break;
+            case R.id.navigation_inspection:
+                item.setChecked(true);
+                break;
+            case  R.id.navigation_noti:
+                item.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new InspectionFragment()).commit();
+                break;
+            case R.id.navigation_search:
+                item.setChecked(true);
+                break;
+            case R.id.navigation_account:
+                item.setChecked(true);
+                break;
+            default:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        }
+
+        return false;
+    }
+
+
+
+
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments = new ArrayList<>();
         private List<String> fragmentTitle = new ArrayList<>();
@@ -113,6 +131,7 @@ public class DriverHomeActivity extends AppCompatActivity {
     public void onClickViewDetail(View view) {
 //        Toast.makeText(DriverHomeActivity.this, "clmmmm", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(DriverHomeActivity.this, ConsignmentDetailActivity.class);
+
 
         TextView user = (TextView) view.findViewById(R.id.txtConsignmentId);
 

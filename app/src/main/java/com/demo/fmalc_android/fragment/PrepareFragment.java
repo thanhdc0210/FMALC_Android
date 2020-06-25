@@ -44,17 +44,24 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         View view = inflater.inflate(R.layout.fragment_prepare, container, false);
 
         init();
-
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
                 List<Integer> status = new ArrayList<>();
         status.add(0);
-
         consignmentPresenter.findByConsignmentStatusAndUsername(status, "driver");
         return view;
 
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
     private void init(){

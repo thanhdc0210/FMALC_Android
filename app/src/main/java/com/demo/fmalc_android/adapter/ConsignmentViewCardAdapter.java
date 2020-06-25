@@ -73,24 +73,22 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
             s = "Còn ";
         }else{
             s = "Trễ ";
+            holder.txtTimeCountDown.setTextColor(Color.RED);
         }
 
         if (diffDays < 0){
             s = s + Math.abs(diffDays) + " ngày ";
             holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
         }
 
         if (diffHours < 0){
             s = s + Math.abs(diffHours) + " giờ ";
             holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
         }
 
         if (diffMinutes <= 0){
             s = s + Math.abs(diffMinutes) + " phút";
             holder.txtTimeCountDown.setText(s);
-            holder.txtTimeCountDown.setTextColor(Color.RED);
         }
 
         if (diffDays > 0){

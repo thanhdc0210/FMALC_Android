@@ -39,7 +39,7 @@ public class ConsignmentPresenter implements ConsignmentContract.Presenter {
             @Override
             public void onFailure(Call<List<Consignment>> call, Throwable t) {
 
-                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
+                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách " + t.getMessage());
             }
         });
     }
