@@ -48,16 +48,26 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
 
         init();
 
+//        onStart();
+        Toast.makeText(getContext(), "ahahahahaahaha", Toast.LENGTH_SHORT).show();
+
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
                 List<Integer> status = new ArrayList<>();
-        status.add(0);
+        status.add(1);
         consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(status, "manager1");
         return view;
 
     }
+
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//    }
 
     private void init(){
         consignmentPresenter = new ConsignmentPresenter();

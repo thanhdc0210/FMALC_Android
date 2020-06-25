@@ -92,14 +92,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Cons
 
         btnNote.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Intent myIntent = new Intent(view.getContext(), agones.class);
-                //startActivityForResult(myIntent, 0);
-
-
-//                AlertDialog alertDialog = new AlertDialog.Builder(ConsignmentDetailActivity.this).setPositiveButton("OK",null).create(); //Read Update
-//                alertDialog.setTitle("Ghi chú");
-//                alertDialog.setMessage(consignmentDetail.getOwnerNote());
-//                alertDialog.show();  //<-- See This!
 
                new  MaterialAlertDialogBuilder(ConsignmentDetailActivity.this, R.style.AlertDialog)
                        .setIcon(getDrawable(R.drawable.ic_chat_24px))
