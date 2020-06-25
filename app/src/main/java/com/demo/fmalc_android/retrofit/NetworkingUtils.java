@@ -1,12 +1,15 @@
 package com.demo.fmalc_android.retrofit;
 
+import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.service.AccountService;
 import com.demo.fmalc_android.service.ConsignmentService;
+import com.demo.fmalc_android.service.LocationConsignmentService;
 
 public class NetworkingUtils {
 
     private static AccountService accountService;
     private static ConsignmentService consignmentService;
+    private static LocationConsignmentService locationConsignmentService;
 
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
@@ -21,5 +24,12 @@ public class NetworkingUtils {
 
         return consignmentService;
 
+    }
+
+    public static LocationConsignmentService getLocationConsignmentService() {
+        if(locationConsignmentService==null){
+            locationConsignmentService = RetrofitInstance.getInstance().create(LocationConsignmentService.class);
+        }
+        return locationConsignmentService;
     }
 }
