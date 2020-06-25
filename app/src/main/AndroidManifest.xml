@@ -12,7 +12,8 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.MyApp"
             android:usesCleartextTraffic="true">
-        <activity android:name=".activity.InspectionActivity"></activity>
+        <activity android:name=".activity.LocationConsignmentActivity"></activity>
+        <activity android:name=".activity.InspectionActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ConsignmentDetailActivity" />
         <activity android:name=".activity.DriverHomeActivity">
