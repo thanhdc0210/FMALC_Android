@@ -57,7 +57,8 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
         setContentView(R.layout.activity_driver_home);
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+        //default là navigation Home, có sửa lại để test fragment khác
+        bottomNavigationView.setSelectedItemId(R.id.navigation_inspection);
 
     }
 
@@ -74,6 +75,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 break;
             case R.id.navigation_inspection:
                 item.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new InspectionFragment()).commit();
                 break;
             case  R.id.navigation_noti:
                 item.setChecked(true);
