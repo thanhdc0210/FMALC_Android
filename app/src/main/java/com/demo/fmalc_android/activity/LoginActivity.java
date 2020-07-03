@@ -75,6 +75,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void loginFailure(String message) {
-        Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

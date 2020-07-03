@@ -13,14 +13,16 @@
             android:theme="@style/Theme.MyApp"
             android:usesCleartextTraffic="true">
         <activity android:name=".activity.InspectionActivity"></activity>
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.ConsignmentDetailActivity" />
-        <activity android:name=".activity.DriverHomeActivity">
+        <activity android:name=".activity.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.ConsignmentDetailActivity" />
+        <activity android:name=".activity.DriverHomeActivity">
+
         </activity>
 
         <meta-data

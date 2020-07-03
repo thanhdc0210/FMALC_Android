@@ -62,7 +62,7 @@ public class CompletedConsignmentViewCardAdapter extends  RecyclerView.Adapter<C
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("consignment_id", consignment.getConsignmentId());
-                intent.putExtra("data", bundle);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
