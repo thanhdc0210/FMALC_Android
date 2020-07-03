@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -35,8 +36,15 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     private List<Inspection> inspectionList;
     private List<Inspection> inspectionListFull;
     private Context context;
-    private HashMap<String, String> listIssue = new HashMap();
+    public HashMap<String, String> listIssue = new HashMap();
 
+    public HashMap<String, String> getListIssue() {
+        return listIssue;
+    }
+
+    public void setListIssue(HashMap<String, String> listIssue) {
+        this.listIssue = listIssue;
+    }
 
     public InspectionAdapter(List<Inspection> inspectionList, Context context) {
         this.inspectionList = inspectionList;
@@ -55,6 +63,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull InspectionAdapter.ViewHolder holder, int position) {
         Inspection inspection = inspectionList.get(position);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 //        holder.txtInspectionName.setText(inspection.getInspectionName());
         holder.cbInspection.setText(inspection.getInspectionName());
         holder.cbInspection.setTextSize(16);
@@ -71,9 +80,13 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                     } else {
                         //xóa khỏi list
                         listIssue.remove(id);
+                        holder.edtNoteIssue.setText("");
+                        imm.hideSoftInputFromWindow(holder.edtNoteIssue.getWindowToken(), 0);
+                        holder.edtNoteIssue.setVisibility(View.GONE);
                     }
                     holder.edtNoteIssue.setVisibility(View.VISIBLE);
                     holder.edtNoteIssue.requestFocus();
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                     holder.edtNoteIssue
                             .setOnEditorActionListener(
                                     new TextView.OnEditorActionListener() {
@@ -81,8 +94,6 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                                         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                                             if (actionId == EditorInfo.IME_ACTION_DONE) {
                                                 listIssue.replace(id, holder.edtNoteIssue.getText().toString());
-                                                Toast.makeText(context, listIssue.get(id) + "ahahaha", Toast.LENGTH_SHORT).show();
-                                                return true;
                                             }
                                             return false;
 
@@ -94,6 +105,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                 }
                 if(!buttonView.isChecked()){
                     listIssue.remove(id);
+                    holder.edtNoteIssue.setText("");
+                    imm.hideSoftInputFromWindow(holder.edtNoteIssue.getWindowToken(), 0);
                     holder.edtNoteIssue.setVisibility(View.GONE);
 
                 }
@@ -151,7 +164,6 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
         ViewHolder(View itemView) {
             super(itemView);
 //            txtInspectionName = itemView.findViewById(R.id.txtInspectionName);
-
             cbInspection = itemView.findViewById(R.id.cbInspection);
             edtNoteIssue = itemView.findViewById(R.id.edtNoteIssue);
             itemLayout = itemView.findViewById(R.id.linearLayoutInspectionItem);

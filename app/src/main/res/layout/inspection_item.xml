@@ -4,8 +4,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/linearLayoutInspectionItem"
-		android:background="@color/colorWhite"
 		android:orientation="vertical"
+		android:layout_marginBottom="10dp"
 		android:weightSum="10">
 
 <!--	<TextView-->
@@ -23,6 +23,8 @@
 			android:layout_weight="10"
 			android:layout_gravity="end"
 			android:layoutDirection="rtl"
+			android:textSize="18dp"
+			android:buttonTint="@color/colorPrimary"
 			android:layout_height="wrap_content"/>
 	<EditText
 			android:id="@+id/edtNoteIssue"
@@ -32,6 +34,7 @@
 			android:layout_height="wrap_content"
 			android:inputType="text"
 			android:singleLine="true"
+			android:textCursorDrawable="@color/colorPrimary"
 			android:imeOptions="actionDone"/>
 
 </LinearLayout>

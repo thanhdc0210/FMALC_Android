@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,14 +38,13 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     private  List<String> spinnerArray = new ArrayList<>();
     private InspectionAdapter inspectionAdapter;
     private List<Inspection> inspectionList;
+    private Button btnSubmit;
     Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Báo cáo trước khi chạy");
-
-
         setContentView(R.layout.activity_preparing);
         Bundle bundle = getIntent().getExtras();
         String vehicleStatus = bundle.getString("VEHICLE_STATUS");
@@ -110,6 +110,16 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         // Đổ data cho inspection list recycle view
         inspectionList = vehicleInspection.getInspections();
         setUpRecyclerView();
+
+        //Submit data
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
 
 //        MenuInflater inflater = getMenuInflater();
 //        inflater.inflate(R.menu.menu_search_inspection, menu);
