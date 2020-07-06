@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Map;
-
 import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +20,7 @@ import retrofit2.Response;
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View view;
+    private static LoginResponse loginResponse;
 
     public void setView(LoginContract.View view) {
         this.view = view;
@@ -40,11 +40,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     if(!response.isSuccessful()){
                         view.loginFailure("Đăng nhập thất bại");
                     }else {
-                      GlobalVariable globalVariable = new GlobalVariable();
-                        LoginResponse loginResponse = response.body();
-                        globalVariable.setUsername(loginResponse.getUsername());
-                        globalVariable.setToken(loginResponse.getToken());
-                        globalVariable.setRole(loginResponse.getRole());
+                        loginResponse = response.body();
+                        System.out.println("LOGIN_RESPONSE " + loginResponse.getUsername());
                         view.loginSuccess();
                     }
                 }
@@ -54,5 +51,9 @@ public class LoginPresenter implements LoginContract.Presenter {
                 view.loginFailure("Đã xảy ra lỗi trong quá trình đăng nhập " + t.getMessage());
             }
         });
+    }
+
+    public LoginResponse getLoginResponse() {
+        return loginResponse;
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context=".activity.PreparingActivity"
+		android:orientation="vertical">
+
+	<LinearLayout
+			android:id="@+id/linearLayout2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingBottom="20dp"
+			tools:layout_editor_absoluteX="1dp"
+			tools:layout_editor_absoluteY="2dp">
+
+		<TextView
+				android:id="@+id/textView2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="20dp"
+				android:fontFamily="@font/roboto"
+				android:text="Chọn xe:"
+				android:textColor="#000"
+				android:textSize="18sp" />
+
+		<Spinner
+				android:id="@+id/spinnerLicensePlates"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:autofillHints="Chọn biển số xe"
+				android:background="@drawable/spinner_background"
+				android:dropDownWidth="50dp"
+				android:spinnerMode="dialog" />
+	</LinearLayout>
+
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerViewInspection"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_marginBottom="80dp"
+			android:padding="30dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.52"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+	<Button
+			android:id="@+id/btnSubmit"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="OK"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/recyclerViewInspection" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

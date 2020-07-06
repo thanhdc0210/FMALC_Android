@@ -17,6 +17,7 @@ import com.demo.fmalc_android.adapter.CompletedConsignmentViewCardAdapter;
 import com.demo.fmalc_android.adapter.ConsignmentViewCardAdapter;
 import com.demo.fmalc_android.contract.ConsignmentContract;
 import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class CompleteFragment extends Fragment implements ConsignmentContract.Vi
     LinearLayout consignmentRecyclerViewLayout;
     CompletedConsignmentViewCardAdapter completedConsignmentViewCardAdapter;
     private ConsignmentPresenter consignmentPresenter;
-    private String token;
+    private GlobalVariable globalVariable;
     List<Consignment> consignmentList;
 
     public CompleteFragment() {
@@ -54,9 +55,10 @@ public class CompleteFragment extends Fragment implements ConsignmentContract.Vi
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
         List<Integer> status = new ArrayList<>();
-        status.add(0);
-
-        consignmentPresenter.findByConsignmentStatusAndUsername(status, "driver");
+        status.add(3);
+        status.add(5);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        consignmentPresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }

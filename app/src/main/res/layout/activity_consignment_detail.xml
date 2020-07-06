@@ -8,7 +8,19 @@
 		tools:context=".activity.ConsignmentDetailActivity">
 
 	<Button
-			android:id="@+id/button"
+			android:id="@+id/btnUpdateStatus"
+			android:layout_width="118dp"
+			android:layout_height="53dp"
+			android:layout_marginStart="20dp"
+			android:layout_marginBottom="70dp"
+			android:text="Bắt đầu"
+			android:textStyle="bold"
+			android:backgroundTint="#5BCA60"
+			app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+			app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+
+	<Button
+			android:id="@+id/btnLocationConsignment"
 			android:layout_width="118dp"
 			android:layout_height="53dp"
 			android:layout_marginEnd="20dp"
@@ -16,7 +28,8 @@
 			android:fontFamily="@font/roboto"
 			android:text="Bản đồ"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent" />
+			app:layout_constraintEnd_toEndOf="parent"
+			android:onClick="clickToLocationCsm"/>
 
 	<LinearLayout
 			android:id="@+id/linearLayout"
@@ -126,12 +139,4 @@
 
 	</LinearLayout>
 
-	<com.google.android.material.bottomnavigation.BottomNavigationView
-			android:id="@+id/bottom_navigation_view"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:menu="@menu/bottom_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.demo.fmalc_android.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class ConsignmentDetailActivity extends AppCompatActivity implements ConsignmentDetailContract.View {
+public class ConsignmentDetailActivity extends AppCompatActivity implements ConsignmentDetailContract.View , View.OnClickListener {
 
     private ConsignmentDetailPresenter consignmentDetailPresenter;
     private ConsignmentDetail consignmentDetail;
@@ -41,6 +42,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Cons
     LinearLayout consignmentDetailLayout;
     @BindView(R.id.txtLicensePlates)
     TextView txtLicensePlates;
+
+    Button btnLocationConsignment;
 
     ImageButton btnNote;
 
@@ -69,6 +72,10 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Cons
         btnNote = (ImageButton) findViewById(R.id.btnNote);
         init();
         consignmentDetailPresenter.findByConsignmentId(id);
+        btnLocationConsignment = findViewById(R.id.btnLocationConsignment);
+        btnLocationConsignment.setOnClickListener(this);
+//        Toast.makeText(this, consignmentDetail.getConsignmentId()+consignmentDetail.getLicensePlates(), Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -113,4 +120,14 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Cons
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onClick(View v) {
+        System.out.println(consignmentDetail.getLicensePlates()+"PPPPPPPP");
+        Intent intent = new Intent(getBaseContext(), LocationConsignmentActivity.class);
+        Bundle bundle = new Bundle();
+        intent.putExtra("CONSIGNMENT_ID", consignmentDetail.getConsignmentId()+"");
+        intent.putExtra("LICENSE_PLATES", consignmentDetail.getLicensePlates());
+        intent.putExtra("CONSIGNMENT_STATUS", consignmentDetail.getStatus());
+        startActivity(intent);
+    }
 }

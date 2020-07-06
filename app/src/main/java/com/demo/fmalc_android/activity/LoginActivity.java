@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.contract.LoginContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.entity.LoginResponse;
 import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 import com.demo.fmalc_android.presenter.LoginPresenter;
 import com.google.android.material.button.MaterialButton;
@@ -18,7 +20,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     private TextInputEditText edtUsername, edtPassword;
     private MaterialButton btnLogin;
-    private LoginPresenter accountPresenter;
+    private LoginPresenter loginPresenter;
     private ConsignmentPresenter consignmentPresenter;
 
     @Override
@@ -35,8 +37,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     private void init(){
-        accountPresenter = new LoginPresenter();
-        accountPresenter.setView(this);
+        loginPresenter = new LoginPresenter();
+        loginPresenter.setView(this);
     }
 
     private boolean checkLogin(String name, String password) {
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         //validate
         if (checkLogin(username, password)) {
             try {
-                accountPresenter.doLogin(username, password);
+                loginPresenter.doLogin(username, password);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -70,6 +72,15 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccess() {
         Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
+
+        LoginResponse loginResponse = loginPresenter.getLoginResponse();
+        final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
+        globalVariable.setUsername(loginResponse.getUsername());
+        globalVariable.setRole(loginResponse.getRole());
+        globalVariable.setToken(loginResponse.getToken());
+
+        System.out.println("LOGIN ACTIVITY: " + loginResponse.getUsername());
+
         startActivity(intent);
     }
 

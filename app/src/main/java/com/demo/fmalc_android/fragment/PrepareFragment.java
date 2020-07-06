@@ -2,6 +2,7 @@ package com.demo.fmalc_android.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.ConsignmentViewCardAdapter;
 import com.demo.fmalc_android.contract.ConsignmentContract;
 import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.StatusRequest;
 import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 
@@ -29,7 +31,7 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     LinearLayout consignmentRecyclerViewLayout;
     ConsignmentViewCardAdapter consignmentViewCardAdapter;
     private ConsignmentPresenter consignmentPresenter;
-    private String token;
+    private GlobalVariable globalVariable;
     List<Consignment> consignmentList;
 
     public PrepareFragment() {
@@ -50,11 +52,11 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
                 List<Integer> status = new ArrayList<>();
         status.add(0);
-        consignmentPresenter.findByConsignmentStatusAndUsername(status, "driver");
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        consignmentPresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }
-
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

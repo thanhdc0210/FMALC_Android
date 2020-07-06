@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/linearLayoutInspectionItem"
+		android:orientation="vertical"
+		android:layout_marginBottom="10dp"
+		android:weightSum="10">
+
+<!--	<TextView-->
+<!--			android:id="@+id/txtInspectionName"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="match_parent"-->
+<!--			android:layout_gravity="center"-->
+<!--			android:layout_weight="9"-->
+<!--			android:gravity="center"-->
+<!--			android:text="Xi nhan"-->
+<!--			android:textSize="16sp" />-->
+	<CheckBox
+			android:id="@+id/cbInspection"
+			android:layout_width="match_parent"
+			android:layout_weight="10"
+			android:layout_gravity="end"
+			android:layoutDirection="rtl"
+			android:textSize="18dp"
+			android:buttonTint="@color/colorPrimary"
+			android:layout_height="wrap_content"/>
+	<EditText
+			android:id="@+id/edtNoteIssue"
+			android:visibility="gone"
+			android:hint="Ghi chú cho sự cố"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:inputType="text"
+			android:singleLine="true"
+			android:textCursorDrawable="@color/colorPrimary"
+			android:imeOptions="actionDone"/>
+
+</LinearLayout>
