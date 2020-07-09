@@ -1,18 +1,11 @@
 package com.demo.fmalc_android.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SearchView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.InspectionAdapter;
 import com.demo.fmalc_android.contract.VehicleContract;
-import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Inspection;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;

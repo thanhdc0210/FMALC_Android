@@ -14,6 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Place implements Serializable {
+    @SerializedName("id")
+    private Integer id;
     @SerializedName("latitude")
     private Double latitude;
     @SerializedName("longitude")
@@ -24,12 +26,14 @@ public class Place implements Serializable {
     private String name;
     @SerializedName("plannedTime")
     private Timestamp plannedTime;
-    @SerializedName("type")
-    private String type; // Giao hàng hay nhận hàng
+    @SerializedName("typeStr")
+    private String typeStr; // Giao hàng hay nhận hàng
     @SerializedName("priority")
     private Integer priority; // trình tự giao nhận hàng
     @SerializedName("actualTime")
     private Timestamp actualTime;
+    @SerializedName("type")
+    private Integer type; // Giao hàng hay nhận hàng
 
         public Place(String address, String name, Timestamp plannedTime) {
             this.address = address;

@@ -11,7 +11,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.contract.LoginContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.LoginResponse;
-import com.demo.fmalc_android.presenter.ConsignmentPresenter;
+import com.demo.fmalc_android.presenter.SchedulePresenter;
 import com.demo.fmalc_android.presenter.LoginPresenter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private TextInputEditText edtUsername, edtPassword;
     private MaterialButton btnLogin;
     private LoginPresenter loginPresenter;
-    private ConsignmentPresenter consignmentPresenter;
+    private SchedulePresenter schedulePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         globalVariable.setUsername(loginResponse.getUsername());
         globalVariable.setRole(loginResponse.getRole());
         globalVariable.setToken(loginResponse.getToken());
-
-        System.out.println("LOGIN ACTIVITY: " + loginResponse.getUsername());
 
         startActivity(intent);
     }

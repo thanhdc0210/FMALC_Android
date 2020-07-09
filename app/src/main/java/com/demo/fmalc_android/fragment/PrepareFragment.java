@@ -2,7 +2,6 @@ package com.demo.fmalc_android.fragment;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,25 +13,24 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.adapter.ConsignmentViewCardAdapter;
-import com.demo.fmalc_android.contract.ConsignmentContract;
-import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
+import com.demo.fmalc_android.contract.ScheduleContract;
+import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
-import com.demo.fmalc_android.entity.StatusRequest;
-import com.demo.fmalc_android.presenter.ConsignmentPresenter;
+import com.demo.fmalc_android.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrepareFragment extends Fragment implements ConsignmentContract.View {
+public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
 
     RecyclerView consignmentRecyclerView;
     LinearLayout consignmentRecyclerViewLayout;
-    ConsignmentViewCardAdapter consignmentViewCardAdapter;
-    private ConsignmentPresenter consignmentPresenter;
+    ScheduleViewCardAdapter scheduleViewCardAdapter;
+    private SchedulePresenter schedulePresenter;
     private GlobalVariable globalVariable;
-    List<Consignment> consignmentList;
+    List<Schedule> scheduleList;
 
     public PrepareFragment() {
         // Required empty public constructor
@@ -53,7 +51,7 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
                 List<Integer> status = new ArrayList<>();
         status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        consignmentPresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }
@@ -67,22 +65,22 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     }
 
     private void init(){
-        consignmentPresenter = new ConsignmentPresenter();
-        consignmentPresenter.setView(this);
+        schedulePresenter = new SchedulePresenter();
+        schedulePresenter.setView(this);
     }
 
-    private void getConsignmentList(List<Consignment> consignmentList){
-        this.consignmentList = consignmentList;
+    private void getConsignmentList(List<Schedule> scheduleList){
+        this.scheduleList = scheduleList;
     }
 
     @Override
-    public void findByConsignmentStatusAndUsernameForSuccess(List<Consignment> consignmentList) {
+    public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-        consignmentViewCardAdapter = new ConsignmentViewCardAdapter(consignmentList, getActivity());
+        scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
 
-        consignmentRecyclerView.setAdapter(consignmentViewCardAdapter);
+        consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getConsignmentList(consignmentList);
+        getConsignmentList(scheduleList);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.demo.fmalc_android.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,45 +14,44 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
-import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.Place;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-public class CompletedConsignmentViewCardAdapter extends  RecyclerView.Adapter<CompletedConsignmentViewCardAdapter.ViewHolder>{
-    private List<Consignment> consignmentList;
+public class CompletedScheduleViewCardAdapter extends  RecyclerView.Adapter<CompletedScheduleViewCardAdapter.ViewHolder>{
+    private List<Schedule> scheduleList;
     private Context context;
 
-    public CompletedConsignmentViewCardAdapter(List<Consignment> consignmentList, Context context) {
-        this.consignmentList = consignmentList;
+    public CompletedScheduleViewCardAdapter(List<Schedule> scheduleList, Context context) {
+        this.scheduleList = scheduleList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public CompletedConsignmentViewCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CompletedScheduleViewCardAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
-        return new CompletedConsignmentViewCardAdapter.ViewHolder(view);
+        return new CompletedScheduleViewCardAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CompletedConsignmentViewCardAdapter.ViewHolder holder, int position) {
-        Consignment consignment = consignmentList.get(position);
-        holder.txtId.setText(consignment.getConsignmentId().toString());
-        holder.txtCompanyName.setText(consignment.getOwnerName());
+    public void onBindViewHolder(@NonNull CompletedScheduleViewCardAdapter.ViewHolder holder, int position) {
+        Schedule schedule = scheduleList.get(position);
+        holder.txtId.setText(schedule.getScheduleId().toString());
+        holder.txtCompanyName.setText(schedule.getOwnerName());
         //Giờ làm
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        holder.txtStartTime.setText(format.format(consignment.getPlaces().get(0).getPlannedTime()));
+        holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getPlannedTime()));
 
-        Place finishPlace = consignment.getPlaces().get(consignment.getPlaces().size()-1);
+        Place finishPlace = schedule.getPlaces().get(schedule.getPlaces().size()-1);
         holder.txtFinishTime.setText(format.format(finishPlace.getPlannedTime()));
         holder.txtReceivedPlace.setText(finishPlace.getName());
-        holder.txtDeliveryPlace.setText(consignment.getPlaces().get(0).getName());
-        holder.txtWeight.setText(consignment.getWeight().toString() + " kg ");
-        holder.txtVehicleInfo.setText(consignment.getLicensePlates()+" | "+consignment.getDriverName());
+        holder.txtDeliveryPlace.setText(schedule.getPlaces().get(0).getName());
+        holder.txtWeight.setText(schedule.getWeight().toString() + " kg ");
+        holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
         holder.txtTimeCountDown.setText("Hoàn thành lúc:" + finishPlace.getActualTime());
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +59,7 @@ public class CompletedConsignmentViewCardAdapter extends  RecyclerView.Adapter<C
             public void onClick(View view) {
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("consignment_id", consignment.getConsignmentId());
+                bundle.putInt("consignment_id", schedule.getScheduleId());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -70,7 +68,7 @@ public class CompletedConsignmentViewCardAdapter extends  RecyclerView.Adapter<C
 
     @Override
     public int getItemCount() {
-        return consignmentList.size();
+        return scheduleList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

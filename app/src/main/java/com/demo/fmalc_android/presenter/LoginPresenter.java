@@ -38,10 +38,9 @@ public class LoginPresenter implements LoginContract.Presenter {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if(!response.isSuccessful()){
-                        view.loginFailure("Đăng nhập thất bại");
+                        view.loginFailure("Đăng nhập thất bại " + response.code());
                     }else {
                         loginResponse = response.body();
-                        System.out.println("LOGIN_RESPONSE " + loginResponse.getUsername());
                         view.loginSuccess();
                     }
                 }

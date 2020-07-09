@@ -1,13 +1,13 @@
 package com.demo.fmalc_android.retrofit;
 
 import com.demo.fmalc_android.service.AccountService;
-import com.demo.fmalc_android.service.ConsignmentService;
+import com.demo.fmalc_android.service.ScheduleService;
 import com.demo.fmalc_android.service.VehicleService;
 
 public class NetworkingUtils {
 
     private static AccountService accountService;
-    private static ConsignmentService consignmentService;
+    private static ScheduleService scheduleService;
     private static VehicleService vehicleService;
 
 
@@ -18,11 +18,11 @@ public class NetworkingUtils {
         return accountService;
     }
 
-    public static ConsignmentService getConsignmentService(){
-        if (consignmentService == null)
-            consignmentService = RetrofitInstance.getInstance().create(ConsignmentService.class);
+    public static ScheduleService getScheduleService(){
+        if (scheduleService == null)
+            scheduleService = RetrofitInstance.getInstance().create(ScheduleService.class);
 
-        return consignmentService;
+        return scheduleService;
 
     }
     public static VehicleService getVehicleService(){

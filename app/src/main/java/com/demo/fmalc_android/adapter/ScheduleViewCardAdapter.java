@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.activity.DriverHomeActivity;
-import com.demo.fmalc_android.entity.Consignment;
+import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.Place;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-
-public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<ConsignmentViewCardAdapter.ViewHolder> {
-    private List<Consignment> consignmentList;
+public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<ScheduleViewCardAdapter.ViewHolder> {
+    private List<Schedule> scheduleList;
     private Context context;
 
-    public ConsignmentViewCardAdapter(List<Consignment> consignmentList, Context context) {
-        this.consignmentList = consignmentList;
+    public ScheduleViewCardAdapter(List<Schedule> scheduleList, Context context) {
+        this.scheduleList = scheduleList;
         this.context = context;
     }
 
@@ -45,19 +41,19 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Consignment consignment = consignmentList.get(position);
-        holder.txtId.setText(consignment.getConsignmentId().toString());
-        holder.txtCompanyName.setText(consignment.getOwnerName());
+        Schedule schedule = scheduleList.get(position);
+        holder.txtId.setText(schedule.getScheduleId().toString());
+        holder.txtCompanyName.setText(schedule.getOwnerName());
         //Giờ làm
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        holder.txtStartTime.setText(format.format(consignment.getPlaces().get(0).getPlannedTime()));
+        holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getPlannedTime()));
 
-        Place finishPlace = consignment.getPlaces().get(consignment.getPlaces().size()-1);
+        Place finishPlace = schedule.getPlaces().get(schedule.getPlaces().size()-1);
         holder.txtFinishTime.setText(format.format(finishPlace.getPlannedTime()));
         holder.txtReceivedPlace.setText(finishPlace.getName());
-        holder.txtDeliveryPlace.setText(consignment.getPlaces().get(0).getName());
-        holder.txtWeight.setText(consignment.getWeight().toString() + " kg ");
-        holder.txtVehicleInfo.setText(consignment.getLicensePlates()+" | "+consignment.getDriverName());
+        holder.txtDeliveryPlace.setText(schedule.getPlaces().get(0).getName());
+        holder.txtWeight.setText(schedule.getWeight().toString() + " kg ");
+        holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
 
         // Kiểm tra còn bao nhiêu thời gian
         Long plannedTime = finishPlace.getPlannedTime().getTime();
@@ -111,7 +107,7 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
             public void onClick(View view) {
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("consignment_id", consignment.getConsignmentId());
+                bundle.putInt("consignment_id", schedule.getScheduleId());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -120,7 +116,7 @@ public class ConsignmentViewCardAdapter extends  RecyclerView.Adapter<Consignmen
 
     @Override
     public int getItemCount() {
-        return consignmentList.size();
+        return scheduleList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

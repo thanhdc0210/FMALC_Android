@@ -1,11 +1,8 @@
 package com.demo.fmalc_android.presenter;
 
-import com.demo.fmalc_android.contract.ConsignmentContract;
 import com.demo.fmalc_android.contract.VehicleContract;
-import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
-import com.demo.fmalc_android.service.ConsignmentService;
 import com.demo.fmalc_android.service.VehicleService;
 
 import java.util.List;
