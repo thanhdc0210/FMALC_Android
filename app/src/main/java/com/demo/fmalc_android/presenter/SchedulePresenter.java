@@ -28,7 +28,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
             @Override
             public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {
                 if(!response.isSuccessful()){
-                    view.findByConsignmentStatusAndUsernameForFailure("Không thể lấy danh sách " + response.code());
+                    view.findByConsignmentStatusAndUsernameForFailure("Không thể lấy danh sách");
                 }else {
                     List<Schedule> scheduleList = response.body();
 
@@ -39,7 +39,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
             @Override
             public void onFailure(Call<List<Schedule>> call, Throwable t) {
 
-                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách " + t.getMessage());
+                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
             }
         });
     }

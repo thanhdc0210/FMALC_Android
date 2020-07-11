@@ -87,5 +87,4 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     public void findByConsignmentStatusAndUsernameForFailure(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.InspectionAdapter;
 import com.demo.fmalc_android.contract.VehicleContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Inspection;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
@@ -32,6 +33,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     private List<Inspection> inspectionList;
     private Button btnSubmit;
     Menu menu;
+    private GlobalVariable globalVariable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,9 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         init();
         List<Integer> status = new ArrayList<>();
         status.add(Integer.parseInt(vehicleStatus));
-        vehicleInspectionPresenter.getListLicensePlate(status, "driver");
+        status.add(1);
+        globalVariable = (GlobalVariable) getApplicationContext();
+        vehicleInspectionPresenter.getListLicensePlate(status, globalVariable.getUsername());
 
 
     }
