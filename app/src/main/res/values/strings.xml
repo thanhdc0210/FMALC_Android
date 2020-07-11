@@ -9,4 +9,9 @@
 		<item>Đã hoàn thành</item>
 	</string-array>
 	<string name="positive_button">OK</string>
+
+	<string name="s3_bucket">fmalc-img</string>
+	<string name="s3_secret_key">gamVtx5sW8lRzz/lytM6NmTjl+tzKNB9+XkfKCyX</string>
+	<string name="s3_access_key">AKIAS3V2PUMY2LJR5UNB</string>
+
 </resources>

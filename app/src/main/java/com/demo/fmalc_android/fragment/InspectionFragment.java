@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
+import com.demo.fmalc_android.activity.InProgressActivity;
 import com.demo.fmalc_android.activity.InspectionActivity;
 import com.demo.fmalc_android.activity.PreparingActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -94,6 +95,30 @@ public class InspectionFragment extends Fragment {
               getContext().startActivity(intent);
           }
       });
+
+        //Button xe đã hoàn tất đơn hàng
+        btnComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PreparingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("VEHICLE_STATUS", "1");
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
+        });
+
+        //Button xe đang chạy
+        //Button xe chuẩn bị chạy
+        btnInProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), InProgressActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+
 
 ////        TextView txtTest = view.findViewById(R.id.txtTest);
 //        String[] singleChoiceItems = getResources().getStringArray(R.array.dialog_single_choice_array);

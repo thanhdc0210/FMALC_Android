@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
 		package="com.demo.fmalc_android">
 
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 	<application
 			android:allowBackup="true"
@@ -13,11 +18,18 @@
 			android:theme="@style/Theme.MyApp"
 			android:usesCleartextTraffic="true"
 			android:windowSoftInputMode="stateAlwaysVisible">
-		<activity android:name=".activity.PreparingActivity"
+		<activity android:name=".activity.InProgressActivity"
 				android:parentActivityName=".activity.DriverHomeActivity"
-				android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+				android:theme="@style/ThemeWithActionBar">
+
 		</activity>
-		<activity android:name=".activity.LocationConsignmentActivity"/>
+		<activity
+				android:name=".activity.PreparingActivity"
+				android:parentActivityName=".activity.DriverHomeActivity"
+				android:theme="@style/ThemeWithActionBar">
+
+		</activity>
+		<activity android:name=".activity.LocationConsignmentActivity" />
 		<activity android:name=".activity.InspectionActivity" />
 		<activity android:name=".activity.LoginActivity" />
 		<activity android:name=".activity.ConsignmentDetailActivity" />
@@ -27,8 +39,23 @@
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
-		</activity>
 
+<!--			dialog Image picker-->
+
+		</activity>
+		<provider
+				android:name="androidx.core.content.FileProvider"
+				android:authorities="${applicationId}.com.vansuita.pickimage.provider"
+				android:exported="false"
+				android:grantUriPermissions="true"
+				tools:replace="android:authorities">
+			<meta-data
+					android:name="android.support.FILE_PROVIDER_PATHS"
+					android:resource="@xml/picker_provider_paths" />
+		</provider>
+		<service
+				android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+				android:enabled="true" />
 		<meta-data
 				android:name="preloaded_fonts"
 				android:resource="@array/preloaded_fonts" />

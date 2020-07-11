@@ -24,11 +24,13 @@ import com.demo.fmalc_android.adapter.InspectionAdapter;
 import com.demo.fmalc_android.contract.VehicleContract;
 import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Inspection;
+import com.demo.fmalc_android.entity.ReportIssue;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class PreparingActivity extends AppCompatActivity implements VehicleContract.View {
@@ -66,27 +68,6 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search_inspection, menu);
-//        MenuItem searchItem = menu.findItem(R.id.searchInspection);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                inspectionAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
-
 
     private void init(){
         vehicleInspectionPresenter = new VehicleInspectionPresenter();
@@ -112,31 +93,20 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setUpRecyclerView();
 
         //Submit data
+
+
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                inspectionAdapter.getListIssue().size();
+                for (Map.Entry<Integer, ReportIssue> a: inspectionAdapter.getListIssue().entrySet()){
+                    Toast.makeText(getApplicationContext(), a.getValue().getImage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search_inspection, menu);
-//        MenuItem searchItem = menu.findItem(R.id.searchInspection);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                inspectionAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
     }
 
     @Override
