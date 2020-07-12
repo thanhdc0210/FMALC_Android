@@ -1,40 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/linearLayoutInspectionItem"
+	android:orientation="vertical"
+	android:background="@color/colorWhite"
+	android:layout_marginBottom="10dp">
+
+	<!--	<TextView-->
+	<!--			android:id="@+id/txtInspectionName"-->
+	<!--			android:layout_width="wrap_content"-->
+	<!--			android:layout_height="match_parent"-->
+	<!--			android:layout_gravity="center"-->
+	<!--			android:layout_weight="9"-->
+	<!--			android:gravity="center"-->
+	<!--			android:text="Xi nhan"-->
+	<!--			android:textSize="16sp" />-->
+
+	<CheckBox
+		android:id="@+id/cbInspection"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/linearLayoutInspectionItem"
-		android:orientation="vertical"
-		android:layout_marginBottom="10dp"
-		android:weightSum="10">
+		android:layoutDirection="rtl"
+		android:textSize="18dp"
+		android:paddingLeft="10dp"
+		android:buttonTint="@color/colorPrimary"
+		/>
+	<LinearLayout
+		android:id="@+id/hiddenLinear"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:visibility="gone"
+		android:weightSum="30"
+		>
 
-<!--	<TextView-->
-<!--			android:id="@+id/txtInspectionName"-->
-<!--			android:layout_width="wrap_content"-->
-<!--			android:layout_height="match_parent"-->
-<!--			android:layout_gravity="center"-->
-<!--			android:layout_weight="9"-->
-<!--			android:gravity="center"-->
-<!--			android:text="Xi nhan"-->
-<!--			android:textSize="16sp" />-->
-	<CheckBox
-			android:id="@+id/cbInspection"
-			android:layout_width="match_parent"
-			android:layout_weight="10"
-			android:layout_gravity="end"
-			android:layoutDirection="rtl"
-			android:textSize="18dp"
-			android:buttonTint="@color/colorPrimary"
-			android:layout_height="wrap_content"/>
-	<EditText
+		<EditText
 			android:id="@+id/edtNoteIssue"
-			android:visibility="gone"
-			android:hint="Ghi chú cho sự cố"
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:layout_weight="29"
+			android:hint="Ghi chú cho sự cố"
 			android:inputType="text"
 			android:singleLine="true"
-			android:textCursorDrawable="@color/colorPrimary"
-			android:imeOptions="actionDone"/>
+			android:textCursorDrawable="@color/colorPrimary" />
+
+<!--		<ImageButton-->
+<!--			android:layout_marginLeft="5dp"-->
+<!--			android:id="@+id/btnLoadImage"-->
+<!--			android:layout_gravity="center"-->
+<!--			android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:layout_weight="1"-->
+<!--			android:background="@drawable/ic_photo_camera_24px"-->
+<!--			android:layout_marginStart="5dp"-->
+<!--			/>-->
+
+	</LinearLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_margin="10dp"
+		android:background="#C4C4C4" />
+
 
 </LinearLayout>

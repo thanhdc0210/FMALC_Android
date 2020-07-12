@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReportIssueContentRequest {
+    @SerializedName("inspectionId")
+    private Integer inspectionId;
     @SerializedName("content")
     private String content;
     @SerializedName("imageUrl")

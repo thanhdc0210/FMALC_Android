@@ -62,5 +62,13 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
+    //AWS S3
+    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true }
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.6.+'
+
+    //Image picker
+    implementation 'com.github.jrvansuita:PickImage:+'
+
 
 }
