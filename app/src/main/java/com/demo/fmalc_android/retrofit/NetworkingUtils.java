@@ -12,7 +12,6 @@ public class NetworkingUtils {
     private static VehicleService vehicleService;
     private static ReportIssueService reportIssueService;
 
-
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
             accountService = RetrofitInstance.getInstance().create(AccountService.class);

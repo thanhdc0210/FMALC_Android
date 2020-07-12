@@ -20,4 +20,6 @@ public class ReportIssueRequest {
     private String vehicleLicensePlates;
     @SerializedName("reportIssueContentRequests")
     private Map<Integer, ReportIssueContentRequest> reportIssueContentRequests;
+    @SerializedName("type")
+    private Integer type;
 }

@@ -1,5 +1,4 @@
 package com.demo.fmalc_android.contract;
-
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 
 public interface ReportIssueContract {
@@ -9,7 +8,7 @@ public interface ReportIssueContract {
         void createReportIssueForFailure(String message);
     }
 
-    interface Presenter{
+    interface Presenter {
         void createReportIssue(ReportIssueRequest reportIssueRequest);
     }
 }

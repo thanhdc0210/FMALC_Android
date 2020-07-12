@@ -66,27 +66,6 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search_inspection, menu);
-//        MenuItem searchItem = menu.findItem(R.id.searchInspection);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                inspectionAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
-
 
     private void init(){
         vehicleInspectionPresenter = new VehicleInspectionPresenter();
@@ -115,6 +94,8 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setUpRecyclerView();
 
         //Submit data
+
+
         btnSubmit = findViewById(R.id.btnSubmit);
         inspectionAdapter.getListIssue();
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +108,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                 reportIssueRequest.setReportIssueContentRequests(inspectionAdapter.getListIssue());
                 reportIssueRequest.setUsername(globalVariable.getUsername());
                 reportIssueRequest.setVehicleLicensePlates(spinner.getSelectedItem().toString());
+                reportIssueRequest.setType(0);
 
                 for(Map.Entry<Integer, ReportIssueContentRequest> entry : inspectionAdapter.getListIssue().entrySet()){
                     System.out.println("Inspection Id: " + entry.getValue().getInspectionId()
@@ -138,22 +120,6 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         });
 
 
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search_inspection, menu);
-//        MenuItem searchItem = menu.findItem(R.id.searchInspection);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                inspectionAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
     }
 
     @Override
