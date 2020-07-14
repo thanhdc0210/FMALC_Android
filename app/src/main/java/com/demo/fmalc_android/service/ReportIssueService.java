@@ -20,10 +20,11 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.POST;
 
 public interface ReportIssueService {
 
-    @POST("/api/v1.0/report-issues")
+    @POST("api/v1.0/report-issues/report")
     Call<ReportIssueRequest> createReportIssue(@Body ReportIssueRequest reportIssueRequest);
 
     @Multipart

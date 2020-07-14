@@ -4,11 +4,11 @@ import com.demo.fmalc_android.entity.ReportIssueRequest;
 public interface ReportIssueContract {
 
     interface View{
-        void createReportIssueForSuccess(ReportIssueRequest reportIssueRequest);
-        void createReportIssueForFailure(String message);
+        void createReportIssueBeforeDeliveryForSuccess(ReportIssueRequest reportIssueRequest);
+        void createReportIssueBeforeDeliveryForFailure(String message);
     }
 
     interface Presenter {
-        void createReportIssue(ReportIssueRequest reportIssueRequest);
+        void createReportIssueBeforeDelivery(ReportIssueRequest reportIssueRequest);
     }
 }

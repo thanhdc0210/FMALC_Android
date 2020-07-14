@@ -20,7 +20,7 @@ import retrofit2.Response;
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View view;
-    private static LoginResponse loginResponse;
+//    private static LoginResponse loginResponse;
 
     public void setView(LoginContract.View view) {
         this.view = view;
@@ -40,8 +40,8 @@ public class LoginPresenter implements LoginContract.Presenter {
                     if(!response.isSuccessful()){
                         view.loginFailure("Đăng nhập thất bại " + response.code());
                     }else {
-                        loginResponse = response.body();
-                        view.loginSuccess();
+//                        loginResponse = response.body();
+                        view.loginSuccess(response.body());
                     }
                 }
 
@@ -52,7 +52,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         });
     }
 
-    public LoginResponse getLoginResponse() {
-        return loginResponse;
-    }
+//    public LoginResponse getLoginResponse() {
+//        return loginResponse;
+//    }
 }

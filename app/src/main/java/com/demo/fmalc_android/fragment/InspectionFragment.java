@@ -102,14 +102,13 @@ public class InspectionFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PreparingActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("VEHICLE_STATUS", "1");
+                bundle.putString("VEHICLE_STATUS", "3");
                 intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }
         });
 
         //Button xe đang chạy
-        //Button xe chuẩn bị chạy
         btnInProgress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
