@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:id="@+id/linearLayoutInspectionItem"
+		android:id="@+id/linearLayoutIssueItem"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
 		android:background="@color/colorWhite"
 		android:orientation="vertical">
 
@@ -20,57 +22,39 @@
 	<!--			android:textSize="16sp" />-->
 
 	<CheckBox
-			android:text="Xi nhannn"
-			android:textColor="#000"
-			android:id="@+id/cbInspection"
+			android:id="@+id/cbIssue"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:buttonTint="@color/colorPrimary"
 			android:layoutDirection="rtl"
-			android:paddingLeft="10dp"
-			android:textSize="18dp" />
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:text="Xi nhan"
+			android:textColor="#000"
+			android:textSize="18dp"
+			tools:text="Xi nhan" />
 
 	<LinearLayout
-			android:id="@+id/hiddenLinear"
+
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:visibility="gone"
 			android:weightSum="10">
 
-		<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_weight="8">
-
-			<EditText
-					android:id="@+id/edtNoteIssue"
-					android:layout_width="wrap_content"
+			<Button
+					android:id="@+id/btnViewIssueDetail"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_gravity="bottom"
-					android:layout_weight="29"
-					android:hint="Ghi chú cho sự cố"
-					android:inputType="text"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+
 					android:singleLine="true"
-					android:textCursorDrawable="@color/colorPrimary" />
-		</LinearLayout>
-
-		<LinearLayout
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:gravity="end"
-				android:paddingLeft="10dp"
-				android:layout_weight="2">
-
-			<ImageButton
-					android:id="@+id/btnLoadImage"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="end"
-					android:padding="18dp"
-					android:background="@drawable/ic_photo_camera_24px" />
-
-		</LinearLayout>
+					android:text="Xem chi tiết"
+					android:textAllCaps="false"
+					android:textColor="@color/colorWhite"
+					android:textSize="16dp"
+					app:iconPadding="0dp" />
 
 	</LinearLayout>
 

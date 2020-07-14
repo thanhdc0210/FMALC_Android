@@ -39,7 +39,7 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
             @Override
             public void onFailure(Call<List<Schedule>> call, Throwable t) {
 
-                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
+                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách "+t.getMessage());
             }
         });
     }
