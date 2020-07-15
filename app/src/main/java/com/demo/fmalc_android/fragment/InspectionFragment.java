@@ -19,6 +19,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.activity.InProgressActivity;
 import com.demo.fmalc_android.activity.InspectionActivity;
+import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
 import com.demo.fmalc_android.activity.PreparingActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
@@ -43,6 +44,8 @@ public class InspectionFragment extends Fragment {
     Button btnPrepare;
     Button btnInProgress;
     Button btnComplete;
+    Button btnMaintainAndIssue;
+
     public InspectionFragment() {
         // Required empty public constructor
     }
@@ -83,6 +86,7 @@ public class InspectionFragment extends Fragment {
         btnPrepare = view.findViewById(R.id.btnPreparing);
         btnInProgress = view.findViewById(R.id.btnOnTheWay);
         btnComplete = view.findViewById(R.id.btnCompleted);
+        btnMaintainAndIssue = view.findViewById(R.id.btnMaintainAndIssue);
 
         //Button xe chuẩn bị chạy
         btnPrepare.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +117,13 @@ public class InspectionFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), InProgressActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        btnMaintainAndIssue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MaintainAndIssueActivity.class);
                 getContext().startActivity(intent);
             }
         });

@@ -47,7 +47,11 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                view.loginFailure("Đã xảy ra lỗi trong quá trình đăng nhập " + t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.loginFailure("Lỗi kết nối mạng");
+                }else {
+                    view.loginFailure("Có lỗi xảy ra ở server");
+                }
             }
         });
     }

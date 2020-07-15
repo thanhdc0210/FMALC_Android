@@ -51,7 +51,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 List<Integer> status = new ArrayList<>();
         status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+        schedulePresenter.findByConsignmentStatusAndUsername(status, "driver2");
         return view;
 
     }

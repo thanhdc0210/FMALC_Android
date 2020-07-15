@@ -26,7 +26,7 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
             @Override
             public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
                 if (!response.isSuccessful()) {
-                    view.findByScheduleIdFailure("Không tìm thấy lịch trình");
+                    view.findByScheduleIdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 } else {
                     DetailedSchedule consignmentDetail = response.body();
                     view.findByScheduleIdSuccess(consignmentDetail);
@@ -35,7 +35,7 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
 
             @Override
             public void onFailure(Call<DetailedSchedule> call, Throwable t) {
-                view.findByScheduleIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+                view.findByScheduleIdFailure("Có lỗi xảy ra ở server");
 
             }
         });

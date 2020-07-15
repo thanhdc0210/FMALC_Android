@@ -1,11 +1,16 @@
 package com.demo.fmalc_android.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +44,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     private InspectionAdapter inspectionAdapter;
     private List<Inspection> inspectionList;
     private Button btnSubmit;
+    private EditText edtNoteIssue;
     Menu menu;
     private GlobalVariable globalVariable;
 
@@ -48,6 +54,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setContentView(R.layout.activity_preparing);
         Bundle bundle = getIntent().getExtras();
         String vehicleStatus = bundle.getString("VEHICLE_STATUS");
+
         Toast.makeText(this, vehicleStatus, Toast.LENGTH_SHORT).show();
         init();
         List<Integer> status = new ArrayList<>();
@@ -105,15 +112,13 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setUpRecyclerView();
 
         //Submit data
-
-
-        btnSubmit = findViewById(R.id.btnSubmit);
         inspectionAdapter.getListIssue();
+        btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(v);
                 globalVariable = (GlobalVariable) getApplicationContext();
-
                 // Report Issue Before Delivery
                 String vehicleLicensePlates = spinner.getSelectedItem().toString();
                 if (vehicleLicensePlates.contains("một xe")){
@@ -191,5 +196,12 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void getListLicensePlateAndInspectionAfterDeliveryFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    // tắt bàn phím
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

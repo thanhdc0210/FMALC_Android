@@ -2,6 +2,7 @@ package com.demo.fmalc_android.adapter;
 
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -142,6 +143,14 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
 //
                     holder.hiddenLayout.setVisibility(View.VISIBLE);
                     holder.edtNoteIssue.requestFocus();
+                    holder.edtNoteIssue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if(!hasFocus){
+                                hideKeyboard(v);
+                            }
+                        }
+                    });
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
                     holder.edtNoteIssue.addTextChangedListener(new TextWatcher() {
@@ -219,6 +228,16 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
         return inspectionList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     @SneakyThrows
     @Override
     public void onPickResult(PickResult r) {
@@ -272,6 +291,10 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
         }
 
 
+    }
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
 

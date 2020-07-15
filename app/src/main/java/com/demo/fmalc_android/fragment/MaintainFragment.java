@@ -3,20 +3,21 @@ package com.demo.fmalc_android.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.demo.fmalc_android.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InforInspectionFragment#newInstance} factory method to
+ * Use the {@link MaintainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InforInspectionFragment extends Fragment {
+public class MaintainFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +28,10 @@ public class InforInspectionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public InforInspectionFragment() {
+    private RecyclerView recyclerView;
+    private LinearLayout layoutRecycleView;
+
+    public MaintainFragment() {
         // Required empty public constructor
     }
 
@@ -37,11 +41,11 @@ public class InforInspectionFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment InforInspectionFragment.
+     * @return A new instance of fragment MaintainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InforInspectionFragment newInstance(String param1, String param2) {
-        InforInspectionFragment fragment = new InforInspectionFragment();
+    public static MaintainFragment newInstance(String param1, String param2) {
+        MaintainFragment fragment = new MaintainFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,9 +66,12 @@ public class InforInspectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_infor_inspection, container, false);
-        Bundle bundle = this.getArguments();
-        Integer statusValue = bundle.getInt("STATUS_VALUE");
+        View view = inflater.inflate(R.layout.fragment_maintain, container, false);
+
+
+
+        layoutRecycleView = view.findViewById(R.id.linearLayoutIssueItem);
+        recyclerView = (RecyclerView)  view.findViewById(R.id.recyclerViewIssue);
         return view;
     }
 }

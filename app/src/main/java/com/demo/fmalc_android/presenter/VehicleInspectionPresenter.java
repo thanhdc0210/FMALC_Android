@@ -5,6 +5,7 @@ import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 import com.demo.fmalc_android.service.VehicleService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +27,7 @@ public class VehicleInspectionPresenter implements VehicleContract.Presenter {
     @Override
     public void getListLicensePlate(List<Integer> status, String username) {
         Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(status, username);
+
         call.enqueue(new Callback<VehicleInspection>() {
             @Override
             public void onResponse(Call<VehicleInspection> call, Response<VehicleInspection> response) {
