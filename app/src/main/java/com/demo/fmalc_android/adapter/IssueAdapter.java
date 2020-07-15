@@ -1,19 +1,16 @@
 package com.demo.fmalc_android.adapter;
 
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,7 +27,9 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.entity.ReportIssueContentResponse;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.SneakyThrows;
@@ -44,7 +43,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
 
     private Uri fileUri;
     private Bitmap bitmap;
-    private List<Integer> listIssue;
+    private List<Integer> listIssue = new ArrayList<>();
 
 
     public IssueAdapter(List<ReportIssueContentResponse> issueList, Context context) {
@@ -61,17 +60,15 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull IssueAdapter.ViewHolder holder, int position) {
-//        issueList.sort(Comparator.comparing(Place::getPriority));
         ReportIssueContentResponse reportIssueContentResponse = issueList.get(position);
         holder.cbIssue.setText(reportIssueContentResponse.getInspectionName());
             holder.btnViewIssueDetail.setOnClickListener(new View.OnClickListener() {
                 @SneakyThrows
                 @Override
                 public void onClick(View v) {
-                    showImage(reportIssueContentResponse.getImage(),reportIssueContentResponse.getContent());
+                    showDetailIssueDialog(reportIssueContentResponse.getInspectionName(),reportIssueContentResponse.getImage(),reportIssueContentResponse.getContent(), v);
                 }
             });
-
         holder.cbIssue.setOnCheckedChangeListener((new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -87,33 +84,39 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
         }));
     }
 
-    private void showImage(String imgUrl, String note) throws IOException {
-        Dialog builder = new Dialog(context);
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().setBackgroundDrawable(
-                new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+    private void showDetailIssueDialog(String issueName, String imgUrl, String note, View v) throws IOException {
+
+        View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.custom_dialog_issue, (ViewGroup)v.getParent(), false);
+        Button btn = dialogView.findViewById(R.id.buttonOk);
+        TextView txtIssueName = dialogView.findViewById(R.id.txtIssueName);
+        txtIssueName.setText(issueName);
+        TextView txtIssueNote = dialogView.findViewById(R.id.txtIssueNote);
+        txtIssueNote.setText(note);
+        ImageView imageView =(ImageView) dialogView.findViewById(R.id.imgIssue);
+        if (imgUrl != null){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                URL url = new URL(imgUrl);
+                imageView.setImageBitmap(BitmapFactory.decodeStream((InputStream) url.getContent()));
+            } catch (IOException e) {
+                Toast.makeText(context, "Có lỗi trong quá trình xử lí ảnh", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+//        URL url = new URL(imgUrl);
+//        Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//        imageView.setImageBitmap(bmp);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
+            public void onClick(View v) {
+                alertDialog.dismiss();
             }
         });
-            if (imgUrl != null){
-                URL url = new URL(imgUrl);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                ImageView imageView = new ImageView(context);
-                imageView.setImageBitmap(bmp);
-                builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
-            TextView textView = new TextView(context);
-            textView.setText(note);
-            builder.addContentView(textView, new RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            builder.show();
     }
 
 
