@@ -1,23 +1,19 @@
 package com.demo.fmalc_android.adapter;
 
 
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,11 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.entity.Issue;
-import com.demo.fmalc_android.entity.ReportIssueContentRequest;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 
 import lombok.SneakyThrows;
@@ -67,7 +61,7 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
             @SneakyThrows
             @Override
             public void onClick(View v) {
-                showImage(issue.getImage(),issue.getNote());
+                showDetailIssueDialog(issue.getInspectionName(),issue.getImage(),issue.getNote(),v);
             }
         });
         holder.cbIssue.setOnCheckedChangeListener((new CompoundButton.OnCheckedChangeListener() {
@@ -85,32 +79,27 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
         }));
     }
 
-    private void showImage(String imgUrl, String note) throws IOException {
-        Dialog builder = new Dialog(context);
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().setBackgroundDrawable(
-                new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
-        });
+    private void showDetailIssueDialog(String issueName, String imgUrl, String note, View v) throws IOException {
 
+        View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.custom_dialog_issue, (ViewGroup)v.getParent(), false);
+        Button btn = dialogView.findViewById(R.id.buttonOk);
+        TextView txtIssueName = dialogView.findViewById(R.id.txtIssueName);
+        txtIssueName.setText(issueName);
+        TextView txtIssueNote = dialogView.findViewById(R.id.txtIssueNote);
+        ImageView imageView =(ImageView) dialogView.findViewById(R.id.imgIssue);
         URL url = new URL(imgUrl);
         Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-        ImageView imageView = new ImageView(context);
         imageView.setImageBitmap(bmp);
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        TextView textView = new TextView(context);
-        textView.setText(note);
-        builder.addContentView(textView, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        ));
-        builder.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 

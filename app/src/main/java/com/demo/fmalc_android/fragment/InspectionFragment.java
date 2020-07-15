@@ -45,6 +45,7 @@ public class InspectionFragment extends Fragment {
     Button btnInProgress;
     Button btnComplete;
     Button btnMaintainAndIssue;
+    Button btnFillingFuel;
 
     public InspectionFragment() {
         // Required empty public constructor
@@ -87,6 +88,8 @@ public class InspectionFragment extends Fragment {
         btnInProgress = view.findViewById(R.id.btnOnTheWay);
         btnComplete = view.findViewById(R.id.btnCompleted);
         btnMaintainAndIssue = view.findViewById(R.id.btnMaintainAndIssue);
+        btnFillingFuel = view.findViewById(R.id.btnFillingFuel);
+
 
         //Button xe chuẩn bị chạy
         btnPrepare.setOnClickListener(new View.OnClickListener() {
@@ -128,30 +131,14 @@ public class InspectionFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+        btnFillingFuel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MaintainAndIssueActivity.class);
+                getContext().startActivity(intent);
 
-
-
-////        TextView txtTest = view.findViewById(R.id.txtTest);
-//        String[] singleChoiceItems = getResources().getStringArray(R.array.dialog_single_choice_array);
-//        int itemSelected = 0;
-//        Bundle bundle = new Bundle();
-//
-//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-//        mBuilder.setTitle("Chọn trạng thái báo cáo cho xe")
-//                .setIcon(R.drawable.ic_rv_hookup_24px_rounded)
-//                .setPositiveButton("OK",test("ádas"))
-//                .setCancelable(false);
-//        mBuilder.setSingleChoiceItems(singleChoiceItems, -1, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                value = singleChoiceItems[i];
-////                txtTest.setText(value);
-//                dialogInterface.dismiss();
-//            }
-//        });
-//
-//        AlertDialog mDialog = mBuilder.create();
-//        mDialog.show();
+            }
+        });
 
         return view;
     }
