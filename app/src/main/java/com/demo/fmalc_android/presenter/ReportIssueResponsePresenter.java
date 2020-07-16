@@ -5,6 +5,8 @@ import com.demo.fmalc_android.entity.ReportIssueResponse;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 import com.demo.fmalc_android.service.ReportIssueService;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,8 +22,8 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void getIssueInformationOfAVehicle(String username) {
-        Call<ReportIssueResponse> call = reportIssueService.getIssueInformationOfAVehicle(username);
+    public void getIssueInformationOfAVehicle(String username, List<Integer> status) {
+        Call<ReportIssueResponse> call = reportIssueService.getIssueInformationOfAVehicle(username, status);
 
         call.enqueue(new Callback<ReportIssueResponse>() {
             @Override

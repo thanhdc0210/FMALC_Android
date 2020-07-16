@@ -1,7 +1,6 @@
 package com.demo.fmalc_android.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -130,7 +128,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                     reportIssueRequest.setVehicleLicensePlates(spinner.getSelectedItem().toString());
                     reportIssueRequest.setType(0);
 
-                    reportIssuePresenter.createReportIssueBeforeDelivery(reportIssueRequest);
+                    reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                 }
             }
         });
@@ -142,12 +140,13 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     }
 
     @Override
-    public void createReportIssueBeforeDeliveryForSuccess(ReportIssueRequest reportIssueRequest) {
+    public void createReportIssueForDeliveryForSuccess(ReportIssueRequest reportIssueRequest) {
         Toast.makeText(this, "Báo cáo thành công", Toast.LENGTH_SHORT).show();
+        reloadActivityAfterCreateReportIssueSuccess();
     }
 
     @Override
-    public void createReportIssueBeforeDeliveryForFailure(String message) {
+    public void createReportIssueForDeliveryForFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -187,7 +186,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                     reportIssueRequest.setVehicleLicensePlates(spinner.getSelectedItem().toString());
                     reportIssueRequest.setType(1);
 
-                    reportIssuePresenter.createReportIssueBeforeDelivery(reportIssueRequest);
+                    reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                 }
             }
         });
@@ -203,5 +202,12 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void reloadActivityAfterCreateReportIssueSuccess(){
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 }

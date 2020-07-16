@@ -26,6 +26,7 @@ import com.demo.fmalc_android.entity.ReportIssueResponse;
 import com.demo.fmalc_android.presenter.ReportIssueForUpdatingPresenter;
 import com.demo.fmalc_android.presenter.ReportIssueResponsePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     List<ReportIssueContentResponse> reportIssueContentResponseList;
     TextView txtCurrentLicensePlate;
     Button btnUpdateReportIssue;
+    List<Integer> status = new ArrayList<>();
 
     public IssueFragment(){}
 
@@ -61,8 +63,8 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         issueInformationRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewIssue);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         btnUpdateReportIssue = view.findViewById(R.id.btnUpdateIssue);
-
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername());
+        status.add(0);
+        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
 
         btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +109,8 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     @Override
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername());
+        status.add(0);
+        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
     }
 
     @Override

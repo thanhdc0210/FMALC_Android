@@ -19,21 +19,21 @@ public class ReportIssuePresenter implements ReportIssueContract.Presenter {
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void createReportIssueBeforeDelivery(ReportIssueRequest reportIssueRequest) {
+    public void createReportIssueForDelivery(ReportIssueRequest reportIssueRequest) {
         Call<ReportIssueRequest> call = reportIssueService.createReportIssue(reportIssueRequest);
         call.enqueue(new Callback<ReportIssueRequest>() {
             @Override
             public void onResponse(Call<ReportIssueRequest> call, Response<ReportIssueRequest> response) {
                 if (!response.isSuccessful()) {
-                    view.createReportIssueBeforeDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo. Xin thử lại sau! " + response.code());
+                    view.createReportIssueForDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo. Xin thử lại sau! " + response.code());
                 } else {
-                    view.createReportIssueBeforeDeliveryForSuccess(response.body());
+                    view.createReportIssueForDeliveryForSuccess(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<ReportIssueRequest> call, Throwable t) {
-                view.createReportIssueBeforeDeliveryForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                view.createReportIssueForDeliveryForFailure("Server đang gặp sự cố. Xin thử lại sau!");
             }
         }
         );

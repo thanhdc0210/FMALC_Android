@@ -2,6 +2,8 @@ package com.demo.fmalc_android.contract;
 
 import com.demo.fmalc_android.entity.ReportIssueResponse;
 
+import java.util.List;
+
 public interface ReportIssueResponseContract {
     interface View{
         void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse);
@@ -9,6 +11,6 @@ public interface ReportIssueResponseContract {
     }
 
     interface Presenter{
-        void getIssueInformationOfAVehicle(String username);
+        void getIssueInformationOfAVehicle(String username, List<Integer> status);
     }
 }

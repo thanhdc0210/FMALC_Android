@@ -35,7 +35,7 @@ public interface ReportIssueService {
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
 
     @GET("api/v1.0/report-issues/information-report-issue")
-    Call<ReportIssueResponse> getIssueInformationOfAVehicle(@Query("username") String username);
+    Call<ReportIssueResponse> getIssueInformationOfAVehicle(@Query("username") String username, @Query("status") List<Integer> status);
 
     @PUT("api/v1.0/report-issues/report-issue")
     Call<ReportIssueInformationForUpdating> updateReportIssue(@Body ReportIssueInformationForUpdating reportIssueInformationForUpdating);
