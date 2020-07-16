@@ -46,6 +46,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.2.0-alpha03'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:design:27.1.0'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -72,6 +73,8 @@ dependencies {
 
     //Image picker
     implementation 'com.github.jrvansuita:PickImage:+'
+
+
 
 
 }

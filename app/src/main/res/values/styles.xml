@@ -5,6 +5,9 @@
 		<item name="colorPrimary">#FF834F</item>
 		<item name="android:textColor">#000</item>
 		<item name="fontFamily">@font/roboto</item>
+		<item name="colorControlNormal">#979797</item>
+		<item name="colorControlActivated">#FF834F</item>
+		<item name="colorControlHighlight">#FF834F</item>
 
 	</style>
 

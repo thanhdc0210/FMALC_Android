@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
@@ -10,48 +10,36 @@
 
 
 	<LinearLayout
+			android:id="@+id/linearLayout7"
 			android:layout_width="match_parent"
 			android:layout_height="320dp"
-			android:layout_gravity="center_vertical"
+			android:layout_gravity="center"
 			android:background="@drawable/border_login"
 			android:backgroundTint="#FFFFFF"
 			android:gravity="center_vertical"
-			android:orientation="horizontal">
+			android:orientation="horizontal"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 
 		<ImageView
-				android:layout_width="500dp"
-				android:layout_height="500dp"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:src="@drawable/logoremovebg">
 
 		</ImageView>
 	</LinearLayout>
 
 	<LinearLayout
+			android:id="@+id/linearLayout6"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:layout_marginTop="50dp"
-			android:orientation="vertical">
-
-		<Button
-				android:id="@+id/forgotPassLink"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="right"
-				android:layout_marginRight="30dp"
-				android:autoLink="web"
-				android:autoText="false"
-				android:background="#03FFFFFF"
-				android:backgroundTint="#00FFFFFF"
-				android:fontFamily="@font/roboto"
-				android:linksClickable="true"
-				android:stateListAnimator="@null"
-				android:text="Quên mật khẩu?"
-				android:textAllCaps="false"
-				android:textColor="@color/colorPrimary"
-				android:textSize="18sp">
-
-		</Button>
+			android:layout_marginTop="20dp"
+			android:orientation="vertical"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
 		<com.google.android.material.textfield.TextInputLayout
 				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -66,8 +54,10 @@
 					android:id="@+id/username"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:text="driver"
-					android:fontFamily="@font/roboto">
+					android:fontFamily="@font/roboto"
+					android:lines="1"
+					android:maxLines="1"
+					android:text="driver">
 
 			</com.google.android.material.textfield.TextInputEditText>
 		</com.google.android.material.textfield.TextInputLayout>
@@ -87,37 +77,34 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:fontFamily="@font/roboto"
+					android:lines="1"
+					android:maxLines="1"
 					android:password="true">
 
 			</com.google.android.material.textfield.TextInputEditText>
 		</com.google.android.material.textfield.TextInputLayout>
 
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginTop="10dp"
-				android:gravity="center">
-
-			<com.google.android.material.button.MaterialButton
-					style="@style/Widget.AppCompat.Button.Colored"
-					android:layout_width="155dp"
-					android:layout_height="60dp"
-					android:fontFamily="@font/roboto"
-					android:text="Đăng nhập"
-					android:textAllCaps="false"
-					android:textSize="16sp"
-					app:cornerRadius="50dp"
-					app:strokeColor="@color/colorPrimary"
-					app:strokeWidth="5dp"
-					android:id="@+id/btnLogin"
-					android:onClick="login">
-
-			</com.google.android.material.button.MaterialButton>
-
-
-		</LinearLayout>
 	</LinearLayout>
 
+	<Button
+			android:id="@+id/btnLogin"
+			style="@style/Widget.AppCompat.Button.Colored"
+			android:layout_width="155dp"
+			android:layout_height="60dp"
+			android:layout_marginTop="20dp"
+			android:fontFamily="@font/roboto"
+			android:onClick="login"
+			android:text="Đăng nhập"
+			android:textAllCaps="false"
+			android:textSize="16sp"
+			app:cornerRadius="50dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+			app:strokeColor="@color/colorPrimary"
+			app:strokeWidth="5dp">
 
-</LinearLayout>
+	</Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
