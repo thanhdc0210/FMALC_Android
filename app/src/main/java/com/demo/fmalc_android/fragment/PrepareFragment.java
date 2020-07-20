@@ -1,9 +1,11 @@
 package com.demo.fmalc_android.fragment;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -27,19 +29,20 @@ import com.demo.fmalc_android.presenter.SchedulePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrepareFragment extends Fragment implements ScheduleContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
 
     RecyclerView consignmentRecyclerView;
-    LinearLayout consignmentRecyclerViewLayout;
     ScheduleViewCardAdapter scheduleViewCardAdapter;
+    LinearLayout consignmentRecyclerViewLayout;
     private SchedulePresenter schedulePresenter;
     private GlobalVariable globalVariable;
     List<Schedule> scheduleList = new ArrayList<>();
     List<Schedule> showData = new ArrayList<>();
     private boolean isLoading = false;
-    int i = 0;
+    int i = 0, nextLimit = 0;
     private SwipeRefreshLayout swipeRefreshLayout;
+
 
     public PrepareFragment() {
         // Required empty public constructor
@@ -63,7 +66,12 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View, 
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
         return view;
 
     }
@@ -94,7 +102,9 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View, 
 
         consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        initScrollListener();
+        if (showData.size() > 1) {
+            initScrollListener();
+        }
     }
 
     @Override
@@ -103,9 +113,14 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View, 
     }
 
     private void populateData() {
-        while (i < 5) {
-            showData.add(scheduleList.get(i));
-            i++;
+        i = 0;
+        if (scheduleList.size() < 5){
+            showData = scheduleList;
+        }else{
+            while (i < 5){
+                showData.add(scheduleList.get(i));
+                i++;
+            }
         }
     }
 
@@ -150,7 +165,11 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View, 
                 int scrollPosition = showData.size();
                 scheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition+1;
-                int nextLimit = scheduleList.size();
+                if (currentSize < scheduleList.size() - 5){
+                    nextLimit = currentSize + 5;
+                }else{
+                    nextLimit = scheduleList.size();
+                }
 
                 while (currentSize - 1 < nextLimit) {
                     showData.add(scheduleList.get(currentSize-1));
@@ -170,24 +189,21 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View, 
 
     }
 
-    @Override
-    public void onRefresh() {
-//        swipeRefreshLayout.setRefreshing(true);
-//        System.out.println("REFRESHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-        refreshList();
-    }
+
 
     private void refreshList(){
-
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
+                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 List<Integer> status = new ArrayList<>();
                 status.add(0);
-                globalVariable = (GlobalVariable) getActivity().getApplicationContext();
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+//                consignmentRecyclerView.setAdapter(new Re );
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 5000);
+        }, 1000);
 
     }
 }

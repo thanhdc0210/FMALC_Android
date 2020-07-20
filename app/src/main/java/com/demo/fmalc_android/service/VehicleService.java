@@ -13,9 +13,9 @@ public interface VehicleService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/vehicles/report-inspection-before-delivery")
-    Call<VehicleInspection> findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(@Query("status") List<Integer> status, @Query("username") String username);
+    Call<VehicleInspection> findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(@Query("username") String username);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/vehicles/report-inspection-after-delivery")
-    Call<VehicleInspection> findVehicleLicensePlatesAndInspectionForReportInspectionAfterDelivery(@Query("status") List<Integer> status, @Query("username") String username);
+    Call<VehicleInspection> findVehicleLicensePlatesAndInspectionForReportInspectionAfterDelivery(@Query("username") String username);
 }

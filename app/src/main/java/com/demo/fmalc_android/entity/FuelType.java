@@ -2,6 +2,8 @@ package com.demo.fmalc_android.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +13,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportIssueContentRequest {
-    @SerializedName("inspectionId")
-    private Integer inspectionId;
-    @SerializedName("content")
-    private String content;
-    @SerializedName("imageUrl")
-    private String image;
+public class FuelType implements Serializable {
+
+    @SerializedName("id")
+    private Integer id;
+
+    @SerializedName("currentPrice")
+    private Double price;
+
+    @SerializedName("type")
+    private String type;
+
+
+
 }

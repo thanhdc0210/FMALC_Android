@@ -100,7 +100,7 @@
 					android:layout_width="250dp"
 					android:layout_height="80dp"
 					android:gravity="center"
-					android:text="Thông tin đổ xăng"
+					android:text="Đổ xăng dầu"
 					android:layout_margin="10dp"
 					android:textSize="16dp"/>
 		</LinearLayout>

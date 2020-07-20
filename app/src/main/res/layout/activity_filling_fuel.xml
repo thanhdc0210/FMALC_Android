@@ -29,14 +29,14 @@
 			android:id="@+id/inforLicensePlate"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:paddingLeft="20dp"
-			android:paddingRight="20dp"
-			android:paddingTop="2dp"
-			android:paddingBottom="2dp"
-			android:background="@drawable/border_cardview"
 			android:layout_gravity="center"
 			android:layout_marginTop="80dp"
+			android:background="@drawable/border_cardview"
 			android:orientation="horizontal"
+			android:paddingLeft="20dp"
+			android:paddingTop="2dp"
+			android:paddingRight="20dp"
+			android:paddingBottom="2dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent">
@@ -54,7 +54,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_gravity="center"
-				android:text="50N1-02158"
+				android:text="64B2-00001"
 				android:textColor="@color/colorPrimary"
 				android:textSize="20dp"
 				android:textStyle="bold" />
@@ -78,8 +78,10 @@
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="20dp"
 			android:layout_marginRight="20dp"
+			android:layout_marginBottom="5dp"
 			android:orientation="horizontal"
 			android:weightSum="10"
+			android:paddingBottom="5dp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/textView3">
@@ -107,76 +109,100 @@
 
 		<TextView
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+				android:layout_height="match_parent"
 				android:layout_weight="1" />
 	</LinearLayout>
+
 	<androidx.recyclerview.widget.RecyclerView
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="35dp"
+			android:layout_marginRight="20dp"
 			android:id="@+id/recyclerViewFuel"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			app:layout_constraintTop_toBottomOf="@id/linearLayout3"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"/>
+			app:layout_constraintTop_toBottomOf="@id/linearLayout3" />
 
 	<LinearLayout
 			android:id="@+id/linearLayout4"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
 			android:orientation="vertical"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/recyclerViewFuel">
 
-		<com.google.android.material.textfield.TextInputLayout
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="20dp"
-				android:layout_marginTop="20dp"
-				android:layout_marginRight="30dp"
-				android:hint="Nhập số km hiện tại">
+				android:text="Nhập số km hiện tại:"
+				android:textSize="18dp" />
 
-			<com.google.android.material.textfield.TextInputEditText
-					android:id="@+id/username"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:fontFamily="@font/roboto"
-					android:text="driver">
-
-			</com.google.android.material.textfield.TextInputEditText>
-		</com.google.android.material.textfield.TextInputLayout>
-
-		<com.google.android.material.textfield.TextInputLayout
-				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		<EditText
+				android:id="@+id/edtCurrentKm"
+				style="@style/Theme.MyApp"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="20dp"
-				android:layout_marginTop="20dp"
-				android:layout_marginRight="30dp"
-				android:hint="Nhập số lít xăng">
-
-			<com.google.android.material.textfield.TextInputEditText
-					android:id="@+id/username"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:fontFamily="@font/roboto"
-					android:text="driver">
-
-			</com.google.android.material.textfield.TextInputEditText>
-		</com.google.android.material.textfield.TextInputLayout>
+				android:fontFamily="@font/roboto"
+				android:hint="23456"
+				android:inputType="number"
+				android:lines="1"
+				android:maxLines="1"
+				android:text="" />
 
 		<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="20dp"
-				android:text="Thành tiền: 500.000VND"
-				android:textStyle="bold"
-				android:textColor="@color/colorPrimary"
+				android:text="Nhập số lít nhiên liệu (lít):"
 				android:textSize="18dp" />
+
+
+		<EditText
+				android:id="@+id/edtVolume"
+				style="@style/Theme.MyApp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/roboto"
+				android:hint="VD: 10.5"
+				android:inputType="numberDecimal"
+				android:lines="1"
+				android:maxLines="1"
+				android:text="" />
+
+		<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+
+				android:orientation="horizontal">
+
+			<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:text="Thành tiền:"
+					android:textColor="@color/colorPrimary"
+					android:textSize="18dp"
+					android:textStyle="bold" />
+
+			<TextView
+					android:id="@+id/txtTotalPrice"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:text="0 VND"
+					android:textColor="@color/colorPrimary"
+					android:textSize="20dp"
+					android:textStyle="bold" />
+		</LinearLayout>
+
 
 	</LinearLayout>
 
 	<Button
+			android:id="@+id/btnSaveFillingFuel"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="20dp"

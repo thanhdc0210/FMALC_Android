@@ -88,7 +88,11 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     private ReportIssueImagePresenter reportIssueImagePresenter;
 
     private Integer id;
+    public HashMap<Integer,String> imageList = new HashMap<>();
 
+    public HashMap<Integer, String> getImageList() {
+        return imageList;
+    }
 
     public HashMap<Integer, ReportIssueContentRequest> getListIssue() {
         return listIssue;
@@ -134,6 +138,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 id = inspection.getId();
+
                 if (buttonView.isChecked()) {
                     if (!listIssue.containsKey(id)) {
                         //nếu chưa có add thêm
@@ -202,6 +207,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                                 init();
                                 reportIssueImagePresenter.getLinkImage(body);
+
 //
                             } else {
 
@@ -257,9 +263,12 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     @Override
     public void getLinkImageAfterUploadS3(String url) {
         Toast.makeText(context, "Đăng tải ảnh thành công " + url, Toast.LENGTH_SHORT).show();
-        ReportIssueContentRequest currentIssue = listIssue.get(id);
-        currentIssue.setImage(url);
-        listIssue.replace(id, currentIssue);
+        if(imageList.containsKey(id)){
+            imageList.replace(id,url);
+        } else {
+            imageList.put(id,url);
+        }
+
     }
 
     @Override

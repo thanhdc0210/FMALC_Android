@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.demo.fmalc_android.contract.VehicleAfterDeliveryContract;
 import com.demo.fmalc_android.contract.VehicleContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Inspection;
+import com.demo.fmalc_android.entity.ReportIssueContentRequest;
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.presenter.ReportIssuePresenter;
@@ -29,7 +31,9 @@ import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
 import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class PreparingActivity extends AppCompatActivity implements VehicleContract.View, ReportIssueContract.View, VehicleAfterDeliveryContract.View {
@@ -43,6 +47,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     private List<Inspection> inspectionList;
     private Button btnSubmit;
     private EditText edtNoteIssue;
+    private TextView txtCurrentLicensePlate;
     Menu menu;
     private GlobalVariable globalVariable;
 
@@ -55,17 +60,13 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
         Toast.makeText(this, vehicleStatus, Toast.LENGTH_SHORT).show();
         init();
-        List<Integer> status = new ArrayList<>();
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
-            status.add(Integer.parseInt(vehicleStatus));
-            status.add(1);
             setTitle("Báo cáo trước khi chạy");
-            vehicleInspectionPresenter.getListLicensePlate(status, globalVariable.getUsername());
+            vehicleInspectionPresenter.getListLicensePlate(globalVariable.getUsername());
         }else{
             setTitle("Báo cáo sau khi chạy");
-            status.add(Integer.parseInt(vehicleStatus));
-            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(status, globalVariable.getUsername());
+            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(globalVariable.getUsername());
         }
 
     }
@@ -96,14 +97,9 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection) {
 
-        //Đổ data cho spinner
-       spinnerArray.add("Chọn một xe");
-       vehicleInspection.getVehicleLicensePlates().forEach(e-> spinnerArray.add(e));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerLicensePlates);
-        spinner.setAdapter(adapter);
+        //Gán biển số xe cho textview
+       txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
+       txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
 
         // Đổ data cho inspection list recycle view
         inspectionList = vehicleInspection.getInspections();
@@ -115,17 +111,22 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideKeyboard(v);
+                HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
                 globalVariable = (GlobalVariable) getApplicationContext();
                 // Report Issue Before Delivery
-                String vehicleLicensePlates = spinner.getSelectedItem().toString();
-                if (vehicleLicensePlates.contains("một xe")){
-                    Toast.makeText(getApplicationContext(),"Vui lòng chọn xe để báo cáo",Toast.LENGTH_SHORT);
-                }else {
+                String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
+                if ( vehicleLicensePlates == "") {
+                    Toast.makeText(getApplicationContext(), "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
+                } else {
                     ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
-                    reportIssueRequest.setReportIssueContentRequests(inspectionAdapter.getListIssue());
+                    for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
+                        ReportIssueContentRequest temp = listResult.get(image.getKey());
+                        temp.setImage(image.getValue());
+                        listResult.replace(image.getKey(), temp);
+                    }
+                    reportIssueRequest.setReportIssueContentRequests(listResult);
                     reportIssueRequest.setUsername(globalVariable.getUsername());
-                    reportIssueRequest.setVehicleLicensePlates(spinner.getSelectedItem().toString());
+                    reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
                     reportIssueRequest.setType(0);
 
                     reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
@@ -152,39 +153,37 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void getListLicensePlateAndInspectionAfterDeliverySuccess(VehicleInspection vehicleInspection) {
-        //Đổ data cho spinner
-        spinnerArray.add("Chọn một xe");
-        vehicleInspection.getVehicleLicensePlates().forEach(e-> spinnerArray.add(e));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        Spinner spinner = (Spinner) findViewById(R.id.spinnerLicensePlates);
-        spinner.setAdapter(adapter);
+        //Gán biển số xe cho textview
+        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
+        txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
 
         // Đổ data cho inspection list recycle view
         inspectionList = vehicleInspection.getInspections();
         setUpRecyclerView();
 
         //Submit data
-
-
-        btnSubmit = findViewById(R.id.btnSubmit);
         inspectionAdapter.getListIssue();
+        btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
                 globalVariable = (GlobalVariable) getApplicationContext();
-
                 // Report Issue Before Delivery
-                String vehicleLicensePlates = spinner.getSelectedItem().toString();
-                if (vehicleLicensePlates.contains("một xe")){
-                    Toast.makeText(getApplicationContext(),"Vui lòng chọn xe để báo cáo",Toast.LENGTH_SHORT);
-                }else {
+                String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
+                if ( vehicleLicensePlates == "") {
+                    Toast.makeText(getApplicationContext(), "Hôm nay bạn không có lịch chạy", Toast.LENGTH_SHORT);
+                } else {
                     ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
-                    reportIssueRequest.setReportIssueContentRequests(inspectionAdapter.getListIssue());
+                    for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
+                        ReportIssueContentRequest temp = listResult.get(image.getKey());
+                        temp.setImage(image.getValue());
+                        listResult.replace(image.getKey(), temp);
+                    }
+                    reportIssueRequest.setReportIssueContentRequests(listResult);
                     reportIssueRequest.setUsername(globalVariable.getUsername());
-                    reportIssueRequest.setVehicleLicensePlates(spinner.getSelectedItem().toString());
-                    reportIssueRequest.setType(1);
+                    reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
+                    reportIssueRequest.setType(0);
 
                     reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                 }

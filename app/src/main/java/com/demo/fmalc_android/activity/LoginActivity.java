@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         if (checkLogin(username, password)) {
             try {
                 loginProgressBar.setVisibility(1);
-                loginProgressBar.setProgress(60*60*1000);
+                loginProgressBar.setProgress(60);
                 loginPresenter.doLogin(username, password);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -92,5 +92,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        loginProgressBar.setVisibility(-1);
     }
 }

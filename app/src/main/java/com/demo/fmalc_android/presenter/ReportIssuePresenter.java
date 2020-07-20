@@ -25,7 +25,7 @@ public class ReportIssuePresenter implements ReportIssueContract.Presenter {
             @Override
             public void onResponse(Call<ReportIssueRequest> call, Response<ReportIssueRequest> response) {
                 if (!response.isSuccessful()) {
-                    view.createReportIssueForDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo. Xin thử lại sau! " + response.code());
+                    view.createReportIssueForDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo. Xin thử lại sau! ");
                 } else {
                     view.createReportIssueForDeliveryForSuccess(response.body());
                 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
+import com.demo.fmalc_android.activity.FillingFuelActivity;
 import com.demo.fmalc_android.activity.InProgressActivity;
 import com.demo.fmalc_android.activity.InspectionActivity;
 import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
@@ -133,7 +134,7 @@ public class InspectionFragment extends Fragment {
         btnFillingFuel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MaintainAndIssueActivity.class);
+                Intent intent = new Intent(getContext(), FillingFuelActivity.class);
                 getContext().startActivity(intent);
 
             }

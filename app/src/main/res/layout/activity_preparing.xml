@@ -10,58 +10,64 @@
 		android:orientation="vertical">
 
 	<LinearLayout
-			android:id="@+id/linearLayout2"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:paddingBottom="20dp"
-			tools:layout_editor_absoluteX="1dp"
-			tools:layout_editor_absoluteY="2dp">
+		android:id="@+id/inforLicensePlate"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:paddingLeft="20dp"
+		android:paddingRight="20dp"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp"
+		android:background="@drawable/border_cardview"
+		android:layout_marginTop="20dp"
+		android:orientation="horizontal"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
 
 		<TextView
-				android:id="@+id/textView2"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="20dp"
-				android:fontFamily="@font/roboto"
-				android:text="Chọn xe:"
-				android:textColor="#000"
-				android:textSize="18sp" />
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:text="Biển số xe : "
+			android:textColor="#000"
+			android:textSize="20dp" />
 
-		<Spinner
-				android:id="@+id/spinnerLicensePlates"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="30dp"
-				android:layout_marginRight="30dp"
-				android:autofillHints="Chọn biển số xe"
-				android:background="@drawable/spinner_background"
-				android:dropDownWidth="50dp"
-				android:spinnerMode="dialog" />
+		<TextView
+			android:id="@+id/txtCurrentLicensePlate"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:text="50N1-02158"
+			android:textColor="@color/colorPrimary"
+			android:textSize="20dp"
+			android:textStyle="bold" />
+
 	</LinearLayout>
 
 	<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/recyclerViewInspection"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			android:layout_marginBottom="80dp"
-			android:padding="30dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.52"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+		android:id="@+id/recyclerViewInspection"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:padding="30dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/inforLicensePlate"
+		app:layout_constraintVertical_bias="0.0" />
 
 	<Button
-			android:theme="@style/Theme.MyApp"
-			android:id="@+id/btnSubmit"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="Báo cáo"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/recyclerViewInspection"
-			android:onClick="createReportIssue"/>
+		android:id="@+id/btnSubmit"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="createReportIssue"
+		android:text="Báo cáo"
+		android:theme="@style/Theme.MyApp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/recyclerViewInspection"
+		app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
