@@ -74,6 +74,8 @@ dependencies {
     //Image picker
     implementation 'com.github.jrvansuita:PickImage:+'
 
+    //Circle Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 
 
