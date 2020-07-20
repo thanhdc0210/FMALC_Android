@@ -18,6 +18,8 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.FuelTypeAdapter;
 import com.demo.fmalc_android.contract.FuelTypeContract;
 import com.demo.fmalc_android.entity.FuelType;
+import com.demo.fmalc_android.entity.FuelTypeResponse;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.presenter.FuelTypePresenter;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
     private Double totalPrice;
 
+    private GlobalVariable globalVariable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,11 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         getSupportActionBar().setTitle("Thông tin đổ xăng dầu");
         init();
         fuelTypeRecyclerView = findViewById(R.id.recyclerViewFuel);
-        fuelTypePresenter.getListFuelTypes();
+        globalVariable = (GlobalVariable) getApplicationContext();
+        List<Integer> status = new ArrayList<>();
+        status.add(1);
+        status.add(2);
+        fuelTypePresenter.getListFuelTypes(globalVariable.getUsername(), status);
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
         edtCurrentKm = findViewById(R.id.edtCurrentKm);
         edtVolume = findViewById(R.id.edtVolume);
@@ -70,10 +77,13 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
     }
 
     @Override
-    public void getListFuelTypeSuccess(List<FuelType> fuelTypeList) {
+    public void getListFuelTypeSuccess(FuelTypeResponse fuelTypeResponse) {
+        List<FuelType> fuelTypeList = fuelTypeResponse.getFuelTypeList();
         fuelTypeAdapter = new FuelTypeAdapter(fuelTypeList, getApplicationContext());
         fuelTypeRecyclerView.setAdapter(fuelTypeAdapter);
         fuelTypeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
+        txtCurrentLicensePlate.setText(fuelTypeResponse.getVehicleLicensePlate());
 
         edtVolume.addTextChangedListener(new TextWatcher() {
             @Override

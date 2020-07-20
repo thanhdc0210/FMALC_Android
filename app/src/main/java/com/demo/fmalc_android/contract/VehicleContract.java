@@ -11,6 +11,6 @@ public interface VehicleContract {
     }
 
     interface Presenter{
-        void getListLicensePlate(List<Integer> status, String username);
+        void getListLicensePlate(String username);
     }
 }

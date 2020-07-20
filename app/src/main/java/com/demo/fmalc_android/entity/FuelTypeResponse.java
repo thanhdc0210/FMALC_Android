@@ -2,7 +2,7 @@ package com.demo.fmalc_android.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,17 +13,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FuelType implements Serializable {
+public class FuelTypeResponse {
+    @SerializedName("vehicleLicensePlate")
+    private String vehicleLicensePlate;
 
-    @SerializedName("id")
-    private Integer id;
-
-    @SerializedName("currentPrice")
-    private Double price;
-
-    @SerializedName("type")
-    private String type;
-
-
-
+    @SerializedName("fuelTypeList")
+    private List<FuelType> fuelTypeList;
 }

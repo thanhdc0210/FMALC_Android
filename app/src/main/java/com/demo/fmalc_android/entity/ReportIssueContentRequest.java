@@ -16,6 +16,6 @@ public class ReportIssueContentRequest {
     private Integer inspectionId;
     @SerializedName("content")
     private String content;
-    @SerializedName("image")
+    @SerializedName("imageUrl")
     private String image;
 }

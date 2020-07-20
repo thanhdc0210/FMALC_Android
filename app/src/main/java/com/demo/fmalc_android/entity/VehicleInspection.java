@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class VehicleInspection {
-    List<String> vehicleLicensePlates;
+    String vehicleLicensePlates;
     List<Inspection> inspections;
 }

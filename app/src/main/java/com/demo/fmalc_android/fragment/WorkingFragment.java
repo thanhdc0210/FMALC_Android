@@ -57,7 +57,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         status.add(1);
         status.add(2);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, "driver2");
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }

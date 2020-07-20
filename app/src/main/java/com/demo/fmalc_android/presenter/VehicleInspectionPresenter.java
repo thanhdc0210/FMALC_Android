@@ -25,8 +25,8 @@ public class VehicleInspectionPresenter implements VehicleContract.Presenter {
 
 
     @Override
-    public void getListLicensePlate(List<Integer> status, String username) {
-        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(status, username);
+    public void getListLicensePlate(String username) {
+        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(username);
 
         call.enqueue(new Callback<VehicleInspection>() {
             @Override

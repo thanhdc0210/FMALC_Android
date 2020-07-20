@@ -57,7 +57,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
         status.add(3);
         status.add(5);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, "driver2");
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }

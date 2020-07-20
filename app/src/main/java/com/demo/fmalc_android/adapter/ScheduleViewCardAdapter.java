@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,9 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<ScheduleViewCardAdapter.ViewHolder> {
+public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private List<Schedule> scheduleList;
     private Context context;
+    private final int VIEW_TYPE_ITEM=0,VIEW_TYPE_LOADING=1;
 
     public ScheduleViewCardAdapter(List<Schedule> scheduleList, Context context) {
         this.scheduleList = scheduleList;
@@ -33,14 +36,77 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<ScheduleViewC
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        view =LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == VIEW_TYPE_ITEM){
+            View view = LayoutInflater.from(context).inflate(R.layout.view_card, parent, false);
+            return new ItemViewHolder(view);
+        }else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
+            return new LoadingViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        if (viewHolder instanceof ItemViewHolder) {
+            populateItemRows((ItemViewHolder) viewHolder, position);
+        } else if (viewHolder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) viewHolder, position);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return scheduleList == null ? 0 : scheduleList.size();
+    }
+
+    /**
+     * The following method decides the type of ViewHolder to display in the RecyclerView
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return scheduleList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView txtId, txtCompanyName, txtStartTime, txtFinishTime, txtDeliveryPlace, txtReceivedPlace, txtTimeCountDown, txtWeight, txtVehicleInfo;
+        public LinearLayout itemLayout;
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            txtId = (TextView) itemView.findViewById(R.id.txtConsignmentId);
+            txtCompanyName = (TextView) itemView.findViewById(R.id.txtCompanyName);
+            txtStartTime = (TextView) itemView.findViewById(R.id.txtStartTime);
+            txtFinishTime = (TextView) itemView.findViewById(R.id.txtFinishTime);
+            txtDeliveryPlace = (TextView) itemView.findViewById(R.id.txtDeliveryPlace);
+            txtReceivedPlace = (TextView) itemView.findViewById(R.id.txtReceivedPlace);
+            txtTimeCountDown = (TextView) itemView.findViewById(R.id.txtTimeCountDown);
+            txtWeight = (TextView) itemView.findViewById(R.id.txtWeight);
+            txtVehicleInfo = (TextView) itemView.findViewById(R.id.txtVehicleInfo);
+            txtTimeCountDown = (TextView) itemView.findViewById(R.id.txtTimeCountDown);
+            itemLayout = (LinearLayout) itemView.findViewById(R.id.card_view_item);
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+
+        ProgressBar progressBar;
+
+        public LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.progressBar);
+        }
+    }
+
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
+        //ProgressBar would be displayed
+
+    }
+
+    private void populateItemRows(ItemViewHolder holder, int position) {
         Schedule schedule = scheduleList.get(position);
         holder.txtId.setText(schedule.getScheduleId().toString());
         holder.txtCompanyName.setText(schedule.getOwnerName());
@@ -62,7 +128,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<ScheduleViewC
         int diffDays = (int) diff / (24 * 60 * 60 * 1000);
         int diffHours = (int) diff / (60 * 60 *1000) % 24;
         int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
-        
+
         String s = "";
 
         if (diffDays > 0 && diffHours > 0 && diffMinutes >= 0){
@@ -112,30 +178,6 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<ScheduleViewC
                 context.startActivity(intent);
             }
         });
-    }
 
-    @Override
-    public int getItemCount() {
-        return scheduleList.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView txtId, txtCompanyName, txtStartTime, txtFinishTime, txtDeliveryPlace, txtReceivedPlace, txtTimeCountDown, txtWeight, txtVehicleInfo;
-        public LinearLayout itemLayout;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtId = (TextView) itemView.findViewById(R.id.txtConsignmentId);
-            txtCompanyName = (TextView) itemView.findViewById(R.id.txtCompanyName);
-            txtStartTime = (TextView) itemView.findViewById(R.id.txtStartTime);
-            txtFinishTime = (TextView) itemView.findViewById(R.id.txtFinishTime);
-            txtDeliveryPlace = (TextView) itemView.findViewById(R.id.txtDeliveryPlace);
-            txtReceivedPlace = (TextView) itemView.findViewById(R.id.txtReceivedPlace);
-            txtTimeCountDown = (TextView) itemView.findViewById(R.id.txtTimeCountDown);
-            txtWeight = (TextView) itemView.findViewById(R.id.txtWeight);
-            txtVehicleInfo = (TextView) itemView.findViewById(R.id.txtVehicleInfo);
-            txtTimeCountDown = (TextView) itemView.findViewById(R.id.txtTimeCountDown);
-            itemLayout = (LinearLayout) itemView.findViewById(R.id.card_view_item);
-        }
     }
 }

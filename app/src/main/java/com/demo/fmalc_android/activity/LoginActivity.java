@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
@@ -22,6 +24,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private MaterialButton btnLogin;
     private LoginPresenter loginPresenter;
     private SchedulePresenter schedulePresenter;
+    private ProgressBar loginProgressBar;
+    private int progressStatus = 0;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         btnLogin = findViewById(R.id.btnLogin);
 
         init();
+
+        loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
 
     }
 
@@ -61,6 +68,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         //validate
         if (checkLogin(username, password)) {
             try {
+                loginProgressBar.setVisibility(1);
+                loginProgressBar.setProgress(60);
                 loginPresenter.doLogin(username, password);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,17 +81,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccess(LoginResponse loginResponse) {
         Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
-
-//        LoginResponse loginResponse = loginPresenter.getLoginResponse();
         final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
         globalVariable.setUsername(loginResponse.getUsername());
         globalVariable.setRole(loginResponse.getRole());
         globalVariable.setToken(loginResponse.getToken());
+        loginProgressBar.setVisibility(-1);
         startActivity(intent);
     }
 
     @Override
     public void loginFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        loginProgressBar.setVisibility(-1);
     }
 }

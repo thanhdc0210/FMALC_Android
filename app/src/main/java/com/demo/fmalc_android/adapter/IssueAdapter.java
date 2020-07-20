@@ -45,6 +45,9 @@ public class IssueAdapter extends RecyclerView.Adapter<IssueAdapter.ViewHolder> 
     private Bitmap bitmap;
     private List<Integer> listIssue = new ArrayList<>();
 
+    public List<Integer> getListIssue() {
+        return listIssue;
+    }
 
     public IssueAdapter(List<ReportIssueContentResponse> issueList, Context context) {
         this.issueList = issueList;
