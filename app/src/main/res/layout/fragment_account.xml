@@ -96,6 +96,18 @@
 				android:layout_gravity="left"
 				android:text="20 giờ / tuần"
 				android:textColor="#000" />
+		<TextView
+				android:layout_marginTop="10dp"
+				android:id="@+id/txtIdentityNo"
+				android:paddingLeft="3dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:drawableLeft="@drawable/ic_credit_card_24px"
+				android:drawablePadding="35sp"
+				android:textSize="18dp"
+				android:layout_gravity="left"
+				android:text="272631506"
+				android:textColor="#000" />
 
 	</LinearLayout>
 

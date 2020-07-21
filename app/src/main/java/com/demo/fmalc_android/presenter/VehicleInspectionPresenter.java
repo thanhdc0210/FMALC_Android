@@ -34,7 +34,7 @@ public class VehicleInspectionPresenter implements VehicleContract.Presenter {
                 if(!response.isSuccessful()){
                     view.getListLicensePlateAndInspectionFailure("Không thể lấy thông tin");
                 }else {
-                  if(response.code() == 200) {
+                  if(response.code() == 200 || response.code()== 204) {
                       VehicleInspection vehicleInspection = response.body();
                       view.getListLicensePlateAndInspectionSuccess(vehicleInspection);
                   } else {

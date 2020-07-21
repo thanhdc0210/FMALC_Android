@@ -45,6 +45,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     ReportIssueResponse reportIssueResponse;
     List<ReportIssueContentResponse> reportIssueContentResponseList;
     TextView txtCurrentLicensePlate;
+    TextView txtEmptyView;
     Button btnUpdateReportIssue;
     List<Integer> status = new ArrayList<>();
 
@@ -63,6 +64,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         issueInformationRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewIssue);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         btnUpdateReportIssue = view.findViewById(R.id.btnUpdateIssue);
+        txtEmptyView = view.findViewById(R.id.txtEmptyView);
         status.add(0);
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
 
@@ -94,11 +96,18 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse) {
-        txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
-        issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
-        issueInformationRecyclerView.setAdapter(issueAdapter);
-        issueInformationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getReportIssueContentResponseList(reportIssueResponse.getReportIssueContentResponses());
+        if(reportIssueResponse.getReportIssueContentResponses().isEmpty()){
+            txtEmptyView.setVisibility(View.VISIBLE);
+            issueInformationRecyclerView.setVisibility(View.GONE);
+        } else {
+            txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
+            issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
+            issueInformationRecyclerView.setAdapter(issueAdapter);
+            issueInformationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            txtEmptyView.setVisibility(View.GONE);
+            issueInformationRecyclerView.setVisibility(View.VISIBLE);
+//            getReportIssueContentResponseList(reportIssueResponse.getReportIssueContentResponses());
+        }
     }
 
     @Override

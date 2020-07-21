@@ -1,21 +1,42 @@
 package com.demo.fmalc_android.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.LoginActivity;
+import com.demo.fmalc_android.contract.DriverContract;
+import com.demo.fmalc_android.entity.DriverInformation;
+import com.demo.fmalc_android.presenter.DriverPresenter;
+import com.demo.fmalc_android.presenter.ReportIssuePresenter;
+import com.demo.fmalc_android.presenter.SchedulePresenter;
+import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
+import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment {
+public class AccountFragment extends Fragment implements DriverContract.View{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,9 +46,25 @@ public class AccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    TextView txtUsernameProfile,txtPhoneNumber,txtWorkedTime,txtIdentityNo;
+    ImageView imgProfile;
+    Button btnLogout;
+
+    private  DriverInformation driverInformation;
+
+    public DriverInformation getDriverInformation() {
+        return driverInformation;
+    }
+
+    private DriverPresenter driverPresenter;
+
 
     public AccountFragment() {
         // Required empty public constructor
+    }
+    private void init(){
+        driverPresenter = new DriverPresenter();
+        driverPresenter.setView(this);
     }
 
     /**
@@ -61,6 +98,67 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        txtUsernameProfile = view.findViewById(R.id.txtUsernameProfile);
+        txtIdentityNo = view.findViewById(R.id.txtIdentityNo);
+        txtPhoneNumber = view.findViewById(R.id.txtPhoneNumber);
+        txtWorkedTime = view.findViewById(R.id.txtWorkedTime);
+        imgProfile = view.findViewById(R.id.imgProfile);
+        btnLogout = view.findViewById(R.id.btnLogout);
+       init();
+        //TODO thay id user hiện tại vào
+        driverPresenter.getDriverInformation(1);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Xác nhận đăng xuất").
+                        setMessage("Bạn có chắc muốn đăng xuất?");
+                builder.setPositiveButton("Có",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Intent i = new Intent(getContext(),
+                                        LoginActivity.class);
+                                startActivity(i);
+
+                            }
+                        });
+                builder.setNegativeButton("Không",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void getDriverInformationSuccessful(DriverInformation driverInformation) {
+        // set ảnh
+        if (driverInformation.getImage() != null){
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                URL url = new URL(driverInformation.getImage());
+                imgProfile.setImageBitmap(BitmapFactory.decodeStream((InputStream) url.getContent()));
+            } catch (IOException e) {
+                Toast.makeText(getContext(), "Có lỗi trong quá trình xử lí ảnh", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        txtUsernameProfile.setText(driverInformation.getName());
+        txtWorkedTime.setText(driverInformation.getWorkingHour().toString() + "giờ");
+        txtPhoneNumber.setText(driverInformation.getPhoneNumber());
+        txtIdentityNo.setText(driverInformation.getIdentityNo());
+    }
+
+    @Override
+    public void getDriverInformationFailure(String message) {
+        Toast.makeText(getContext(), "Có lỗi trong quá trình lấy thông tin " + message, Toast.LENGTH_SHORT).show();
     }
 }

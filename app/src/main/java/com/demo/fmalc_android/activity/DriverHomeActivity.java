@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.fragment.AccountFragment;
 import com.demo.fmalc_android.fragment.HomeFragment;
 import com.demo.fmalc_android.fragment.InspectionFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,6 +66,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 break;
             case R.id.navigation_account:
                 item.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new AccountFragment()).commit();
                 break;
             default:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
