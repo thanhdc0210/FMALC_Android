@@ -31,7 +31,7 @@
 		<item name="colorSecondary">#A8F6F6F6</item>
 		<item name="colorControlActivated">#FF834F</item>
 		<item name="android:textColorPrimary">#FF834F</item>
-		<item name="android:textColor">#FB0000</item>
+		<item name="android:textColor">#000</item>
 		<item name="fontFamily">@font/roboto</item>
 
 	</style>

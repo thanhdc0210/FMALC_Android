@@ -5,9 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.LoginActivity;
 import com.demo.fmalc_android.contract.DriverContract;
 import com.demo.fmalc_android.entity.DriverInformation;
 import com.demo.fmalc_android.presenter.DriverPresenter;
-import com.demo.fmalc_android.presenter.ReportIssuePresenter;
-import com.demo.fmalc_android.presenter.SchedulePresenter;
-import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
-import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +42,7 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView txtUsernameProfile,txtPhoneNumber,txtWorkedTime,txtIdentityNo;
+    TextView txtUsernameProfile,txtPhoneNumber,txtWorkedTime,txtIdentityNo, txtDoB;
     ImageView imgProfile;
     Button btnLogout;
 
@@ -103,6 +99,7 @@ public class AccountFragment extends Fragment implements DriverContract.View{
         txtIdentityNo = view.findViewById(R.id.txtIdentityNo);
         txtPhoneNumber = view.findViewById(R.id.txtPhoneNumber);
         txtWorkedTime = view.findViewById(R.id.txtWorkedTime);
+        txtDoB = view.findViewById(R.id.txtDoB);
         imgProfile = view.findViewById(R.id.imgProfile);
         btnLogout = view.findViewById(R.id.btnLogout);
        init();
@@ -118,8 +115,8 @@ public class AccountFragment extends Fragment implements DriverContract.View{
                 builder.setPositiveButton("Có",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(getContext(),
-                                        LoginActivity.class);
+                                Intent i = new Intent(getContext(),LoginActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
 
                             }
@@ -152,7 +149,11 @@ public class AccountFragment extends Fragment implements DriverContract.View{
 
         }
         txtUsernameProfile.setText(driverInformation.getName());
-        txtWorkedTime.setText(driverInformation.getWorkingHour().toString() + "giờ");
+        // parse date dd-mm-yyy
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        txtDoB.setText(formatter.format(driverInformation.getDateOfBirth()));
+        //-------
+        txtWorkedTime.setText(driverInformation.getWorkingHour().toString() + " giờ");
         txtPhoneNumber.setText(driverInformation.getPhoneNumber());
         txtIdentityNo.setText(driverInformation.getIdentityNo());
     }

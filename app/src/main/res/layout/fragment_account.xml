@@ -14,7 +14,8 @@
 			android:layout_height="150dp"
 			android:layout_marginTop="20dp"
 			android:orientation="horizontal"
-			app:cardCornerRadius="300dp"
+			app:cardCornerRadius="100dp"
+			style="@style/Theme.MyApp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
@@ -23,10 +24,10 @@
 
 		<ImageView
 				android:id="@+id/imgProfile"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:scaleType="centerCrop"
-				android:src="@drawable/girl_profile" />
+				app:srcCompat="@drawable/girl_profile" />
 	</com.google.android.material.card.MaterialCardView>
 
 	<View

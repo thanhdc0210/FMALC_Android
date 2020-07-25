@@ -24,20 +24,28 @@
 			android:windowSoftInputMode="stateAlwaysVisible">
 		<activity
 				android:name=".activity.FillingFuelActivity"
-				android:label="@string/title_activity_filling_fuel"
-				android:theme="@style/Theme.MyApp.NoActionBar"></activity>
+				android:parentActivityName=".activity.DriverHomeActivity"
+				android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+		</activity>
 		<activity
 				android:name=".activity.MaintainAndIssueActivity"
 				android:parentActivityName=".activity.DriverHomeActivity"
-				android:theme="@style/ThemeWithActionBar"></activity>
+				android:theme="@style/ThemeWithActionBar">
+
+		</activity>
 		<activity
 				android:name=".activity.InProgressActivity"
 				android:parentActivityName=".activity.DriverHomeActivity"
-				android:theme="@style/ThemeWithActionBar"></activity>
+				android:theme="@style/ThemeWithActionBar">
+
+		</activity>
 		<activity
 				android:name=".activity.PreparingActivity"
 				android:parentActivityName=".activity.DriverHomeActivity"
-				android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"></activity>
+				android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+		</activity>
 		<activity android:name=".activity.LocationConsignmentActivity" />
 		<activity android:name=".activity.InspectionActivity" />
 		<activity android:name=".activity.LoginActivity">

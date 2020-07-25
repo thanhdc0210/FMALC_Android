@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/maintain_item"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="20dp"
+		android:background="@drawable/border_cardview"
+		android:clickable="true"
+		android:elevation="10dp"
+		android:onClick="onClickViewDetail"
+		android:orientation="vertical"
+		android:padding="20dp"
+		android:text="TextView"
+		tools:layout_editor_absoluteX="20dp">
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal">
+
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+
+			android:drawableLeft="@drawable/ic_directions_car_24px"
+			android:drawablePadding="5dp"
+			android:text="Biển số xe:" />
+		<TextView
+				android:paddingLeft="10dp"
+			android:id="@+id/txtLicensePlateMaintain"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="60AC-02158" />
+	</LinearLayout>
+
+	<TextView
+			android:id="@+id/txtMaintainDate"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:drawableLeft="@drawable/ic_event_24px"
+			android:drawablePadding="5dp"
+			android:text="20-23-2020" />
+
+	<TextView
+			android:id="@+id/txtMaintainTypeName"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:drawableLeft="@drawable/ic_type_24px"
+			android:drawablePadding="5dp"
+			android:text="Loại bảo trì :" />
+
+</LinearLayout>

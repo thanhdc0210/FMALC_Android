@@ -35,7 +35,7 @@ public class FuelTypePresenter implements FuelTypeContract.Presenter {
                 }else if (response.code() == 200){
                     view.getListFuelTypeSuccess(response.body());
                 }else{
-                    view.getListFuelTypeFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+                    view.getListFuelTypeFailure("Có lỗi xảy ra trong quá trình lấy thông tin "+ response.message());
                 }
             }
 

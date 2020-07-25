@@ -7,23 +7,6 @@
 		android:background="@color/colorWhite"
 		tools:context=".activity.FillingFuelActivity">
 
-	<com.google.android.material.appbar.AppBarLayout
-			android:id="@+id/appBarLayout4"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:theme="@style/Theme.MyApp.AppBarOverlay"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
-
-		<androidx.appcompat.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				android:background="#000000"
-				app:popupTheme="@style/Theme.MyApp.PopupOverlay" />
-
-	</com.google.android.material.appbar.AppBarLayout>
 
 	<LinearLayout
 			android:id="@+id/inforLicensePlate"
@@ -207,6 +190,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="20dp"
 			android:text="Lưu"
+			android:theme="@style/Theme.MyApp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent" />

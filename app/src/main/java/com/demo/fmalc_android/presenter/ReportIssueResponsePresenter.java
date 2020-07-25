@@ -30,8 +30,10 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
             public void onResponse(Call<ReportIssueResponse> call, Response<ReportIssueResponse> response) {
                 if (!response.isSuccessful()){
                     view.getIssueInformationOfAVehicleFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu ");
-                }else{
+                }else if(response.code() == 200){
                     view.getIssueInformationOfAVehicleSuccess(response.body());
+                } else if(response.code() == 204){
+                    view.getIssueInformationOfAVehicleSuccess(new ReportIssueResponse());
                 }
             }
 
