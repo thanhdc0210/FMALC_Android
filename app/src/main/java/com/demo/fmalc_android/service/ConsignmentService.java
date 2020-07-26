@@ -24,6 +24,5 @@ public interface ConsignmentService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/consignments/driver")
-    Call<List<Consignment>> findByConsignmentStatusAndUsernameForDriver(@Query("allParams") StatusRequest allParams
-    );
+    Call<List<Consignment>> findByConsignmentStatusAndUsernameForDriver(@Query("status") List<Integer> status, @Query("username") String username);
 }

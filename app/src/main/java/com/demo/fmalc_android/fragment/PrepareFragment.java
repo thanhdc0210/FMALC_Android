@@ -22,8 +22,6 @@ import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-
 public class PrepareFragment extends Fragment implements ConsignmentContract.View {
 
 
@@ -32,7 +30,6 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     ConsignmentViewCardAdapter consignmentViewCardAdapter;
     private ConsignmentPresenter consignmentPresenter;
     private String token;
-    private StatusRequest statusRequest;
     List<Consignment> consignmentList;
 
     public PrepareFragment() {
@@ -52,8 +49,8 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
                 List<Integer> status = new ArrayList<>();
-        status.add(1);
-        consignmentPresenter.findByConsignmentStatusAndUsernameForFleetManager(status, "manager1");
+        status.add(0);
+        consignmentPresenter.findByConsignmentStatusAndUsername(status, "0372813268");
         return view;
 
     }
@@ -77,7 +74,7 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     }
 
     @Override
-    public void findByConsignmentStatusAndUsernameForFleetManagerSuccess(List<Consignment> consignmentList) {
+    public void findByConsignmentStatusAndUsernameForSuccess(List<Consignment> consignmentList) {
 
         consignmentViewCardAdapter = new ConsignmentViewCardAdapter(consignmentList, getActivity());
 
@@ -87,7 +84,7 @@ public class PrepareFragment extends Fragment implements ConsignmentContract.Vie
     }
 
     @Override
-    public void findByConsignmentStatusAndUsernameForFleetManagerFailure(String message) {
+    public void findByConsignmentStatusAndUsernameForFailure(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 

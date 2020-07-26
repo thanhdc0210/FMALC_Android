@@ -4,26 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.contract.ConsignmentContract;
 import com.demo.fmalc_android.contract.LoginContract;
-import com.demo.fmalc_android.entity.Account;
-import com.demo.fmalc_android.entity.GlobalVariable;
-import com.demo.fmalc_android.entity.Token;
 import com.demo.fmalc_android.presenter.ConsignmentPresenter;
 import com.demo.fmalc_android.presenter.LoginPresenter;
-import com.demo.fmalc_android.retrofit.NetworkingUtils;
-import com.demo.fmalc_android.service.AccountService;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
@@ -76,44 +65,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             }
 
         }
-
-//        ConsignmentService consignmentService = NetworkingUtils.getConsignmentService();
-//
-//        Call<ConsignmentDetail> call = consignmentService.findByConsignmentId(1);
-//        call.enqueue(new Callback<ConsignmentDetail>() {
-//            @Override
-//            public void onResponse(Call<ConsignmentDetail> call, Response<ConsignmentDetail> response) {
-//                try{
-//                    Log.e("FAIL", " Successfully " + response.body().getConsignmentId());
-//                }catch (Throwable t){
-//                    Log.e("UNSUCCESSFULLY", " Unsuccessfully " + t.getMessage());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
-//                Log.e("FAIL", " Unsuccessfully" + t.getMessage());
-//            }
-//        });
-
-//        ConsignmentService consignmentService = NetworkingUtils.getConsignmentService();
-//        String username = "admin";
-//        List<Integer> list = new ArrayList<>();
-//        list.add(0);
-//        StatusRequest statusRequest = new StatusRequest(username, list);
-//        Call<List<Consignment>> call = consignmentService.findByConsignmentStatusAndUsernameForFleetManager(statusRequest);
-//
-//        call.enqueue(new Callback<List<Consignment>>() {
-//            @Override
-//            public void onResponse(Call<List<Consignment>> call, Response<List<Consignment>> response) {
-//                Log.e("FAIL", " Successfully " + response.body().get(0).getConsignmentId());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Consignment>> call, Throwable t) {
-//                Log.e("FAIL", " Unsuccessfully " + t.getMessage());
-//            }
-//        });
     }
 
     @Override

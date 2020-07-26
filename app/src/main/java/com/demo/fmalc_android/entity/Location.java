@@ -15,8 +15,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Location implements Serializable {
 
-    @SerializedName("id")
-    private int id;
+//    @SerializedName("id")
+//    private int id;
     @SerializedName("latitude")
     private double latitude;
     @SerializedName("longitude")
@@ -26,5 +26,5 @@ public class Location implements Serializable {
     @SerializedName("time")
     private String time;
     @SerializedName("vehicle_id")
-    private int vehicle_id;
+    private int consignment;
 }

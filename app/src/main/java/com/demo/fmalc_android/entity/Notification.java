@@ -16,8 +16,9 @@ import lombok.Setter;
 public class Notification implements Serializable {
 
     private int vehicle_id;
-    private int notify_type_id;
+    private boolean status;
     private String time;
     private String content;
+    private int driver_id;
 
 }

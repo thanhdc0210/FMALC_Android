@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface ConsignmentContract {
     interface View{
-        void findByConsignmentStatusAndUsernameForFleetManagerSuccess(List<Consignment> consignmentList);
-        void findByConsignmentStatusAndUsernameForFleetManagerFailure(String message);
+        void findByConsignmentStatusAndUsernameForSuccess(List<Consignment> consignmentList);
+        void findByConsignmentStatusAndUsernameForFailure(String message);
     }
 
     interface Presenter{
-        void findByConsignmentStatusAndUsernameForFleetManager(List<Integer> status, String username);
+        void findByConsignmentStatusAndUsername(List<Integer> status, String username);
     }
 }
