@@ -23,6 +23,7 @@
 		<item name="colorPrimary">#FF834F</item>
 		<item name="colorSecondary">#A8F6F6F6</item>
 		<item name="colorOnSurface">#FFFFFF</item>
+		<item name="fontFamily">@font/roboto</item>
 	</style>
 
 	<style name="ThemeWithActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
@@ -42,10 +43,12 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
+		<item name="fontFamily">@font/roboto</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar">
 		<item name="windowActionBar">false</item>
+		<item name="fontFamily">@font/roboto</item>
 		<item name="windowNoTitle">true</item>
 	</style>
 

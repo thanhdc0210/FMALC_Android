@@ -16,7 +16,8 @@ public class RetrofitInstance {
     private static Gson gson;
 
 //    private static final String BASE_URL = "http://192.168.1.108:8080/fmalc/"; // YANA tang 1
-    private static final String BASE_URL = "http://192.168.17.116:8080/fmalc/"; // luntrinhle
+    private static final String BASE_URL = "http://192.168.1.72:8080/fmalc/"; // YANA tang 3
+//    private static final String BASE_URL = "http://192.168.17.116:8080/fmalc/"; // luntrinhle
 //    private static final String BASE_URL = "http://172.20.10.2:8080/fmalc/"; // FPT2
     public static synchronized Retrofit getInstance() {
 

@@ -153,6 +153,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                             }
                         }
                     });
+                    holder.edtNoteIssue.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
                     holder.edtNoteIssue.addTextChangedListener(new TextWatcher() {

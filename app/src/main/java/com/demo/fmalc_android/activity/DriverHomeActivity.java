@@ -13,6 +13,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.fragment.AccountFragment;
 import com.demo.fmalc_android.fragment.HomeFragment;
 import com.demo.fmalc_android.fragment.InspectionFragment;
+import com.demo.fmalc_android.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
@@ -63,6 +64,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 break;
             case R.id.navigation_search:
                 item.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new SearchFragment()).commit();
                 break;
             case R.id.navigation_account:
                 item.setChecked(true);

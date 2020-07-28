@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,9 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     private List<Inspection> inspectionList;
     private Button btnSubmit;
     private EditText edtNoteIssue;
-    private TextView txtCurrentLicensePlate;
+    private TextView txtCurrentLicensePlate,txtEmptyView;
+    private LinearLayout inforLicensePlate;
+    private RecyclerView recyclerView;
     Menu menu;
     private GlobalVariable globalVariable;
 
@@ -57,7 +60,11 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setContentView(R.layout.activity_preparing);
         Bundle bundle = getIntent().getExtras();
         String vehicleStatus = bundle.getString("VEHICLE_STATUS");
-
+        txtEmptyView = findViewById(R.id.txtEmptyView);
+        recyclerView = findViewById(R.id.recyclerViewInspection);
+        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
+        inforLicensePlate = findViewById(R.id.inforLicensePlate);
+        btnSubmit = findViewById(R.id.btnSubmit);
         Toast.makeText(this, vehicleStatus, Toast.LENGTH_SHORT).show();
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
@@ -72,7 +79,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     }
 
     private void setUpRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewInspection);
+
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         inspectionAdapter = new InspectionAdapter(inspectionList,this);
@@ -97,42 +104,50 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection) {
 
-        //Gán biển số xe cho textview
-       txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
-       txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
+        if (vehicleInspection.getVehicleLicensePlates() == null){
+            inforLicensePlate.setVisibility(View.GONE);
+            txtEmptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            btnSubmit.setVisibility(View.GONE);
 
-        // Đổ data cho inspection list recycle view
-        inspectionList = vehicleInspection.getInspections();
-        setUpRecyclerView();
+        } else {
+            //Gán biển số xe cho textview
 
-        //Submit data
-        inspectionAdapter.getListIssue();
-        btnSubmit = findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
-                globalVariable = (GlobalVariable) getApplicationContext();
-                // Report Issue Before Delivery
-                String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
-                if ( vehicleLicensePlates == "") {
-                    Toast.makeText(getApplicationContext(), "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
-                } else {
-                    ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
-                    for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
-                        ReportIssueContentRequest temp = listResult.get(image.getKey());
-                        temp.setImage(image.getValue());
-                        listResult.replace(image.getKey(), temp);
+            txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
+
+            // Đổ data cho inspection list recycle view
+            inspectionList = vehicleInspection.getInspections();
+            setUpRecyclerView();
+
+            //Submit data
+            inspectionAdapter.getListIssue();
+            btnSubmit = findViewById(R.id.btnSubmit);
+            btnSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
+                    globalVariable = (GlobalVariable) getApplicationContext();
+                    // Report Issue Before Delivery
+                    if ( listResult.isEmpty() ) {
+                        Toast.makeText(getApplicationContext(), "Vui lòng chọn sự cố để báo cáo", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
+                        for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
+                            ReportIssueContentRequest temp = listResult.get(image.getKey());
+                            temp.setImage(image.getValue());
+                            listResult.replace(image.getKey(), temp);
+                        }
+                        reportIssueRequest.setReportIssueContentRequests(listResult);
+                        reportIssueRequest.setUsername(globalVariable.getUsername());
+                        reportIssueRequest.setVehicleLicensePlates(txtCurrentLicensePlate.getText().toString());
+                        reportIssueRequest.setType(0);
+                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                     }
-                    reportIssueRequest.setReportIssueContentRequests(listResult);
-                    reportIssueRequest.setUsername(globalVariable.getUsername());
-                    reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
-                    reportIssueRequest.setType(0);
-
-                    reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                 }
-            }
-        });
+            });
+        }
+
+
     }
 
     @Override
@@ -153,42 +168,50 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void getListLicensePlateAndInspectionAfterDeliverySuccess(VehicleInspection vehicleInspection) {
-        //Gán biển số xe cho textview
-        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
-        txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
+        if (vehicleInspection.getVehicleLicensePlates() == null) {
+            inforLicensePlate.setVisibility(View.GONE);
+            txtEmptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            btnSubmit.setVisibility(View.GONE);
 
-        // Đổ data cho inspection list recycle view
-        inspectionList = vehicleInspection.getInspections();
-        setUpRecyclerView();
+        } else {
+            //Gán biển số xe cho textview
+            txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
+            txtCurrentLicensePlate.setText(vehicleInspection.getVehicleLicensePlates());
 
-        //Submit data
-        inspectionAdapter.getListIssue();
-        btnSubmit = findViewById(R.id.btnSubmit);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
-                globalVariable = (GlobalVariable) getApplicationContext();
-                // Report Issue Before Delivery
-                String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
-                if ( vehicleLicensePlates == "") {
-                    Toast.makeText(getApplicationContext(), "Hôm nay bạn không có lịch chạy", Toast.LENGTH_SHORT);
-                } else {
-                    ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
-                    for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
-                        ReportIssueContentRequest temp = listResult.get(image.getKey());
-                        temp.setImage(image.getValue());
-                        listResult.replace(image.getKey(), temp);
+            // Đổ data cho inspection list recycle view
+            inspectionList = vehicleInspection.getInspections();
+            setUpRecyclerView();
+
+            //Submit data
+            inspectionAdapter.getListIssue();
+
+            btnSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<Integer, ReportIssueContentRequest> listResult = inspectionAdapter.getListIssue();
+                    globalVariable = (GlobalVariable) getApplicationContext();
+                    // Report Issue Before Delivery
+                    String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
+                    if (vehicleLicensePlates == "") {
+                        Toast.makeText(getApplicationContext(), "Hôm nay bạn không có lịch chạy", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
+                        for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
+                            ReportIssueContentRequest temp = listResult.get(image.getKey());
+                            temp.setImage(image.getValue());
+                            listResult.replace(image.getKey(), temp);
+                        }
+                        reportIssueRequest.setReportIssueContentRequests(listResult);
+                        reportIssueRequest.setUsername(globalVariable.getUsername());
+                        reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
+                        reportIssueRequest.setType(0);
+
+                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                     }
-                    reportIssueRequest.setReportIssueContentRequests(listResult);
-                    reportIssueRequest.setUsername(globalVariable.getUsername());
-                    reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
-                    reportIssueRequest.setType(0);
-
-                    reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.demo.fmalc_android.service.FuelTypeService;
 import com.demo.fmalc_android.service.MaintenanceService;
 import com.demo.fmalc_android.service.ReportIssueService;
 import com.demo.fmalc_android.service.ScheduleService;
+import com.demo.fmalc_android.service.SearchingService;
 import com.demo.fmalc_android.service.VehicleService;
 
 public class NetworkingUtils {
@@ -18,6 +19,7 @@ public class NetworkingUtils {
     private static FuelTypeService fuelTypeService;
     private static DriverService driverService;
     private static MaintenanceService maintenanceService;
+    private static SearchingService searchingService;
 
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
@@ -64,5 +66,11 @@ public class NetworkingUtils {
         if (maintenanceService == null)
             maintenanceService = RetrofitInstance.getInstance().create(MaintenanceService.class);
         return maintenanceService;
+    }
+
+    public static SearchingService getSearchingService(){
+        if (searchingService == null)
+            searchingService = RetrofitInstance.getInstance().create(SearchingService.class);
+        return searchingService;
     }
 }
