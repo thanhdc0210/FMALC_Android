@@ -3,6 +3,7 @@ package com.demo.fmalc_android.retrofit;
 import com.demo.fmalc_android.entity.FuelType;
 import com.demo.fmalc_android.service.AccountService;
 import com.demo.fmalc_android.service.DriverService;
+import com.demo.fmalc_android.service.FuelService;
 import com.demo.fmalc_android.service.FuelTypeService;
 import com.demo.fmalc_android.service.ReportIssueService;
 import com.demo.fmalc_android.service.ScheduleService;
@@ -16,6 +17,7 @@ public class NetworkingUtils {
     private static ReportIssueService reportIssueService;
     private static FuelTypeService fuelTypeService;
     private static DriverService driverService;
+    private static FuelService fuelService;
 
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
@@ -57,5 +59,12 @@ public class NetworkingUtils {
         if (driverService == null)
             driverService = RetrofitInstance.getInstance().create(DriverService.class);
         return driverService;
+    }
+
+    public static FuelService getFuelService(){
+        if (fuelService == null){
+            fuelService = RetrofitInstance.getInstance().create(FuelService.class);
+        }
+        return fuelService;
     }
 }

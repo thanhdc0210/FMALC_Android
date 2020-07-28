@@ -57,8 +57,6 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         setContentView(R.layout.activity_preparing);
         Bundle bundle = getIntent().getExtras();
         String vehicleStatus = bundle.getString("VEHICLE_STATUS");
-
-        Toast.makeText(this, vehicleStatus, Toast.LENGTH_SHORT).show();
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
@@ -115,8 +113,8 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                 globalVariable = (GlobalVariable) getApplicationContext();
                 // Report Issue Before Delivery
                 String vehicleLicensePlates = txtCurrentLicensePlate.getText().toString().trim();
-                if ( vehicleLicensePlates == "") {
-                    Toast.makeText(getApplicationContext(), "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
+                if ( vehicleLicensePlates.equals("")) {
+                    Toast.makeText(PreparingActivity.this, "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
                 } else {
                     ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
                     for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
@@ -143,7 +141,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void createReportIssueForDeliveryForSuccess(ReportIssueRequest reportIssueRequest) {
         Toast.makeText(this, "Báo cáo thành công", Toast.LENGTH_SHORT).show();
-        reloadActivityAfterCreateReportIssueSuccess();
+        onBackPressed();
     }
 
     @Override
@@ -186,6 +184,8 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                     reportIssueRequest.setType(0);
 
                     reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
+                    Toast.makeText(PreparingActivity.this, "Báo cáo thành công", Toast.LENGTH_SHORT);
+                    onBackPressed();
                 }
             }
         });
@@ -203,10 +203,10 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void reloadActivityAfterCreateReportIssueSuccess(){
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(getIntent());
-        overridePendingTransition(0, 0);
-    }
+//    private void reloadActivityAfterCreateReportIssueSuccess(){
+//        finish();
+//        overridePendingTransition(0, 0);
+//        startActivity(getIntent());
+//        overridePendingTransition(0, 0);
+//    }
 }

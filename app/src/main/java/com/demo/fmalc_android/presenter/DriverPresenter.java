@@ -28,12 +28,11 @@ public class DriverPresenter implements DriverContract.Presenter {
         call.enqueue(new Callback<DriverInformation>() {
             @Override
             public void onResponse(Call<DriverInformation> call, Response<DriverInformation> response) {
-                if(!response.isSuccessful()){
-                    view.getDriverInformationFailure("Không thể lấy thông tin tài xế");
+                if(response.code() == 204){
+                    view.getDriverInformationFailure("Dữ liệu bạn yêu cầu hiện không có");
                 }else {
                     if(response.code() == 200 ) {
-                        DriverInformation driverInformation = response.body();
-                        view.getDriverInformationSuccessful(driverInformation);
+                        view.getDriverInformationSuccessful(response.body());
                     } else {
                         view.getDriverInformationFailure("Không thể lấy thông tin tài xế");
                     }
@@ -42,7 +41,11 @@ public class DriverPresenter implements DriverContract.Presenter {
 
             @Override
             public void onFailure(Call<DriverInformation> call, Throwable t) {
-                view.getDriverInformationFailure("Không thể lấy thông tin tài xế "+ t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.getDriverInformationFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else {
+                    view.getDriverInformationFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

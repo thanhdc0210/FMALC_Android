@@ -28,21 +28,22 @@ public class VehicleAfterDeliveryPresenter implements VehicleAfterDeliveryContra
         call.enqueue(new Callback<VehicleInspection>() {
             @Override
             public void onResponse(Call<VehicleInspection> call, Response<VehicleInspection> response) {
-                if(!response.isSuccessful()){
-                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Không thể lấy thông tin");
-                }else {
-                    if(response.code() == 200) {
-                        VehicleInspection vehicleInspection = response.body();
-                        view.getListLicensePlateAndInspectionAfterDeliverySuccess(vehicleInspection);
-                    } else {
-                        view.getListLicensePlateAndInspectionAfterDeliveryFailure("Không thể lấy thông tin");
-                    }
+                if (response.code() == 204) {
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Không thể lưu báo cáo");
+                } else if (response.code() == 200) {
+                    view.getListLicensePlateAndInspectionAfterDeliverySuccess(response.body());
+                }else{
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Có lỗi xảy ra trong quá trình báo cáo");
                 }
             }
 
             @Override
             public void onFailure(Call<VehicleInspection> call, Throwable t) {
-                view.getListLicensePlateAndInspectionAfterDeliveryFailure("Có lỗi xảy ra trong quá trình lấy thông tin " + t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else {
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
 
         });

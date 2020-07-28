@@ -10,7 +10,6 @@
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 	<application
 			android:name=".entity.GlobalVariable"
@@ -22,6 +21,16 @@
 			android:theme="@style/Theme.MyApp"
 			android:usesCleartextTraffic="true"
 			android:windowSoftInputMode="stateAlwaysVisible">
+
+		<!-- [START fcm_disable_auto_init] -->
+		<meta-data
+			android:name="firebase_messaging_auto_init_enabled"
+			android:value="false" />
+		<meta-data
+			android:name="firebase_analytics_collection_enabled"
+			android:value="false" />
+		<!-- [END fcm_disable_auto_init] -->
+
 		<activity
 				android:name=".activity.FillingFuelActivity"
 				android:label="@string/title_activity_filling_fuel"
@@ -41,7 +50,6 @@
 		<activity android:name=".activity.LocationConsignmentActivity" />
 		<activity android:name=".activity.InspectionActivity" />
 		<activity android:name=".activity.LoginActivity">
-
 			 <intent-filter>
 			 <action android:name="android.intent.action.MAIN" />
 
@@ -56,9 +64,6 @@
 
 <!--				<category android:name="android.intent.category.LAUNCHER" />-->
 <!--			</intent-filter>-->
-
-			<!-- dialog Image picker -->
-
 		</activity>
 
 		<provider
@@ -75,6 +80,14 @@
 		<service
 				android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
 				android:enabled="true" />
+
+		<service
+			android:name=".service.MyFirebaseMessagingService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		</service>
 
 		<meta-data
 				android:name="preloaded_fonts"

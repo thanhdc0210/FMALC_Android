@@ -1,5 +1,6 @@
 package com.demo.fmalc_android.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -68,17 +69,6 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         status.add(0);
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
 
-        btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Integer> listReportIssueId = issueAdapter.getListIssue();
-                ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
-                reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
-                reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
-                reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating);
-            }
-        });
-
         return view;
     }
 
@@ -106,7 +96,16 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
             issueInformationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             txtEmptyView.setVisibility(View.GONE);
             issueInformationRecyclerView.setVisibility(View.VISIBLE);
-//            getReportIssueContentResponseList(reportIssueResponse.getReportIssueContentResponses());
+            btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<Integer> listReportIssueId = issueAdapter.getListIssue();
+                    ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
+                    reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
+                    reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
+                    reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating);
+                }
+            });
         }
     }
 
@@ -118,8 +117,6 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     @Override
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-        status.add(0);
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
     }
 
     @Override

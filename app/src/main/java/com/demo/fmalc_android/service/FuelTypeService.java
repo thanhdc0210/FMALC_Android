@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface FuelTypeService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @GET("api/v1.0/fuel-type")
+    @GET("api/v1.0/fuel-types/fuel-type")
     Call<FuelTypeResponse> getFuelTypeResponse(@Query("username") String username, @Query("status") List<Integer> status);
 
 }

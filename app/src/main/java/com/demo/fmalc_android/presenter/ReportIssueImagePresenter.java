@@ -39,8 +39,7 @@ public class ReportIssueImagePresenter implements ReportIssueImageContract.Prese
                         try {
                             view.getLinkImageAfterUploadS3(response.body().string());
                         } catch (IOException e) {
-                            e.printStackTrace();
-                            System.out.println("Error");
+                            view.getLinkImageAfterUploadS3Failure("Không thể đăng tải hình ảnh");
                         }
                     } else {
                         view.getLinkImageAfterUploadS3Failure("Không thể đăng tải hình ảnh");
@@ -50,8 +49,11 @@ public class ReportIssueImagePresenter implements ReportIssueImageContract.Prese
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view.getLinkImageAfterUploadS3Failure("Có lỗi xảy ra trong quá trình đăng tải ảnh " + t.getMessage());
-                System.out.println(t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.getLinkImageAfterUploadS3Failure("Vui lòng kiểm tra lại kết nối mạng");
+                }else{
+                    view.getLinkImageAfterUploadS3Failure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

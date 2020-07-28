@@ -27,19 +27,22 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         call.enqueue(new Callback<List<Schedule>>() {
             @Override
             public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {
-                if(!response.isSuccessful()){
-                    view.findByConsignmentStatusAndUsernameForFailure("Không thể lấy danh sách");
-                }else {
-                    List<Schedule> scheduleList = response.body();
-
-                    view.findByConsignmentStatusAndUsernameForSuccess(scheduleList);
+                if (response.code() == 204){
+                    view.findByConsignmentStatusAndUsernameForFailure("Dữ liệu bạn yêu cầu hiện không có");
+                }else if (response.code() == 200){
+                    view.findByConsignmentStatusAndUsernameForSuccess(response.body());
+                }else{
+                    view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Schedule>> call, Throwable t) {
-
-                view.findByConsignmentStatusAndUsernameForFailure("Có lỗi xảy ra trong quá trình lấy danh sách");
+                if (t.getMessage().contains("timed out")){
+                    view.findByConsignmentStatusAndUsernameForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else {
+                    view.findByConsignmentStatusAndUsernameForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

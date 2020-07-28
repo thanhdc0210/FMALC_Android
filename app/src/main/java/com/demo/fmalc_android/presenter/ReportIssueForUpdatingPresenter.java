@@ -26,16 +26,22 @@ public class ReportIssueForUpdatingPresenter implements ReportIssueForUpdatingCo
         call.enqueue(new Callback<ReportIssueInformationForUpdating>() {
             @Override
             public void onResponse(Call<ReportIssueInformationForUpdating> call, Response<ReportIssueInformationForUpdating> response) {
-                if (!response.isSuccessful()){
-                    view.updateReportIssueForFailure("Có lỗi xảy ra trong quá trình cập nhật thông tin " + response.code());
-                }else{
+                if (response.code() == 204) {
+                    view.updateReportIssueForFailure("Không thể lưu báo cáo");
+                } else if (response.code() == 200) {
                     view.updateReportIssueForSuccess();
+                }else{
+                    view.updateReportIssueForFailure("Có lỗi xảy ra trong quá trình báo cáo");
                 }
             }
 
             @Override
             public void onFailure(Call<ReportIssueInformationForUpdating> call, Throwable t) {
-                view.updateReportIssueForFailure("Có lỗi xảy ra ở server");
+                if (t.getMessage().contains("timed out")){
+                    view.updateReportIssueForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else{
+                    view.updateReportIssueForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

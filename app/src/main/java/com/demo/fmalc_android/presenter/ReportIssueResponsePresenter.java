@@ -28,16 +28,22 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
         call.enqueue(new Callback<ReportIssueResponse>() {
             @Override
             public void onResponse(Call<ReportIssueResponse> call, Response<ReportIssueResponse> response) {
-                if (!response.isSuccessful()){
-                    view.getIssueInformationOfAVehicleFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu ");
-                }else{
+                if (response.code() == 204){
+                    view.getIssueInformationOfAVehicleFailure("Dữ liệu bạn yêu cầu hiện không có");
+                }else if (response.code() == 200) {
                     view.getIssueInformationOfAVehicleSuccess(response.body());
+                } else {
+                    view.getIssueInformationOfAVehicleFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<ReportIssueResponse> call, Throwable t) {
-                view.getIssueInformationOfAVehicleFailure("Có lỗi xảy ra ở server");
+                if (t.getMessage().contains("timed out")){
+                    view.getIssueInformationOfAVehicleFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else{
+                    view.getIssueInformationOfAVehicleFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

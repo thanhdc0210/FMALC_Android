@@ -192,18 +192,13 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
 
     private void refreshList(){
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
                 List<Integer> status = new ArrayList<>();
                 status.add(0);
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
-                System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
-//                consignmentRecyclerView.setAdapter(new Re );
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 1000);
-
     }
 }
