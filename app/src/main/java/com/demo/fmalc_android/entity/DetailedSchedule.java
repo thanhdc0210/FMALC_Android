@@ -14,10 +14,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConsignmentDetail implements Serializable {
+public class DetailedSchedule implements Serializable {
 
-    @SerializedName("consignmentId")
-    private Integer consignmentId;
+    @SerializedName("scheduleId")
+    private Integer scheduleId;
 
     @SerializedName("licensePlates")
     private String licensePlates;

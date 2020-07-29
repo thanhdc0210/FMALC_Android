@@ -1,14 +1,29 @@
 package com.demo.fmalc_android.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.ActionBarOverlayLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
+import com.demo.fmalc_android.activity.FillingFuelActivity;
+import com.demo.fmalc_android.activity.InProgressActivity;
+import com.demo.fmalc_android.activity.InspectionActivity;
+import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
+import com.demo.fmalc_android.activity.PreparingActivity;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.dialog.MaterialDialogs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +40,13 @@ public class InspectionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    String value;
+    Button btnPrepare;
+    Button btnInProgress;
+    Button btnComplete;
+    Button btnMaintainAndIssue;
+    Button btnFillingFuel;
 
     public InspectionFragment() {
         // Required empty public constructor
@@ -55,12 +77,75 @@ public class InspectionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inspection, container, false);
+        View view = inflater.inflate(R.layout.fragment_inspection, container, false);
+        btnPrepare = view.findViewById(R.id.btnPreparing);
+        btnInProgress = view.findViewById(R.id.btnOnTheWay);
+        btnComplete = view.findViewById(R.id.btnCompleted);
+        btnMaintainAndIssue = view.findViewById(R.id.btnMaintainAndIssue);
+        btnFillingFuel = view.findViewById(R.id.btnFillingFuel);
+
+
+        //Button xe chuẩn bị chạy
+        btnPrepare.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(getContext(), PreparingActivity.class);
+              Bundle bundle = new Bundle();
+              bundle.putString("VEHICLE_STATUS", "0");
+              intent.putExtras(bundle);
+              getContext().startActivity(intent);
+          }
+      });
+
+        //Button xe đã hoàn tất đơn hàng
+        btnComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), PreparingActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("VEHICLE_STATUS", "3");
+                intent.putExtras(bundle);
+                getContext().startActivity(intent);
+            }
+        });
+
+        //Button xe đang chạy
+        btnInProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), InProgressActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        btnMaintainAndIssue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MaintainAndIssueActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        btnFillingFuel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FillingFuelActivity.class);
+                getContext().startActivity(intent);
+
+            }
+        });
+
+        return view;
+    }
+
+
+
+    public void test( String value){
+        Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
     }
 }

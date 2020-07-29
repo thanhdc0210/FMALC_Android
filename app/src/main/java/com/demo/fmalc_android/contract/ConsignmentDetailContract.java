@@ -1,7 +1,8 @@
 package com.demo.fmalc_android.contract;
 
 
-import com.demo.fmalc_android.entity.ConsignmentDetail;
+//import com.demo.fmalc_android.entity.ConsignmentDetail;
+import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
@@ -13,7 +14,7 @@ import okhttp3.ResponseBody;
 
 public interface ConsignmentDetailContract {
     interface View{
-        void findByConsignmentIdSuccess(ConsignmentDetail consignmentDetail);
+        void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail);
         void findByConsignmentIdFailure(String message);
 
         void trackingLocationSuccess(ResponseBody responseBody);

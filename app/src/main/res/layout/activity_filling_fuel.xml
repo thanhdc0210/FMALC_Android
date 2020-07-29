@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/colorWhite"
+		tools:context=".activity.FillingFuelActivity">
+
+	<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/appBarLayout4"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/Theme.MyApp.AppBarOverlay"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+		<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:background="#000000"
+				app:popupTheme="@style/Theme.MyApp.PopupOverlay" />
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<LinearLayout
+			android:id="@+id/inforLicensePlate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginTop="80dp"
+			android:background="@drawable/border_cardview"
+			android:orientation="horizontal"
+			android:paddingLeft="20dp"
+			android:paddingTop="2dp"
+			android:paddingRight="20dp"
+			android:paddingBottom="2dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="Biển số xe : "
+				android:textColor="#000"
+				android:textSize="20dp" />
+
+		<TextView
+				android:id="@+id/txtCurrentLicensePlate"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:text="64B2-00001"
+				android:textColor="@color/colorPrimary"
+				android:textSize="20dp"
+				android:textStyle="bold" />
+
+	</LinearLayout>
+
+	<TextView
+			android:id="@+id/textView3"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:text="Chọn loại nhiên liệu:"
+			android:textSize="18dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/inforLicensePlate" />
+
+	<LinearLayout
+			android:id="@+id/linearLayout3"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal"
+			android:weightSum="10"
+			android:paddingBottom="5dp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="7"
+				android:gravity="center"
+				android:text="Tên nhiên liệu"
+				android:textColor="#03A9F4"
+				android:textSize="18dp"
+				android:textStyle="bold" />
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="2"
+				android:gravity="center"
+				android:text="Đơn giá (VND)"
+				android:textColor="#03A9F4"
+				android:textColorHighlight="#2196F3"
+				android:textSize="18dp"
+				android:textStyle="bold" />
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_weight="1" />
+	</LinearLayout>
+
+	<androidx.recyclerview.widget.RecyclerView
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="35dp"
+			android:layout_marginRight="20dp"
+			android:id="@+id/recyclerViewFuel"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/linearLayout3" />
+
+	<LinearLayout
+			android:id="@+id/linearLayout4"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:orientation="vertical"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/recyclerViewFuel">
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Nhập số km hiện tại:"
+				android:textSize="18dp" />
+
+		<EditText
+				android:id="@+id/edtCurrentKm"
+				style="@style/Theme.MyApp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/roboto"
+				android:hint="23456"
+				android:inputType="number"
+				android:lines="1"
+				android:maxLines="1"
+				android:text="" />
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Nhập số lít nhiên liệu (lít):"
+				android:textSize="18dp" />
+
+
+		<EditText
+				android:id="@+id/edtVolume"
+				style="@style/Theme.MyApp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/roboto"
+				android:hint="VD: 10.5"
+				android:inputType="numberDecimal"
+				android:lines="1"
+				android:maxLines="1"
+				android:text="" />
+
+		<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+
+				android:orientation="horizontal">
+
+			<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:text="Thành tiền:"
+					android:textColor="@color/colorPrimary"
+					android:textSize="18dp"
+					android:textStyle="bold" />
+
+			<TextView
+					android:id="@+id/txtTotalPrice"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:text="0 VND"
+					android:textColor="@color/colorPrimary"
+					android:textSize="20dp"
+					android:textStyle="bold" />
+		</LinearLayout>
+
+
+	</LinearLayout>
+
+	<Button
+			android:id="@+id/btnSaveFillingFuel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="20dp"
+			android:text="Lưu"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

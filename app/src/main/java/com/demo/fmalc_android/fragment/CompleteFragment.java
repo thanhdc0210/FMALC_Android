@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.adapter.CompletedConsignmentViewCardAdapter;
-import com.demo.fmalc_android.adapter.ConsignmentViewCardAdapter;
-import com.demo.fmalc_android.contract.ConsignmentContract;
-import com.demo.fmalc_android.entity.Consignment;
-import com.demo.fmalc_android.presenter.ConsignmentPresenter;
+import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
+import com.demo.fmalc_android.contract.ScheduleContract;
+import com.demo.fmalc_android.entity.Schedule;
+import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +27,14 @@ import java.util.List;
  * Use the {@link CompleteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CompleteFragment extends Fragment implements ConsignmentContract.View {
+public class CompleteFragment extends Fragment implements ScheduleContract.View {
 
     RecyclerView consignmentRecyclerView;
     LinearLayout consignmentRecyclerViewLayout;
-    CompletedConsignmentViewCardAdapter completedConsignmentViewCardAdapter;
-    private ConsignmentPresenter consignmentPresenter;
-    private String token;
-    List<Consignment> consignmentList;
+    CompletedScheduleViewCardAdapter completedScheduleViewCardAdapter;
+    private SchedulePresenter schedulePresenter;
+    private GlobalVariable globalVariable;
+    List<Schedule> scheduleList;
 
     public CompleteFragment() {
         // Required empty public constructor
@@ -54,30 +54,31 @@ public class CompleteFragment extends Fragment implements ConsignmentContract.Vi
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
         List<Integer> status = new ArrayList<>();
-        status.add(0);
-
-        consignmentPresenter.findByConsignmentStatusAndUsername(status, "driver");
+        status.add(3);
+        status.add(5);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
         return view;
 
     }
 
     private void init(){
-        consignmentPresenter = new ConsignmentPresenter();
-        consignmentPresenter.setView(this);
+        schedulePresenter = new SchedulePresenter();
+        schedulePresenter.setView(this);
     }
 
-    private void getConsignmentList(List<Consignment> consignmentList){
-        this.consignmentList = consignmentList;
+    private void getConsignmentList(List<Schedule> scheduleList){
+        this.scheduleList = scheduleList;
     }
 
     @Override
-    public void findByConsignmentStatusAndUsernameForSuccess(List<Consignment> consignmentList) {
+    public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-        completedConsignmentViewCardAdapter = new CompletedConsignmentViewCardAdapter(consignmentList, getActivity());
+        completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(scheduleList, getActivity());
 
-        consignmentRecyclerView.setAdapter(completedConsignmentViewCardAdapter);
+        consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getConsignmentList(consignmentList);
+        getConsignmentList(scheduleList);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        System.out.println("RELOADDDED");
+
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         viewPager =(ViewPager) view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tab_layout);

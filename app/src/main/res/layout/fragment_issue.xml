@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/colorWhite"
+		android:orientation="vertical"
+		tools:context=".fragment.IssueFragment">
+
+	<!-- TODO: Update blank fragment layout -->
+	<LinearLayout
+			android:id="@+id/inforLicensePlate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:paddingLeft="20dp"
+			android:paddingRight="20dp"
+			android:paddingTop="2dp"
+			android:paddingBottom="2dp"
+			android:background="@drawable/border_cardview"
+			android:layout_marginTop="20dp"
+			android:orientation="horizontal"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="Biển số xe : "
+				android:textColor="#000"
+				android:textSize="20dp" />
+
+		<TextView
+				android:id="@+id/txtCurrentLicensePlate"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="center"
+				android:text="50N1-02158"
+				android:textColor="@color/colorPrimary"
+				android:textSize="20dp"
+				android:textStyle="bold" />
+
+	</LinearLayout>
+
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerViewIssue"
+			android:layout_marginBottom="30dp"
+			android:padding="20dp"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			app:layout_constraintBottom_toTopOf="@+id/btnUpdateIssue"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/inforLicensePlate"/>
+
+
+	<Button
+			android:id="@+id/btnUpdateIssue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginBottom="20dp"
+			android:text="Cập nhật"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,10 +12,10 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface LocationConsignmentService {
-    @POST("location/sendLocation")
+    @POST("api/v1.0/location/sendLocation")
     Call<ResponseBody> trackingLocation(@Body Location latLng);
 
-    @POST("notification/")
+    @POST("api/v1.0/notification/")
     Call<Notification> notifyWorkingHours(@Body Notification notification);
 
     @GET("api/v1.0/vehicles/detail/{licensePlates}")

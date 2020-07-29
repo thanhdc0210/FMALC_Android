@@ -13,10 +13,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Consignment implements Serializable {
+public class Schedule implements Serializable {
 
-    @SerializedName("consignmentId")
-    private Integer consignmentId;
+    @SerializedName("scheduleId")
+    private Integer scheduleId;
 
     @SerializedName("ownerName")
     private String ownerName;

@@ -17,31 +17,31 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.List;
 
-public class ConsignmentTimeStepAdapter extends RecyclerView.Adapter<ConsignmentTimeStepAdapter.ViewHolder> {
+public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeStepAdapter.ViewHolder> {
     private List<Place> placeList;
     private Context context;
 
-    public ConsignmentTimeStepAdapter(List<Place> placeList, Context context) {
+    public ScheduleTimeStepAdapter(List<Place> placeList, Context context) {
         this.placeList = placeList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ConsignmentTimeStepAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ScheduleTimeStepAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         view = LayoutInflater.from(context).inflate(R.layout.time_step_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ConsignmentTimeStepAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ScheduleTimeStepAdapter.ViewHolder holder, int position) {
         placeList.sort(Comparator.comparing(Place::getPriority));
         Place place = placeList.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         holder.txtPlannedTime.setText(format.format(place.getPlannedTime()));
         holder.txtAddressDetails.setText(place.getAddress());
-        holder.txtTypePlace.setText(place.getType());
+        holder.txtTypePlace.setText(place.getTypeStr());
 
 
     }

@@ -15,15 +15,19 @@ public class RetrofitInstance {
     private static Retrofit retrofit;
     private static Gson gson;
 
-    private static final String BASE_URL = "http://192.168.1.159:8080/fmalc/";
+
+    private static final String BASE_URL = "http://172.20.10.11:8080/fmalc/";
+
+
+//    private static final String BASE_URL = "http://192.168.0.102:8080/fmalc/";
 
     public static synchronized Retrofit getInstance() {
 
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .callTimeout(2, TimeUnit.MINUTES)
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS);
+//        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+//                .callTimeout(2, TimeUnit.MINUTES)
+//                .connectTimeout(20, TimeUnit.SECONDS)
+//                .readTimeout(30, TimeUnit.SECONDS)
+//                .writeTimeout(30, TimeUnit.SECONDS);
 
         HttpLoggingInterceptor loggingInterceptor =  new HttpLoggingInterceptor();
 
@@ -31,7 +35,7 @@ public class RetrofitInstance {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         // add logging as last interceptor
-        clientBuilder.addInterceptor(loggingInterceptor);
+//        clientBuilder.addInterceptor(loggingInterceptor);
 
         if (retrofit == null) {
             if (gson == null) {

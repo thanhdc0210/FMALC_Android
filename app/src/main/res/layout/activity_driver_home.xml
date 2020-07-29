@@ -4,6 +4,7 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:orientation="vertical"
 		tools:context=".activity.DriverHomeActivity">
 
 	<FrameLayout
@@ -19,28 +20,28 @@
 		<!--				android:id="@+id/appBarLayout"-->
 		<!--				android:layout_width="match_parent"-->
 		<!--				android:layout_height="wrap_content">-->
-<!--		<LinearLayout-->
-<!--				android:layout_width="match_parent"-->
-<!--				android:layout_height="match_parent"-->
-<!--				android:orientation="vertical">-->
+		<!--		<LinearLayout-->
+		<!--				android:layout_width="match_parent"-->
+		<!--				android:layout_height="match_parent"-->
+		<!--				android:orientation="vertical">-->
 
-<!--			<com.google.android.material.tabs.TabLayout-->
-<!--					android:id="@+id/tab_layout"-->
-<!--					android:layout_width="match_parent"-->
-<!--					android:layout_height="wrap_content"-->
-<!--					android:background="@color/colorPrimaryDark"-->
-<!--					app:tabTextColor="#FFFFFF" />-->
-<!--			&lt;!&ndash;		</com.google.android.material.appbar.AppBarLayout>&ndash;&gt;-->
+		<!--			<com.google.android.material.tabs.TabLayout-->
+		<!--					android:id="@+id/tab_layout"-->
+		<!--					android:layout_width="match_parent"-->
+		<!--					android:layout_height="wrap_content"-->
+		<!--					android:background="@color/colorPrimaryDark"-->
+		<!--					app:tabTextColor="#FFFFFF" />-->
+		<!--			&lt;!&ndash;		</com.google.android.material.appbar.AppBarLayout>&ndash;&gt;-->
 
-<!--			<androidx.viewpager.widget.ViewPager-->
-<!--					android:id="@+id/view_pager"-->
-<!--					android:layout_width="match_parent"-->
-<!--					android:layout_height="match_parent"-->
-<!--					android:background="#FFFFFF"-->
-<!--					app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">-->
+		<!--			<androidx.viewpager.widget.ViewPager-->
+		<!--					android:id="@+id/view_pager"-->
+		<!--					android:layout_width="match_parent"-->
+		<!--					android:layout_height="match_parent"-->
+		<!--					android:background="#FFFFFF"-->
+		<!--					app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">-->
 
-<!--			</androidx.viewpager.widget.ViewPager>-->
-<!--		</LinearLayout>-->
+		<!--			</androidx.viewpager.widget.ViewPager>-->
+		<!--		</LinearLayout>-->
 
 	</FrameLayout>
 
@@ -51,8 +52,7 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/container"
-			app:menu="@menu/bottom_navigation_menu"
-		/>
+			app:layout_constraintTop_toBottomOf="@+id/container"
+			app:menu="@menu/bottom_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

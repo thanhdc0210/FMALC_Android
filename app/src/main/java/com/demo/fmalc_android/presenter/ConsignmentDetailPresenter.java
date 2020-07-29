@@ -1,13 +1,15 @@
 package com.demo.fmalc_android.presenter;
 
 import com.demo.fmalc_android.contract.ConsignmentDetailContract;
-import com.demo.fmalc_android.entity.ConsignmentDetail;
+//import com.demo.fmalc_android.entity.ConsignmentDetail;
+import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.VehicleDetail;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
-import com.demo.fmalc_android.service.ConsignmentService;
+//import com.demo.fmalc_android.service.ConsignmentService;
 import com.demo.fmalc_android.service.LocationConsignmentService;
+import com.demo.fmalc_android.service.ScheduleService;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,30 +24,48 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
         this.view = view;
     }
 
-    ConsignmentService consignmentService = NetworkingUtils.getConsignmentService();
+    ScheduleService consignmentService = NetworkingUtils.getScheduleService();
 
     LocationConsignmentService service = NetworkingUtils.getLocationConsignmentService();
 
 
     public void findByConsignmentId(Integer id) {
-        Call<ConsignmentDetail> call = consignmentService.findByConsignmentId(id);
-        call.enqueue(new Callback<ConsignmentDetail>() {
-            @Override
-            public void onResponse(Call<ConsignmentDetail> call, Response<ConsignmentDetail> response) {
-                if (!response.isSuccessful()) {
-                    view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
-                } else {
-                    ConsignmentDetail consignmentDetail = response.body();
-                    view.findByConsignmentIdSuccess(consignmentDetail);
-                }
-            }
+        Call<DetailedSchedule> call = consignmentService.findByScheduleId(id);
+       call.enqueue(new Callback<DetailedSchedule>() {
+           @Override
+           public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
+               if (!response.isSuccessful()) {
+                   view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
+               } else {
+                   DetailedSchedule consignmentDetail = response.body();
+                   view.findByConsignmentIdSuccess(consignmentDetail);
+               }
+           }
 
-            @Override
-            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
-                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+           @Override
+           public void onFailure(Call<DetailedSchedule> call, Throwable t) {
+               view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+           }
+       });
 
-            }
-        });
+
+//        call.enqueue(new Callback<DetailedSchedule>() {
+//            @Override
+//            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
+//                if (!response.isSuccessful()) {
+//                    view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
+//                } else {
+//                    DetailedSchedule consignmentDetail = response.body();
+//                    view.findByConsignmentIdSuccess(consignmentDetail);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
+//                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+//
+//            }
+//        });
     }
 
     @Override

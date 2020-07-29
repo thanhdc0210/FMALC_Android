@@ -25,6 +25,6 @@ public class Location implements Serializable {
     private String address;
     @SerializedName("time")
     private String time;
-    @SerializedName("vehicle_id")
-    private int consignment;
+    @SerializedName("schedule")
+    private int schedule;
 }

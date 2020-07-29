@@ -1,6 +1,6 @@
 package com.demo.fmalc_android.contract;
 
-import com.demo.fmalc_android.entity.Consignment;
+//import com.demo.fmalc_android.entity.Consignment;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.VehicleDetail;
 

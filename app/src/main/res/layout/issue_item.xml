@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/linearLayoutIssueItem"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:background="@color/colorWhite"
+		android:orientation="vertical">
+
+	<!--	<TextView-->
+	<!--			android:id="@+id/txtInspectionName"-->
+	<!--			android:layout_width="wrap_content"-->
+	<!--			android:layout_height="match_parent"-->
+	<!--			android:layout_gravity="center"-->
+	<!--			android:layout_weight="9"-->
+	<!--			android:gravity="center"-->
+	<!--			android:text="Xi nhan"-->
+	<!--			android:textSize="16sp" />-->
+
+	<CheckBox
+			android:id="@+id/cbIssue"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:buttonTint="@color/colorPrimary"
+			android:layoutDirection="rtl"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp"
+			android:text="Xi nhan"
+			android:textColor="#000"
+			android:textSize="18dp"
+			tools:text="Xi nhan" />
+
+	<LinearLayout
+
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="10">
+
+			<Button
+					android:id="@+id/btnViewIssueDetail"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="bottom"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+
+					android:singleLine="true"
+					android:text="Xem chi tiết"
+					android:textAllCaps="false"
+					android:textColor="@color/colorWhite"
+					android:textSize="16dp"
+					app:iconPadding="0dp" />
+
+	</LinearLayout>
+
+	<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_margin="10dp"
+			android:background="#C4C4C4" />
+
+</LinearLayout>

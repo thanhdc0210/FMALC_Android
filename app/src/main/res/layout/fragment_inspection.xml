@@ -1,15 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context=".fragment.InspectionFragment"
-		android:background="#FFFF">
+		android:layout_gravity="center"
+		android:background="#FFFFFF"
 
-	<!-- TODO: Update blank fragment layout -->
+		android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+		tools:context=".fragment.InspectionFragment">
+
+
 	<TextView
+			android:id="@+id/txtTitleBar"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:text="@string/hello_blank_fragment" />
+			android:layout_height="45dp"
+			android:background="@color/colorPrimaryDark"
+			android:backgroundTint="@color/colorPrimaryDark"
+			android:gravity="center"
+			android:text="Báo cáo tình trạng xe"
+			android:textAllCaps="true"
+			android:textColor="@color/colorWhite"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toTopOf="@id/containterInspection"
+			app:layout_constraintEnd_toEndOf="parent"
 
-</FrameLayout>
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+	<FrameLayout
+			android:id="@+id/containterInspection"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:layout_gravity="center"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/txtTitleBar">
+
+		<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:orientation="vertical"
+				android:layout_gravity="center">
+			<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Chọn loại báo cáo cho xe:"
+					android:fontFamily="@font/roboto_bold"
+					android:textSize="20dp"/>
+
+			<Button
+					android:id="@+id/btnPreparing"
+					android:layout_width="250dp"
+					android:layout_height="80dp"
+					android:layout_margin="10dp"
+					android:gravity="center"
+					android:text="Trước khi chạy"
+					android:textSize="16dp"/>
+			<Button
+					android:id="@+id/btnOnTheWay"
+					android:layout_width="250dp"
+					android:layout_height="80dp"
+					android:gravity="center"
+					android:text="Đang chạy"
+					android:layout_margin="10dp"
+					android:textSize="16dp"/>
+			<Button
+					android:id="@+id/btnCompleted"
+					android:layout_width="250dp"
+					android:layout_height="80dp"
+					android:gravity="center"
+					android:text="Đã hoàn thành"
+					android:layout_margin="10dp"
+					android:textSize="16dp"/>
+			<Button
+					android:id="@+id/btnMaintainAndIssue"
+					android:layout_width="250dp"
+					android:layout_height="80dp"
+					android:gravity="center"
+					android:text="Bảo trì và sự cố"
+					android:layout_margin="10dp"
+					android:textSize="16dp"/>
+			<View
+					android:layout_width="300dp"
+					android:layout_height="1dp"
+					android:layout_margin="10dp"
+					android:background="#C4C4C4" />
+			<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Thông tin khác:"
+					android:fontFamily="@font/roboto_bold"
+					android:textSize="20dp"/>
+			<Button
+					android:id="@+id/btnFillingFuel"
+					android:layout_width="250dp"
+					android:layout_height="80dp"
+					android:gravity="center"
+					android:text="Đổ xăng dầu"
+					android:layout_margin="10dp"
+					android:textSize="16dp"/>
+		</LinearLayout>
+
+
+	</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

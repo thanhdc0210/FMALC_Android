@@ -1,5 +1,30 @@
 <resources>
-	<string name="app_name">FMALC</string>
-	<!-- TODO: Remove or change this placeholder text -->
-	<string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">FMALC</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="dialog_single_choice_array">
+        <item>Chuẩn bị chạy</item>
+        <item>Đang chạy</item>
+        <item>Đã hoàn thành</item>
+    </string-array>
+    <string name="positive_button">OK</string>
+
+    <string name="s3_bucket">fmalc-img</string>
+    <string name="s3_secret_key">gamVtx5sW8lRzz/lytM6NmTjl+tzKNB9+XkfKCyX</string>
+    <string name="s3_access_key">AKIAS3V2PUMY2LJR5UNB</string>
+    <string name="title_activity_maintain_and_issue">Bảo Trì và Sự Cố</string>
+    <string name="tab_maintain">Bảo trì</string>
+    <string name="tab_issue">Sự cố</string>
+    <string name="title_activity_filling_fuel">FillingFuelActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>

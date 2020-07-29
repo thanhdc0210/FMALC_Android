@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.contract.LoginContract;
-import com.demo.fmalc_android.presenter.ConsignmentPresenter;
+import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.entity.LoginResponse;
+import com.demo.fmalc_android.presenter.SchedulePresenter;
 import com.demo.fmalc_android.presenter.LoginPresenter;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -18,8 +22,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     private TextInputEditText edtUsername, edtPassword;
     private MaterialButton btnLogin;
-    private LoginPresenter accountPresenter;
-    private ConsignmentPresenter consignmentPresenter;
+    private LoginPresenter loginPresenter;
+    private SchedulePresenter schedulePresenter;
+    private ProgressBar loginProgressBar;
+    private int progressStatus = 0;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +39,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         init();
 
+        loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
+
     }
 
     private void init(){
-        accountPresenter = new LoginPresenter();
-        accountPresenter.setView(this);
+        loginPresenter = new LoginPresenter();
+        loginPresenter.setView(this);
     }
 
     private boolean checkLogin(String name, String password) {
@@ -59,7 +68,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         //validate
         if (checkLogin(username, password)) {
             try {
-                accountPresenter.doLogin(username, password);
+                loginProgressBar.setVisibility(1);
+                loginProgressBar.setProgress(60);
+                loginPresenter.doLogin(username, password);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -68,13 +79,19 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void loginSuccess() {
+    public void loginSuccess(LoginResponse loginResponse) {
         Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
+        final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
+        globalVariable.setUsername(loginResponse.getUsername());
+        globalVariable.setRole(loginResponse.getRole());
+        globalVariable.setToken(loginResponse.getToken());
+        loginProgressBar.setVisibility(-1);
         startActivity(intent);
     }
 
     @Override
     public void loginFailure(String message) {
-        Toast.makeText(this, "Đăng nhập không thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        loginProgressBar.setVisibility(-1);
     }
 }
