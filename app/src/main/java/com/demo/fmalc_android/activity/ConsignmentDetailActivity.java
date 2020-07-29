@@ -13,7 +13,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -27,39 +26,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-//
-import com.demo.fmalc_android.R;
 
-//import com.demo.fmalc_android.adapter.ConsignmentTimeStepAdapter;
+import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.adapter.ScheduleTimeStepAdapter;
 import com.demo.fmalc_android.contract.ConsignmentDetailContract;
-//import com.demo.fmalc_android.entity.ConsignmentDetail;
+import com.demo.fmalc_android.contract.DetailedScheduleContract;
+import com.demo.fmalc_android.entity.DetailedSchedule;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.ListStatusUpdate;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
+import com.demo.fmalc_android.enum1.NotificationTypeEnum;
 import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.enumType.DriverStatusEnum;
 import com.demo.fmalc_android.enumType.VehicleStatusEnum;
 import com.demo.fmalc_android.presenter.ConsignmentDetailPresenter;
+import com.demo.fmalc_android.presenter.DetailedSchedulePresenter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import com.demo.fmalc_android.adapter.ScheduleTimeStepAdapter;
-import com.demo.fmalc_android.contract.DetailedScheduleContract;
-import com.demo.fmalc_android.entity.DetailedSchedule;
-import com.demo.fmalc_android.presenter.DetailedSchedulePresenter;
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
-
 import okhttp3.ResponseBody;
 
 
@@ -80,7 +75,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
     private Handler handler = new Handler();
     private Runnable runnable;
     private int delay = 10000;
-
+    private GlobalVariable globalVariable;
     //location request is config file for all settings related to FusedLocationProviderClient
     private LocationRequest locationRequest;
 
@@ -139,7 +134,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
         btnTracking = findViewById(R.id.btnUpdateStatus);
 
         init();
-
+        globalVariable = (GlobalVariable) getApplicationContext();
         detailedSchedulePresenter.findByScheduleId(id);
 
         btnLocationConsignment = findViewById(R.id.btnLocationConsignment);
@@ -171,19 +166,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
             }
         };
 
-//        @Override
-//        public void onClick(View v) {
-//
-//
-////        System.out.println(detailedSchedule.getLicensePlates()+"PPPPPPPP");
-//            Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-//            Bundle bundle = new Bundle();
-//            intent.putExtra("CONSIGNMENT_ID", detailedSchedule.getScheduleId() + "");
-//            intent.putExtra("LICENSE_PLATES", detailedSchedule.getLicensePlates());
-//            intent.putExtra("CONSIGNMENT_STATUS", detailedSchedule.getStatus());
-//            intent.putExtra("SCHEDULE_ID",id);
-//            startActivity(intent);
-//        }
+
 
         btnLocationConsignment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -324,6 +307,11 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
 //                || consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue())))) {
 //            updateGPS();
 //
+//        }else if((consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue())))){
+////            btnTracking.setText(consignmentDetail.getStatus());
+////            btnTracking.setClickable(false);
+////            btnTracking.setBackgroundColor(Color.GRAY);
+////            btnTracking.setTextColor(Color.WHITE);
 //        }
         btnNote.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -422,9 +410,11 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
                     System.out.println(locationTemp + " --- " + temp);
                     Notification notification = new Notification();
                     notification.setVehicle_id(vehicleDetail.getId());
-                    notification.setDriver_id(1);
+
+
+                    notification.setDriver_id(globalVariable.getId());
                     notification.setStatus(true);
-                    notification.setType(1);
+                    notification.setType(NotificationTypeEnum.LONG_IDLE_TIMES.getValue());
                     notification.setContent("Xe biển số :" + vehicleDetail.getLicensePlates() + " dừng trong lúc giao hàng quá lâu ở: " + locationTemp);
 //                    notification.setTime("2020-6-10 11:00:00");
                     consignmentDetailPresenter.sendNotification(notification);

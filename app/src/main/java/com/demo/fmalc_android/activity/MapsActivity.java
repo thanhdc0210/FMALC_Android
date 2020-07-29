@@ -110,7 +110,7 @@ private Polyline currentPolyline;
                 }
             }
 //            Polyline polyline = mMap.addPolyline(rectOptions);
-            mMap.moveCamera(CameraUpdateFactory.zoomTo(20));
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(30));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(places.get(0).getLatitude(),places.get(0).getLongitude())));
         }
 //        Log.d("mylog", "Added Markers");
@@ -135,7 +135,7 @@ private Polyline currentPolyline;
         String output = "json";
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + key;
-        System.out.println(url);
+//        System.out.println(url);
         return url;
     }
 

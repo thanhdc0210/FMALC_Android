@@ -103,7 +103,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
         consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 1) {
+        if (showData.size() > 10) {
             initScrollListener();
         }
     }
