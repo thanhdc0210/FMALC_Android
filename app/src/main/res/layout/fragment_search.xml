@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/colorWhite"
+		tools:context=".fragment.SearchFragment">
+
+	<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/appBarLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/Theme.MyApp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+		<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+			<com.google.android.material.appbar.MaterialToolbar
+					android:id="@+id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:background="?attr/colorPrimary"
+					app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+			<com.miguelcatalan.materialsearchview.MaterialSearchView
+					android:id="@+id/search"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+
+		</FrameLayout>
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<com.google.android.material.chip.ChipGroup
+			android:id="@+id/chipGroup"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:checkedChip="@+id/consignmentId"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+			app:selectionRequired="true"
+			app:singleSelection="true">
+
+		<com.google.android.material.chip.Chip
+				android:id="@+id/consignmentId"
+				style="@style/AppTheme"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="10dp"
+				android:checkable="true"
+				android:text="Mã lô hàng"
+				android:textColor="@color/colorWhite"
+				android:textStyle="bold"
+				app:chipBackgroundColor="@color/colorPrimary"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
+		<com.google.android.material.chip.Chip
+				android:id="@+id/licensePlates"
+				style="@style/AppTheme"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:checkable="true"
+				android:text="Biển số xe"
+				android:textColor="@color/colorWhite"
+				android:textStyle="bold"
+				app:chipBackgroundColor="@color/colorPrimary" />
+
+		<com.google.android.material.chip.Chip
+				android:id="@+id/consignmentOwner"
+				style="@style/AppTheme"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@color/colorPrimaryDark"
+				android:checkable="true"
+				android:text="Chủ lô hàng"
+				android:textColor="@color/colorWhite"
+				android:textSize="20dp"
+				android:textStyle="bold"
+				app:chipBackgroundColor="@color/colorPrimary"
+
+				/>
+	</com.google.android.material.chip.ChipGroup>
+
+	<TextView
+			android:id="@+id/txtEmptyView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:text="Không tìm thấy lịch"
+			android:textSize="25dp"
+			android:textStyle="bold"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+			app:layout_constraintBottom_toBottomOf="parent" />
+	<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rvConsignment"
+			android:layout_marginTop="110dp"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

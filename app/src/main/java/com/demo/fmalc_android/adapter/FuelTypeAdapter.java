@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.entity.FuelRequest;
 import com.demo.fmalc_android.entity.FuelType;
 
 import java.util.ArrayList;
@@ -36,6 +37,12 @@ public class FuelTypeAdapter extends RecyclerView.Adapter<FuelTypeAdapter.ViewHo
         this.id = id;
     }
 
+    private FuelType fuelType = new FuelType();
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
     public FuelTypeAdapter(List<FuelType> fuelTypeList, Context context) {
         this.fuelTypeList = fuelTypeList;
         this.context = context;
@@ -51,17 +58,19 @@ public class FuelTypeAdapter extends RecyclerView.Adapter<FuelTypeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull FuelTypeAdapter.ViewHolder holder, int position) {
         boolean mCheck = false;
-        FuelType fuelType = fuelTypeList.get(position);
+        FuelType fuelTypeChecked = fuelTypeList.get(position);
 
-        holder.txtFuelType.setText(fuelType.getType());
-        holder.txtPrice.setText(fuelType.getPrice() + "");
+        holder.txtFuelType.setText(fuelTypeChecked.getType());
+        holder.txtPrice.setText(fuelTypeChecked.getPrice() + "");
         holder.rdbtnFuel.setChecked(position == lastSelectedPosition);
         holder.rdbtnFuel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    setId(fuelType.getId());
-                    Toast.makeText(context, fuelType.getPrice()+"id:"+id, Toast.LENGTH_SHORT).show();
+                    setId(fuelTypeChecked.getId());
+                    fuelType.setId(fuelTypeChecked.getId());
+                    fuelType.setPrice(fuelTypeChecked.getPrice());
+                    Toast.makeText(context, fuelTypeChecked.getPrice()+" id: " + fuelTypeChecked.getId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -31,21 +31,22 @@ public class VehicleInspectionPresenter implements VehicleContract.Presenter {
         call.enqueue(new Callback<VehicleInspection>() {
             @Override
             public void onResponse(Call<VehicleInspection> call, Response<VehicleInspection> response) {
-                if(!response.isSuccessful()){
-                    view.getListLicensePlateAndInspectionFailure("Không thể lấy thông tin");
-                }else {
-                  if(response.code() == 200) {
-                      VehicleInspection vehicleInspection = response.body();
-                      view.getListLicensePlateAndInspectionSuccess(vehicleInspection);
-                  } else {
-                      view.getListLicensePlateAndInspectionFailure("Không thể lấy thông tin");
-                  }
+                if (response.code() == 204){
+                    view.getListLicensePlateAndInspectionFailure("Dữ liệu bạn yêu cầu hiện không có");
+                }else if (response.code() == 200){
+                    view.getListLicensePlateAndInspectionSuccess(response.body());
+                }else{
+                    view.getListLicensePlateAndInspectionFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<VehicleInspection> call, Throwable t) {
-                view.getListLicensePlateAndInspectionFailure("Có lỗi xảy ra trong quá trình lấy thông tin " + t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.getListLicensePlateAndInspectionFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else {
+                    view.getListLicensePlateAndInspectionFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
 
         });

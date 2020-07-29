@@ -16,19 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.FuelTypeAdapter;
+import com.demo.fmalc_android.contract.FuelContract;
 import com.demo.fmalc_android.contract.FuelTypeContract;
+import com.demo.fmalc_android.entity.FuelRequest;
 import com.demo.fmalc_android.entity.FuelType;
 import com.demo.fmalc_android.entity.FuelTypeResponse;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.presenter.FuelPresenter;
 import com.demo.fmalc_android.presenter.FuelTypePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FillingFuelActivity extends AppCompatActivity implements FuelTypeContract.View {
+public class FillingFuelActivity extends AppCompatActivity implements FuelTypeContract.View, FuelContract.View {
 
     private List<FuelType> fuelTypeList = new ArrayList<>();
     private FuelTypePresenter fuelTypePresenter;
+    private FuelPresenter fuelPresenter;
     private FuelTypeAdapter fuelTypeAdapter;
     private RecyclerView fuelTypeRecyclerView;
 
@@ -45,10 +49,8 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Thông tin đổ xăng dầu");
         setContentView(R.layout.activity_filling_fuel);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thông tin đổ xăng dầu");
         init();
         fuelTypeRecyclerView = findViewById(R.id.recyclerViewFuel);
         globalVariable = (GlobalVariable) getApplicationContext();
@@ -57,23 +59,19 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         status.add(2);
         fuelTypePresenter.getListFuelTypes(globalVariable.getUsername(), status);
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
+        txtTotalPrice.setText("0 VNĐ");
         edtCurrentKm = findViewById(R.id.edtCurrentKm);
         edtVolume = findViewById(R.id.edtVolume);
-        edtVolume.setText("0");
+        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
         btnSaveFillingFuel = findViewById(R.id.btnSaveFillingFuel);
-        btnSaveFillingFuel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(FillingFuelActivity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
-                onBackPressed();
-            }
-        });
-
     }
 
     private void init() {
         fuelTypePresenter = new FuelTypePresenter();
         fuelTypePresenter.setView(this);
+
+        fuelPresenter = new FuelPresenter();
+        fuelPresenter.setView(this);
     }
 
     @Override
@@ -82,7 +80,6 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         fuelTypeAdapter = new FuelTypeAdapter(fuelTypeList, getApplicationContext());
         fuelTypeRecyclerView.setAdapter(fuelTypeAdapter);
         fuelTypeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
         txtCurrentLicensePlate.setText(fuelTypeResponse.getVehicleLicensePlate());
 
         edtVolume.addTextChangedListener(new TextWatcher() {
@@ -117,6 +114,43 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                 }
             }
         });
+
+        btnSaveFillingFuel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String vehicleLicensePlate = txtCurrentLicensePlate.getText().toString();
+                if (vehicleLicensePlate.equals("")){
+                    Toast.makeText(FillingFuelActivity.this, "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
+                }else{
+                    String km = edtCurrentKm.getText().toString();
+                    String vol = edtVolume.getText().toString();
+                    if (km.equals("")){
+                        Toast.makeText(FillingFuelActivity.this, "Bạn chưa nhập thông tin số km đổ nhiên liệu", Toast.LENGTH_SHORT);
+                    }else if (vol.equals("")){
+                        Toast.makeText(FillingFuelActivity.this, "Bạn chưa nhập thông tin số lít nhiên liệu", Toast.LENGTH_SHORT);
+                    }else {
+                        Integer kmOld = Integer.valueOf(km);
+                        Double volume = Double.valueOf(vol);
+                        FuelType fuelType = fuelTypeAdapter.getFuelType();
+
+                        if (fuelType != null){
+                            Integer fuelTypeId = fuelType.getId();
+                            Double unitPriceAtFillingTime = fuelType.getPrice();
+                            FuelRequest fuelRequest = new FuelRequest();
+                            fuelRequest.setFuelTypeId(fuelTypeId);
+                            fuelRequest.setKmOld(kmOld);
+                            fuelRequest.setUnitPriceAtFillingTime(unitPriceAtFillingTime);
+                            fuelRequest.setVolume(volume);
+                            fuelRequest.setVehicleLicensePlates(vehicleLicensePlate);
+
+                            fuelPresenter.saveFuelFilling(fuelRequest);
+                        } else {
+                            Toast.makeText(FillingFuelActivity.this.getApplicationContext(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
     }
 
 
@@ -125,4 +159,14 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void saveFuelFillingSuccess() {
+        Toast.makeText(this.getApplicationContext(), "Lưu thành công ", Toast.LENGTH_LONG).show();
+        onBackPressed();
+    }
+
+    @Override
+    public void saveFuelFillingFailure(String message) {
+        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

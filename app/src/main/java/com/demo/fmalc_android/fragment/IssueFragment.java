@@ -1,5 +1,6 @@
 package com.demo.fmalc_android.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -45,6 +46,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     ReportIssueResponse reportIssueResponse;
     List<ReportIssueContentResponse> reportIssueContentResponseList;
     TextView txtCurrentLicensePlate;
+    TextView txtEmptyView;
     Button btnUpdateReportIssue;
     List<Integer> status = new ArrayList<>();
 
@@ -63,19 +65,9 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         issueInformationRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewIssue);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         btnUpdateReportIssue = view.findViewById(R.id.btnUpdateIssue);
+        txtEmptyView = view.findViewById(R.id.txtEmptyView);
         status.add(0);
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
-
-        btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<Integer> listReportIssueId = issueAdapter.getListIssue();
-                ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
-                reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
-                reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
-                reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating);
-            }
-        });
 
         return view;
     }
@@ -94,11 +86,27 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse) {
-        txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
-        issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
-        issueInformationRecyclerView.setAdapter(issueAdapter);
-        issueInformationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        getReportIssueContentResponseList(reportIssueResponse.getReportIssueContentResponses());
+        if(reportIssueResponse.getReportIssueContentResponses()==null){
+            txtEmptyView.setVisibility(View.VISIBLE);
+            issueInformationRecyclerView.setVisibility(View.GONE);
+        } else {
+            txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
+            issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
+            issueInformationRecyclerView.setAdapter(issueAdapter);
+            issueInformationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            txtEmptyView.setVisibility(View.GONE);
+            issueInformationRecyclerView.setVisibility(View.VISIBLE);
+            btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<Integer> listReportIssueId = issueAdapter.getListIssue();
+                    ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
+                    reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
+                    reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
+                    reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating);
+                }
+            });
+        }
     }
 
     @Override
@@ -109,8 +117,6 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     @Override
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-        status.add(0);
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
     }
 
     @Override

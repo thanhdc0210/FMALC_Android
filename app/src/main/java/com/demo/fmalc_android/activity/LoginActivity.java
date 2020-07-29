@@ -85,6 +85,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         globalVariable.setUsername(loginResponse.getUsername());
         globalVariable.setRole(loginResponse.getRole());
         globalVariable.setToken(loginResponse.getToken());
+        globalVariable.setId(loginResponse.getId());
+        System.out.println(loginResponse.getId());
         loginProgressBar.setVisibility(-1);
         startActivity(intent);
     }

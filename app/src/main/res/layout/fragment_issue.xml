@@ -38,7 +38,6 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_gravity="center"
-				android:text="50N1-02158"
 				android:textColor="@color/colorPrimary"
 				android:textSize="20dp"
 				android:textStyle="bold" />
@@ -56,7 +55,19 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/inforLicensePlate"/>
 
-
+	<TextView
+			android:id="@+id/txtEmptyView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:text="Không có sự cố"
+			android:textSize="25dp"
+			android:textStyle="bold"
+			android:visibility="gone"
+			app:layout_constraintBottom_toTopOf="@+id/btnUpdateIssue"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/inforLicensePlate" />
 	<Button
 			android:id="@+id/btnUpdateIssue"
 			android:layout_width="wrap_content"

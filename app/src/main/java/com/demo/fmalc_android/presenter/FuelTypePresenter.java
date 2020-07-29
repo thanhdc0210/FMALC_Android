@@ -31,20 +31,20 @@ public class FuelTypePresenter implements FuelTypeContract.Presenter {
             @Override
             public void onResponse(Call<FuelTypeResponse> call, Response<FuelTypeResponse> response) {
                 if (response.code() == 204){
-                    view.getListFuelTypeFailure("Không có thông tin");
+                    view.getListFuelTypeFailure("Dữ liệu bạn yêu cầu hiện không có");
                 }else if (response.code() == 200){
                     view.getListFuelTypeSuccess(response.body());
                 }else{
-                    view.getListFuelTypeFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+                    view.getListFuelTypeFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<FuelTypeResponse> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
-                    view.getListFuelTypeFailure("Lỗi kết nối mạng");
+                    view.getListFuelTypeFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else {
-                    view.getListFuelTypeFailure("Có lỗi xảy ra ở server");
+                    view.getListFuelTypeFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
             }
         });

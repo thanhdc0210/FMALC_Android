@@ -24,16 +24,22 @@ public class ReportIssuePresenter implements ReportIssueContract.Presenter {
         call.enqueue(new Callback<ReportIssueRequest>() {
             @Override
             public void onResponse(Call<ReportIssueRequest> call, Response<ReportIssueRequest> response) {
-                if (!response.isSuccessful()) {
-                    view.createReportIssueForDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo. Xin thử lại sau! ");
-                } else {
+                if (response.code() == 204) {
+                    view.createReportIssueForDeliveryForFailure("Không thể lưu báo cáo");
+                } else if (response.code() == 200) {
                     view.createReportIssueForDeliveryForSuccess(response.body());
+                }else{
+                    view.createReportIssueForDeliveryForFailure("Có lỗi xảy ra trong quá trình báo cáo");
                 }
             }
 
             @Override
             public void onFailure(Call<ReportIssueRequest> call, Throwable t) {
-                view.createReportIssueForDeliveryForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                if (t.getMessage().contains("timed out")){
+                    view.createReportIssueForDeliveryForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else{
+                    view.createReportIssueForDeliveryForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         }
         );

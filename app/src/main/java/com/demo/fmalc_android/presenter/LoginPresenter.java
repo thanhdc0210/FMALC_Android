@@ -37,26 +37,25 @@ public class LoginPresenter implements LoginContract.Presenter {
             @SneakyThrows
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if(!response.isSuccessful()){
-                        view.loginFailure("Đăng nhập thất bại " + response.code());
-                    }else {
-//                        loginResponse = response.body();
+                    if(response.code() == 204){
+                        view.loginFailure("Tài khoản không tồn tại");
+                    }else if (response.code() == 200){
                         view.loginSuccess(response.body());
+                    }else if (response.code() == 401){
+                        view.loginFailure("Username hoặc Password không hợp lệ");
+                    }else{
+                        view.loginFailure("Có lỗi xảy ra trong quá trình đăng nhập");
                     }
                 }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
-                    view.loginFailure("Lỗi kết nối mạng");
+                    view.loginFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else {
-                    view.loginFailure("Có lỗi xảy ra ở server " + t.getMessage());
+                    view.loginFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
             }
         });
     }
-
-//    public LoginResponse getLoginResponse() {
-//        return loginResponse;
-//    }
 }
