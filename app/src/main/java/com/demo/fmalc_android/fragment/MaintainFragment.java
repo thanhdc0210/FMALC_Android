@@ -17,6 +17,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.IssueAdapter;
 import com.demo.fmalc_android.adapter.MaintainAdapter;
 import com.demo.fmalc_android.contract.MaintenanceContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.MaintainResponse;
 import com.demo.fmalc_android.presenter.MaintenancePresenter;
 import com.demo.fmalc_android.presenter.ReportIssueResponsePresenter;
@@ -44,6 +45,7 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
     private TextView txtEmptyMaintain;
     private MaintenancePresenter maintenancePresenter;
     private MaintainAdapter maintainAdapter;
+    private GlobalVariable globalVariable;
 
     public MaintainFragment() {
         // Required empty public constructor
@@ -89,7 +91,8 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
         txtEmptyMaintain = view.findViewById(R.id.txtEmptyMaintain);
         init();
         //TODO sửa lại truyền id driver
-        maintenancePresenter.getMaintenanceList(1);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        maintenancePresenter.getMaintenanceList(globalVariable.getId());
 
         return view;
     }
@@ -120,7 +123,10 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
 
     @Override
     public void updateMaintenanceSuccessful(boolean isSuccessful) {
-
+        Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+//        status.add(0);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        maintenancePresenter.getMaintenanceList(globalVariable.getId());
     }
 
     @Override

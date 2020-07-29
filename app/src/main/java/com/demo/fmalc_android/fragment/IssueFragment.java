@@ -117,6 +117,8 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     @Override
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+        status.add(0);
+        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
     }
 
     @Override
