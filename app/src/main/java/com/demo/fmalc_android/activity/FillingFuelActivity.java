@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -120,14 +119,14 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
             public void onClick(View v) {
                 String vehicleLicensePlate = txtCurrentLicensePlate.getText().toString();
                 if (vehicleLicensePlate.equals("")){
-                    Toast.makeText(FillingFuelActivity.this, "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT);
+                    Toast.makeText(FillingFuelActivity.this.getApplication(), "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT).show();
                 }else{
                     String km = edtCurrentKm.getText().toString();
                     String vol = edtVolume.getText().toString();
                     if (km.equals("")){
-                        Toast.makeText(FillingFuelActivity.this, "Bạn chưa nhập thông tin số km đổ nhiên liệu", Toast.LENGTH_SHORT);
+                        Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa nhập thông tin số km đổ nhiên liệu", Toast.LENGTH_SHORT).show();
                     }else if (vol.equals("")){
-                        Toast.makeText(FillingFuelActivity.this, "Bạn chưa nhập thông tin số lít nhiên liệu", Toast.LENGTH_SHORT);
+                        Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa nhập thông tin số lít nhiên liệu", Toast.LENGTH_SHORT).show();
                     }else {
                         Integer kmOld = Integer.valueOf(km);
                         Double volume = Double.valueOf(vol);
@@ -145,7 +144,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
                             fuelPresenter.saveFuelFilling(fuelRequest);
                         } else {
-                            Toast.makeText(FillingFuelActivity.this.getApplicationContext(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

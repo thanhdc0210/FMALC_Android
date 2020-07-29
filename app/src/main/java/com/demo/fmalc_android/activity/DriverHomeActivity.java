@@ -67,7 +67,6 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
                         globalVariable = (GlobalVariable) getApplicationContext();
-                        System.out.println("tokennnnnnnnnnnnnnnnnnnnnn: " + token);
                         tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), token);
                     }
                 });

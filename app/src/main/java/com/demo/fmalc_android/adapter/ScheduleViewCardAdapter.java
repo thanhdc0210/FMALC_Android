@@ -173,7 +173,13 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
             public void onClick(View view) {
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
+//<<<<<<< HEAD:app/src/main/java/com/demo/fmalc_android/adapter/ConsignmentViewCardAdapter.java
+//                bundle.putInt("consignment_id", consignment.getConsignmentId());
+//                bundle.putString("LICENSE", consignment.getLicensePlates());
+//=======
                 bundle.putInt("consignment_id", schedule.getScheduleId());
+
+//>>>>>>> eca2328197770bd44b14eb61fa8f77eb02835d86:app/src/main/java/com/demo/fmalc_android/adapter/ScheduleViewCardAdapter.java
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

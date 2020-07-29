@@ -118,7 +118,12 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
 
     @Override
     public void getMaintenanceListFailure(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        if (message.contains("Dữ liệu bạn yêu cầu hiện không có")){
+            txtEmptyMaintain.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -131,6 +136,23 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
 
     @Override
     public void updateMaintenanceFailure(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Refresh tab data:
+
+        if (isVisibleToUser) {
+
+            getFragmentManager()
+                    .beginTransaction()
+                    .detach(this)
+                    .attach(this)
+                    .commit();
+        }
     }
 }

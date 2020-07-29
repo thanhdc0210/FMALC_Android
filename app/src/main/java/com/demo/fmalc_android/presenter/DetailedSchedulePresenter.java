@@ -2,6 +2,7 @@ package com.demo.fmalc_android.presenter;
 
 import com.demo.fmalc_android.contract.DetailedScheduleContract;
 import com.demo.fmalc_android.entity.DetailedSchedule;
+import com.demo.fmalc_android.entity.ListStatusUpdate;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 import com.demo.fmalc_android.service.ScheduleService;
 
@@ -41,6 +42,26 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
                 }else{
                     view.findByScheduleIdFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
+            }
+        });
+    }
+    @Override
+    public void updateConsDriVeh(ListStatusUpdate statusUpdate, Integer id) {
+        Call<ListStatusUpdate> call = scheduleService.updateStatusAndUsernameForDriver(id,statusUpdate);
+        call.enqueue(new Callback<ListStatusUpdate>() {
+            @Override
+            public void onResponse(Call<ListStatusUpdate> call, Response<ListStatusUpdate> response) {
+                if(!response.isSuccessful()){
+                    view.updateConsDriVehFailed("Bắt đầu thất bại");
+                }else{
+                    ListStatusUpdate listStatusUpdate = response.body();
+                    view.updateConsDriVehSuccess(listStatusUpdate);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListStatusUpdate> call, Throwable t) {
+                view.updateConsDriVehFailed("Có lỗi xày ra");
             }
         });
     }

@@ -34,21 +34,22 @@ public class MaintenancePresenter implements MaintenanceContract.Presenter {
         call.enqueue(new Callback<List<MaintainResponse>>() {
             @Override
             public void onResponse(Call<List<MaintainResponse>> call, Response<List<MaintainResponse>> response) {
-                if (!response.isSuccessful()) {
-                    view.getMaintenanceListFailure("Không thể tải thông tin");
-
+                if (response.code() == 204){
+                    view.getMaintenanceListFailure("Dữ liệu bạn yêu cầu hiện không có");
+                }else if (response.code() == 200) {
+                    view.getMaintenanceListSuccessful(response.body());
                 } else {
-                    if (response.code() == 200 || response.code() == 204) {
-                        List<MaintainResponse> maintainResponses = response.body();
-                        view.getMaintenanceListSuccessful(maintainResponses);
-                    }
-
+                    view.getMaintenanceListFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu ");
                 }
             }
 
             @Override
             public void onFailure(Call<List<MaintainResponse>> call, Throwable t) {
-                view.getMaintenanceListFailure("Không thể tải thông tin " + t.getMessage());
+                if (t.getMessage().contains("timed out")){
+                    view.getMaintenanceListFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else{
+                    view.getMaintenanceListFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }
             }
         });
     }

@@ -23,7 +23,6 @@ import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.ScheduleContract;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
-import com.demo.fmalc_android.paging.ILoadMore;
 import com.demo.fmalc_android.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     int i = 0, nextLimit = 0;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+//    SchedulePresenter schedulePresenter;
 
     public PrepareFragment() {
         // Required empty public constructor
@@ -72,6 +72,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 refreshList();
             }
         });
+
         return view;
 
     }

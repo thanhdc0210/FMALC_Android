@@ -15,6 +15,7 @@
 			android:layout_marginBottom="70dp"
 			android:text="Bắt đầu"
 			android:textStyle="bold"
+
 			android:backgroundTint="#5BCA60"
 			app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
 			app:layout_constraintStart_toStartOf="@+id/linearLayout" />

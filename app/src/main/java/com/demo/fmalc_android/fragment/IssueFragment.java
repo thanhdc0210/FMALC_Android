@@ -69,6 +69,8 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         status.add(0);
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
 
+        setUserVisibleHint(false);
+
         return view;
     }
 
@@ -86,10 +88,12 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse) {
-        if(reportIssueResponse.getReportIssueContentResponses()==null){
+        if (reportIssueResponse.getReportIssueContentResponses().isEmpty()){
             txtEmptyView.setVisibility(View.VISIBLE);
             issueInformationRecyclerView.setVisibility(View.GONE);
-        } else {
+            txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
+            btnUpdateReportIssue.setVisibility(View.GONE);
+        }else {
             txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
             issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
             issueInformationRecyclerView.setAdapter(issueAdapter);
@@ -111,7 +115,14 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleFailure(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        if (message.contains("Dữ liệu bạn yêu cầu hiện không có")){
+            txtEmptyView.setVisibility(View.VISIBLE);
+            issueInformationRecyclerView.setVisibility(View.GONE);
+            btnUpdateReportIssue.setVisibility(View.GONE);
+            txtCurrentLicensePlate.setVisibility(View.GONE);
+        }else{
+            Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -133,13 +144,15 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
         // Refresh tab data:
 
-        if (getFragmentManager() != null) {
+        if (isVisibleToUser) {
 
             getFragmentManager()
                     .beginTransaction()
                     .detach(this)
                     .attach(this)
                     .commit();
+        }else{
+
         }
     }
 }

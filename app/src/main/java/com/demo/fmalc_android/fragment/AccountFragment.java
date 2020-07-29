@@ -20,6 +20,7 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.LoginActivity;
 import com.demo.fmalc_android.contract.DriverContract;
 import com.demo.fmalc_android.entity.DriverInformation;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.presenter.DriverPresenter;
 
 import java.io.IOException;
@@ -45,6 +46,7 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     TextView txtUsernameProfile,txtPhoneNumber,txtWorkedTime,txtIdentityNo, txtDoB;
     ImageView imgProfile;
     Button btnLogout;
+    GlobalVariable globalVariable;
 
     private  DriverInformation driverInformation;
 
@@ -102,9 +104,10 @@ public class AccountFragment extends Fragment implements DriverContract.View{
         txtDoB = view.findViewById(R.id.txtDoB);
         imgProfile = view.findViewById(R.id.imgProfile);
         btnLogout = view.findViewById(R.id.btnLogout);
-       init();
+        init();
         //TODO thay id user hiện tại vào
-        driverPresenter.getDriverInformation(1);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
+        driverPresenter.getDriverInformation(globalVariable.getId());
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.demo.fmalc_android.presenter;
 
 import com.demo.fmalc_android.contract.ScheduleContract;
+import com.demo.fmalc_android.entity.ListStatusUpdate;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 import com.demo.fmalc_android.service.ScheduleService;
@@ -46,4 +47,6 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
             }
         });
     }
+
+
 }

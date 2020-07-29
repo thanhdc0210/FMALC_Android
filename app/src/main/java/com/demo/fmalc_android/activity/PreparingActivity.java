@@ -65,7 +65,6 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
         inforLicensePlate = findViewById(R.id.inforLicensePlate);
         btnSubmit = findViewById(R.id.btnSubmit);
-        Toast.makeText(this, vehicleStatus, Toast.LENGTH_SHORT).show();
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
@@ -104,7 +103,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection) {
 
-        if (vehicleInspection.getVehicleLicensePlates() == null){
+        if (vehicleInspection.getVehicleLicensePlates().equals("")){
             inforLicensePlate.setVisibility(View.GONE);
             txtEmptyView.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
@@ -152,7 +151,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void getListLicensePlateAndInspectionFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -168,12 +167,11 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void getListLicensePlateAndInspectionAfterDeliverySuccess(VehicleInspection vehicleInspection) {
-        if (vehicleInspection.getVehicleLicensePlates() == null) {
+        if (vehicleInspection.getVehicleLicensePlates().equals("")) {
             inforLicensePlate.setVisibility(View.GONE);
             txtEmptyView.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             btnSubmit.setVisibility(View.GONE);
-
         } else {
             //Gán biển số xe cho textview
             txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
