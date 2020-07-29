@@ -17,4 +17,5 @@ public class GlobalVariable extends Application {
     private String token;
     private String username;
     private String role;
+    private Integer id;
 }

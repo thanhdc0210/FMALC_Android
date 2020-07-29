@@ -86,7 +86,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse) {
-        if(reportIssueResponse.getReportIssueContentResponses().isEmpty()){
+        if(reportIssueResponse.getReportIssueContentResponses()==null){
             txtEmptyView.setVisibility(View.VISIBLE);
             issueInformationRecyclerView.setVisibility(View.GONE);
         } else {

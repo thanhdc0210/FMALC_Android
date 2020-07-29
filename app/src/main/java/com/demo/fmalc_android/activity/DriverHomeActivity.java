@@ -11,11 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.contract.TokenDeviceContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.fragment.AccountFragment;
 import com.demo.fmalc_android.fragment.HomeFragment;
 import com.demo.fmalc_android.fragment.InspectionFragment;
+import com.demo.fmalc_android.presenter.TokenDevicePresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.demo.fmalc_android.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -24,7 +28,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import butterknife.BindView;
 
 
-public class DriverHomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class DriverHomeActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, TokenDeviceContract.View {
 
 
 
@@ -36,6 +40,8 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
     LinearLayout cardView;
 
     BottomNavigationView bottomNavigationView;
+    GlobalVariable globalVariable;
+    TokenDevicePresenter tokenDevicePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,9 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         //default là navigation Home, có sửa lại để test fragment khác
         bottomNavigationView.setSelectedItemId(R.id.navigation_inspection);
+
+        tokenDevicePresenter = new TokenDevicePresenter();
+        tokenDevicePresenter.setView(this);
 
         // Set up firebase cloud messaging
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -57,7 +66,9 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                         }
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-                        System.out.println("tokennnnnnnnnnnnnnnnnnnnnnnnnn " + token);
+                        globalVariable = (GlobalVariable) getApplicationContext();
+                        System.out.println("tokennnnnnnnnnnnnnnnnnnnnn: " + token);
+                        tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), token);
                     }
                 });
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
@@ -85,6 +96,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 break;
             case R.id.navigation_search:
                 item.setChecked(true);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new SearchFragment()).commit();
                 break;
             case R.id.navigation_account:
                 item.setChecked(true);
@@ -98,5 +110,13 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
     }
 
 
+    @Override
+    public void updateTokenDeviceSuccess() {
 
+    }
+
+    @Override
+    public void updateTokenDeviceFailure(String message) {
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

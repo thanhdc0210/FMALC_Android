@@ -28,4 +28,5 @@ public  class DriverInformation  implements Serializable {
     private Float workingHour;
     private String image;
     private Boolean isActive;
+    private String tokenDevice;
 }

@@ -49,10 +49,8 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Thông tin đổ xăng dầu");
         setContentView(R.layout.activity_filling_fuel);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thông tin đổ xăng dầu");
         init();
         fuelTypeRecyclerView = findViewById(R.id.recyclerViewFuel);
         globalVariable = (GlobalVariable) getApplicationContext();

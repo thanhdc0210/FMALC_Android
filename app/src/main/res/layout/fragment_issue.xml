@@ -61,6 +61,7 @@
 			android:layout_height="match_parent"
 			android:gravity="center"
 			android:text="Không có sự cố"
+			android:textSize="25dp"
 			android:textStyle="bold"
 			android:visibility="gone"
 			app:layout_constraintBottom_toTopOf="@+id/btnUpdateIssue"

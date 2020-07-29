@@ -77,9 +77,6 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     private Context context;
     public HashMap<Integer, ReportIssueContentRequest> listIssue = new HashMap();
 
-    private AmazonS3Client s3Client;
-    private BasicAWSCredentials credentials;
-    private AmazonS3 s3;
 
     private Uri fileUri;
     private Bitmap bitmap;
@@ -156,6 +153,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                             }
                         }
                     });
+                    holder.edtNoteIssue.setImeOptions(EditorInfo.IME_ACTION_DONE);
                     imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
                     holder.edtNoteIssue.addTextChangedListener(new TextWatcher() {
@@ -294,9 +292,6 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
             hiddenLayout = itemView.findViewById(R.id.hiddenLinear);
             btnLoadImg = itemView.findViewById(R.id.btnLoadImage);
 
-//            AWSMobileClient.getInstance().initialize(context).execute();
-//            credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-//            s3Client = new AmazonS3Client(credentials);
         }
 
 

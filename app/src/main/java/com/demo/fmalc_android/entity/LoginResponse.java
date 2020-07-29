@@ -20,4 +20,6 @@ public class LoginResponse implements Serializable {
     private String username;
     @SerializedName("role")
     private String role;
+    @SerializedName("id")
+    private Integer id;
 }
