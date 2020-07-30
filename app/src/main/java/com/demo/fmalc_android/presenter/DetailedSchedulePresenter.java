@@ -45,6 +45,27 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
             }
         });
     }
+
+    @Override
+    public void numOfConsignment(Integer id) {
+        Call<Integer> call = scheduleService.countConsignment(id);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(!response.isSuccessful()){
+
+                }else{
+                    view.numOfConsignmentSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public void updateConsDriVeh(ListStatusUpdate statusUpdate, Integer id) {
         Call<ListStatusUpdate> call = scheduleService.updateStatusAndUsernameForDriver(id,statusUpdate);

@@ -31,6 +31,8 @@ import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.ScheduleTimeStepAdapter;
 import com.demo.fmalc_android.contract.ConsignmentDetailContract;
 import com.demo.fmalc_android.contract.DetailedScheduleContract;
+import com.demo.fmalc_android.directionhelpers.FetchURL;
+import com.demo.fmalc_android.directionhelpers.TaskLoadedCallback;
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.ListStatusUpdate;
@@ -48,6 +50,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -58,7 +61,7 @@ import butterknife.BindView;
 import okhttp3.ResponseBody;
 
 
-public class ConsignmentDetailActivity extends AppCompatActivity implements DetailedScheduleContract.View, ConsignmentDetailContract.View{
+public class ConsignmentDetailActivity extends AppCompatActivity implements TaskLoadedCallback, DetailedScheduleContract.View, ConsignmentDetailContract.View{
 
     private ConsignmentDetailPresenter consignmentDetailPresenter;
     private DetailedSchedule consignmentDetail;
@@ -71,7 +74,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
     private int interval = 1000 * 60 * 1;// 1 phut * 15;
 
     private VehicleDetail vehicleDetail;
-
+    private Integer numberConsignment;
     private Handler handler = new Handler();
     private Runnable runnable;
     private int delay = 10000;
@@ -135,6 +138,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
 
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
+
         detailedSchedulePresenter.findByScheduleId(id);
 
         btnLocationConsignment = findViewById(R.id.btnLocationConsignment);
@@ -179,18 +183,21 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
         btnTracking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus()) ) {
-                    System.out.println(consignmentDetail.getStatus());
-                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                    listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
-                    listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
-                    listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-                    detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
-                    updateGPS();
-                    tracking();
-                }else {
+               if(numberConsignment ==0){
+                   if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus()) ) {
+                       System.out.println(consignmentDetail.getStatus());
+                       ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                       listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                       listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
+                       listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                       detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
+                       updateGPS();
+                       tracking();
+                   }else {
 //                    System.out.println(consignmentDetail.getStatus());
-                }
+
+                   }
+               }
 
 
             }
@@ -290,7 +297,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
 //        txtLicensePlates.setText(consignmentDetail.getLicensePlates());
         scheduleTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
         consignmentDetailRecycleView.setAdapter(scheduleTimeStepAdapter);
-
+        detailedSchedulePresenter.numOfConsignment(globalVariable.getId());
         consignmentDetailRecycleView.setLayoutManager(new LinearLayoutManager(this));
         txtTitleConsignmentNo.setText("CHI TIẾT DỊCH VỤ " + consignmentDetail.getScheduleId());
         txtLicensePlates.setText(consignmentDetail.getLicensePlates());
@@ -382,12 +389,41 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
     }
 
 
+    private void checkingPosition(){
 
+    }
+
+    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
+        // Origin of route
+        String str_origin = "origins=" + origin.latitude + "," + origin.longitude;
+        // Destination of route
+        String str_dest = "destinations=" + dest.latitude + "," + dest.longitude;
+        // Mode
+        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
+        String mode = "mode=" + directionMode;
+        // Building the parameters to the web service
+        String parameters = str_origin + "&" + str_dest + "&" + mode;
+        // Output format
+        String output = "json";
+        // Building the url to the web service
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + key;
+//        System.out.println(url);
+        return url;
+    }
     private void detailLocation(final Location location) throws IOException {
+
+//            Place place = new Place();
+//            for(int i =0; i< detailedSchedule.getPlaces().size();i++){
+//                place = detailedSchedule.getPlaces().get(i);
+//
+//            }
 
 //            System.out.println( "AAAAAAA");
         if (id > 0) {
             Geocoder geocoder = new Geocoder(ConsignmentDetailActivity.this);
+            LatLng place = new LatLng(10.7777795,106.6845587);
+            LatLng destination = new LatLng(19.767579,105.9196084);
+            new FetchURL(ConsignmentDetailActivity.this, "distancematrix").execute( getUrl(place,destination, "driving"), "driving");
 
 
             List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -443,6 +479,22 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void numOfConsignmentSuccess(Integer statusUpdate) {
+        this.numberConsignment = statusUpdate;
+        if(statusUpdate>0){
+            btnTracking.setText("Bạn đang chạy lô hàng khác");
+            btnTracking.setClickable(false);
+            btnTracking.setBackgroundColor(Color.GRAY);
+            btnTracking.setTextColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public void numOfConsignmentFailed(String message) {
+
+    }
+
     public void statusCheck() {
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -468,5 +520,11 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Deta
                 });
         final AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onTaskDone(Object... values) {
+        System.out.println("VALUEEEEEEEEEEEEEEEEEE::::::::::::::::"+values);
+//        Toast.makeText(globalVariable, "", Toast.LENGTH_SHORT).show();
     }
 }

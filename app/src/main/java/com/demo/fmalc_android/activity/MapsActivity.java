@@ -104,7 +104,7 @@ private Polyline currentPolyline;
             if(mUrls.size()>0){
                 for (int i = 0; i < mUrls.size(); i++) {
                     String url = mUrls.get(i);
-                     new FetchURL(MapsActivity.this).execute(url, "driving");
+                     new FetchURL(MapsActivity.this,"directions").execute(url, "driving");
                     // Start downloading json data from Google Directions API
 //                    downloadTask.execute(url);
                 }
@@ -135,6 +135,7 @@ private Polyline currentPolyline;
         String output = "json";
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + key;
+//        String url = "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + key;
 //        System.out.println(url);
         return url;
     }

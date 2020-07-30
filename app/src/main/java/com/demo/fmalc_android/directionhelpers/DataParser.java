@@ -57,6 +57,28 @@ public class DataParser {
     }
 
 
+    public Integer distance(JSONObject jObject){
+        JSONArray rows;
+        JSONArray elements;
+        JSONArray jDistance;
+        Integer meters =0;
+        try{
+            rows = jObject.getJSONArray("rows");
+//            for (int i = 0; i < rows.length(); i++) {
+            elements = ((JSONObject) rows.get(0)).getJSONArray("elements");
+//            jDistance = ((JSONObject) elements.get(0)).get("distance").get("value");
+
+             meters =(Integer) ((JSONObject) ((JSONObject) elements.get(0)).get("distance")).get("value");
+//            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }catch (Exception e){
+
+        }
+        return meters;
+    }
+
+
     /**
      * Method to decode polyline points
      * Courtesy : https://jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
