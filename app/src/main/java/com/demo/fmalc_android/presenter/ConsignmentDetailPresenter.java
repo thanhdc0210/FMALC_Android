@@ -47,25 +47,6 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
            }
        });
-
-
-//        call.enqueue(new Callback<DetailedSchedule>() {
-//            @Override
-//            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
-//                if (!response.isSuccessful()) {
-//                    view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
-//                } else {
-//                    DetailedSchedule consignmentDetail = response.body();
-//                    view.findByConsignmentIdSuccess(consignmentDetail);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
-//                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
-//
-//            }
-//        });
     }
 
     @Override

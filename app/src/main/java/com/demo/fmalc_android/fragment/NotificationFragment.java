@@ -16,57 +16,53 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
-import com.demo.fmalc_android.contract.ScheduleContract;
-import com.demo.fmalc_android.entity.Schedule;
+import com.demo.fmalc_android.adapter.NotificationViewCardAdapter;
+import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
-import com.demo.fmalc_android.presenter.SchedulePresenter;
+import com.demo.fmalc_android.entity.NotificationMobileResponse;
+import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CompleteFragment#newInstance} factory method to
+ * Use the {@link NotificationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CompleteFragment extends Fragment implements ScheduleContract.View {
+public class NotificationFragment extends Fragment implements NotificationMobileContract.View {
 
-    RecyclerView consignmentRecyclerView;
-    LinearLayout consignmentRecyclerViewLayout;
-    CompletedScheduleViewCardAdapter completedScheduleViewCardAdapter;
-    private SchedulePresenter schedulePresenter;
+    RecyclerView notificationRecyclerView;
+    NotificationViewCardAdapter notificationViewCardAdapter;
+    LinearLayout notificationLinearLayout;
     private GlobalVariable globalVariable;
-    List<Schedule> scheduleList = new ArrayList<>();
-    List<Schedule> showData = new ArrayList<>();
+    List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
+    List<NotificationMobileResponse> showData = new ArrayList<>();
     private boolean isLoading = false;
     int i = 0, nextLimit = 0;
+    NotificationMobilePresenter notificationMobilePresenter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public CompleteFragment() {
+    public NotificationFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prepare, container, false);
+        View view = inflater.inflate(R.layout.fragment_notification, container, false);
+
+        notificationLinearLayout = view.findViewById(R.id.card_view_item_notification);
+        notificationRecyclerView = view.findViewById(R.id.rvNotification);
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
 
         init();
 
-        // Adapter init and setup
+        notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId());
 
-        consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
-        consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
-        List<Integer> status = new ArrayList<>();
-        status.add(3);
-        status.add(5);
-        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutNotification);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -75,7 +71,6 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
         });
 
         return view;
-
     }
 
     @Override
@@ -86,51 +81,47 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
         }
     }
 
-    private void init(){
-        schedulePresenter = new SchedulePresenter();
-        schedulePresenter.setView(this);
+    private void getNotificationMobileResponseList(List<NotificationMobileResponse> notificationMobileResponses){
+        this.notificationMobileResponses = notificationMobileResponses;
     }
 
-    private void getConsignmentList(List<Schedule> scheduleList){
-        this.scheduleList = scheduleList;
-    }
+    void init(){
+        notificationMobilePresenter = new NotificationMobilePresenter();
+        notificationMobilePresenter.setView(this);
+    };
 
     @Override
-    public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-
-        getConsignmentList(scheduleList);
+    public void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
+        getNotificationMobileResponseList(notificationMobileResponses);
         populateData();
-
-        completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(scheduleList, getActivity());
-
-        consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity());
+        notificationRecyclerView.setAdapter(notificationViewCardAdapter);
+        notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (showData.size() > 4) {
             initScrollListener();
         }
     }
 
     @Override
-    public void findByConsignmentStatusAndUsernameForFailure(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+    public void findNotificationByDriverIdFailure(String message) {
+        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void populateData() {
         i = 0;
         showData.clear();
-        if (scheduleList.size() < 5){
-            showData = scheduleList;
+        if (notificationMobileResponses.size() < 5){
+            showData = notificationMobileResponses;
         }else{
             while (i < 5){
-                showData.add(scheduleList.get(i));
+                showData.add(notificationMobileResponses.get(i));
                 i++;
             }
         }
     }
 
     private void initScrollListener() {
-        consignmentRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        notificationRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -157,9 +148,9 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     private void loadMore() {
         showData.add(null);
-        consignmentRecyclerView.post(new Runnable() {
+        notificationRecyclerView.post(new Runnable() {
             public void run() {
-                completedScheduleViewCardAdapter.notifyItemInserted(showData.size()-1);
+                notificationViewCardAdapter.notifyItemInserted(showData.size()-1);
             }
         });
         Handler handler = new Handler();
@@ -168,23 +159,23 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
             public void run() {
                 showData.remove(showData.size() - 1);
                 int scrollPosition = showData.size();
-                completedScheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
+                notificationViewCardAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition+1;
-                if (currentSize < scheduleList.size() - 4){
+                if (currentSize < notificationMobileResponses.size() - 4){
                     nextLimit = currentSize + 4;
                 }else{
-                    nextLimit = scheduleList.size();
+                    nextLimit = notificationMobileResponses.size();
                 }
 
                 while (currentSize - 1 < nextLimit) {
-                    showData.add(scheduleList.get(currentSize-1));
+                    showData.add(notificationMobileResponses.get(currentSize-1));
                     currentSize++;
                 }
 
 //                scheduleViewCardAdapter.notifyDataSetChanged();
-                consignmentRecyclerView.post(new Runnable() {
+                notificationRecyclerView.post(new Runnable() {
                     public void run() {
-                        completedScheduleViewCardAdapter.notifyDataSetChanged();
+                        notificationViewCardAdapter.notifyDataSetChanged();
                     }
                 });
                 isLoading = false;
@@ -199,14 +190,11 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                List<Integer> status = new ArrayList<>();
-                status.add(3);
-                status.add(5);
-                schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
-//                consignmentRecyclerView.setAdapter(new Re );
+                List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
+                List<NotificationMobileResponse> showData = new ArrayList<>();
+                notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId());
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 800);
-
     }
 }

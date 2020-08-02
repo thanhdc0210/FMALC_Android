@@ -114,7 +114,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getPlannedTime()));
 
-        Place finishPlace = schedule.getPlaces().get(schedule.getPlaces().size()-1);
+        Place finishPlace = schedule.getPlaces().get(0);
         holder.txtFinishTime.setText(format.format(finishPlace.getPlannedTime()));
         holder.txtReceivedPlace.setText(finishPlace.getName());
         holder.txtDeliveryPlace.setText(schedule.getPlaces().get(0).getName());
@@ -173,13 +173,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
             public void onClick(View view) {
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
-//<<<<<<< HEAD:app/src/main/java/com/demo/fmalc_android/adapter/ConsignmentViewCardAdapter.java
-//                bundle.putInt("consignment_id", consignment.getConsignmentId());
-//                bundle.putString("LICENSE", consignment.getLicensePlates());
-//=======
                 bundle.putInt("consignment_id", schedule.getScheduleId());
-
-//>>>>>>> eca2328197770bd44b14eb61fa8f77eb02835d86:app/src/main/java/com/demo/fmalc_android/adapter/ScheduleViewCardAdapter.java
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

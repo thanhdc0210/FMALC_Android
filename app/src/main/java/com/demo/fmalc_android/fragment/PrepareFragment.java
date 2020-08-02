@@ -42,8 +42,6 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     int i = 0, nextLimit = 0;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-//    SchedulePresenter schedulePresenter;
-
     public PrepareFragment() {
         // Required empty public constructor
     }
@@ -60,18 +58,11 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
+
         List<Integer> status = new ArrayList<>();
         status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
-            }
-        });
 
         return view;
 
@@ -99,13 +90,21 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
         getConsignmentList(scheduleList);
         populateData();
-        scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
 
+        scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
         consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 10) {
+        if (showData.size() > 4) {
             initScrollListener();
         }
+
+        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
     }
 
     @Override
@@ -114,6 +113,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     }
 
     private void populateData() {
+        showData.clear();
         i = 0;
         if (scheduleList.size() < 5){
             showData = scheduleList;
@@ -185,7 +185,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 });
                 isLoading = false;
             }
-        }, 2000);
+        }, 800);
 
 
     }
@@ -195,11 +195,13 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
+                scheduleList.clear();
+                showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(0);
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 1000);
+        }, 800);
     }
 }
