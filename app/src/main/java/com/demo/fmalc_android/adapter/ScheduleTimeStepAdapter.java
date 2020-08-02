@@ -36,7 +36,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
 
     @Override
     public void onBindViewHolder(@NonNull ScheduleTimeStepAdapter.ViewHolder holder, int position) {
-        placeList.sort(Comparator.comparing(Place::getPriority));
+        placeList.sort(Comparator.comparing(Place::getPlannedTime));
         Place place = placeList.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         holder.txtPlannedTime.setText(format.format(place.getPlannedTime()));

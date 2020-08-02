@@ -77,7 +77,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
                 lineOptions.width(10);
                 lineOptions.color(Color.MAGENTA);
             } else {
-                lineOptions.width(20);
+                lineOptions.width(10);
                 lineOptions.color(Color.BLUE);
             }
 //            Log.d("mylog", "onPostExecute lineoptions decoded");
