@@ -25,6 +25,9 @@ public interface ConsignmentDetailContract {
 
         void sendNotificationSuccess(Notification notification);
         void sendNotificationFailed(String notification);
+
+        void updateActualTimeSuccess(Place place);
+        void updateActualTimeFailed(String message);
     }
 
     interface Presenter{
@@ -32,5 +35,6 @@ public interface ConsignmentDetailContract {
         void trackingLocation(Location location);
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);
+        void updateActualTime(Integer placeId);
     }
 }

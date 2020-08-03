@@ -6,4 +6,5 @@ package com.demo.fmalc_android.directionhelpers;
 
 public interface TaskLoadedCallback {
     void onTaskDone(Object... values);
+    void onDistanceDone(Integer... meter);
 }

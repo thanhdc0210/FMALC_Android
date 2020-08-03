@@ -5,6 +5,7 @@ import com.demo.fmalc_android.contract.ConsignmentDetailContract;
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Notification;
+import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 //import com.demo.fmalc_android.service.ConsignmentService;
@@ -138,6 +139,26 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
             @Override
             public void onFailure(Call<Notification> call, Throwable t) {
                 view.findByConsignmentIdFailure("Không thể thông báo. Vui lòng kiểm tra");
+            }
+        });
+    }
+
+    @Override
+    public void updateActualTime(Integer placeId) {
+        Call<Place> call = service.updateActualTime(placeId);
+        call.enqueue(new Callback<Place>() {
+            @Override
+            public void onResponse(Call<Place> call, Response<Place> response) {
+                if(response.isSuccessful()){
+                    view.updateActualTimeSuccess(response.body());
+                }else{
+                    view.updateActualTimeFailed("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Place> call, Throwable t) {
+                view.updateActualTimeFailed("Có lỗi xảy ra!");
             }
         });
     }

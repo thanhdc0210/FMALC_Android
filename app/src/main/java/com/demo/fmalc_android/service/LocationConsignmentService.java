@@ -2,6 +2,7 @@ package com.demo.fmalc_android.service;
 
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Notification;
+import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
 
 import okhttp3.ResponseBody;
@@ -21,5 +22,6 @@ public interface LocationConsignmentService {
     @GET("api/v1.0/vehicles/detail/{licensePlates}")
     Call<VehicleDetail> getDetailVehicleByLicense(@Path("licensePlates") String licensePlates);
 
-
+    @POST("api/v1.0/consignments/id/{id}")
+    Call<Place> updateActualTime(@Path("id") Integer id);
 }
