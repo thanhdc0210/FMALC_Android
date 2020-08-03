@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,8 +21,10 @@ import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.fragment.MaintainFragment;
+import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -66,13 +69,17 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
-        public TextView txtContent, txtTime;
+        public TextView txtContent, txtTime, txtTitle;
         public LinearLayout notificationItemLayout;
+        public ImageView imageView;
+
 
         public ItemViewHolder(@NonNull View itemView){
             super(itemView);
+            txtTitle = itemView.findViewById(R.id.txtTitle);
             txtContent = itemView.findViewById(R.id.txtContentNotification);
             txtTime = itemView.findViewById(R.id.txtTime);
+            imageView = itemView.findViewById(R.id.imageView);
             notificationItemLayout = itemView.findViewById(R.id.card_view_item_notification);
         }
     }
@@ -93,8 +100,9 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     private void populateItemRows(ItemViewHolder holder, int position) {
+
         NotificationMobileResponse notificationMobileResponse = notificationMobileResponses.get(position);
-        holder.txtContent.setText(notificationMobileResponse.getContent());
+
 
         if(notificationMobileResponse.isStatus()){
             holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#EEEEEE"));
@@ -132,27 +140,60 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             s = Math.abs(diffMinutes) + " phút trước ";
             holder.txtTime.setText(s);
         }
+        holder.txtContent.setText(notificationMobileResponse.getContent());
+        int type = notificationMobileResponse.getType();
 
+        switch (type){
+            // xe chạy ngoài giờ làm việc
+            case 0:
+                holder.txtTitle.setText("Cảnh báo chạy ngoài giờ:");
+                holder.imageView.setImageResource(R.drawable.ic_warning_amber_24px);
+                break;
+            // dừng xe quá lâu
+            case 1:
+                holder.txtTitle.setText("Cảnh báo xe dừng quá lâu:");
+                holder.imageView.setImageResource(R.drawable.ic_warning_amber_24px);
+                break;
+            case 2:
+                holder.txtTitle.setText("Lịch bảo trì xe mới");
+                holder.imageView.setImageResource(R.drawable.ic_new_releases_242px);
+                break;
+            case 3:
+                holder.txtTitle.setText("Lịch chạy mới");
+                holder.imageView.setImageResource(R.drawable.ic_notification_important_24px);
+               break;
+        }
+
+
+        //TODO sửa lại khi click xem notification
         holder.notificationItemLayout.setOnClickListener(new View.OnClickListener() {
+            Intent intent = new Intent(context, ConsignmentDetailActivity.class);
+            Bundle bundle = new Bundle();
             @Override
             public void onClick(View view) {
-                int type = notificationMobileResponse.getType();
-
-                if (type == 0 || type == 1){
-
-                }else if (type == 2){
-                    Intent intent = new Intent(context, ConsignmentDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("notification_id", notificationMobileResponse.getId());
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }else{
-                    Intent intent = new Intent(context, MaintainFragment.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("notification_id", notificationMobileResponse.getId());
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
+                switch (type){
+                    case 2:
+                        intent = new Intent(context, ConsignmentDetailActivity.class);
+                        bundle.putInt("notification_id", notificationMobileResponse.getId());
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(context, MaintainFragment.class);
+                        bundle.putInt("notification_id", notificationMobileResponse.getId());
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                        break;
+                    default: break;
                 }
+
+//                if (type == 0 || type == 1){
+//
+//                }else if (type == 2){
+//
+//                }else{
+//
+//                }
 
             }
         });

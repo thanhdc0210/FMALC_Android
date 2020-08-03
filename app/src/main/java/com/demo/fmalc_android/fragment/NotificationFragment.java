@@ -23,6 +23,9 @@ import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -83,6 +86,8 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     private void getNotificationMobileResponseList(List<NotificationMobileResponse> notificationMobileResponses){
         this.notificationMobileResponses = notificationMobileResponses;
+        this.notificationMobileResponses.sort(Comparator.comparing(a-> a.getTime(),Comparator.nullsLast(Comparator.naturalOrder())));
+        Collections.reverse(notificationMobileResponses);
     }
 
     void init(){
