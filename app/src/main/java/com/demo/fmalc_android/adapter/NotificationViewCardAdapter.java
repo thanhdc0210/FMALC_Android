@@ -114,7 +114,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
         Long notificationTime = notificationMobileResponse.getTime().getTime();
         Long nowTime = new Date().getTime();
         long diff = notificationTime - nowTime;
-        int diffWeeks = (int) diff / (14 * 60 * 60 * 1000 * 7);
+        int diffWeeks = (int) diff / (24 * 60 * 60 * 1000 * 7);
         int diffDays = (int) diff / (24 * 60 * 60 * 1000) % 7;
         int diffHours = (int) diff / (60 * 60 *1000) % 24;
         int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
@@ -172,13 +172,15 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             @Override
             public void onClick(View view) {
                 switch (type){
-                    case 2:
+                    case 3:
                         intent = new Intent(context, ConsignmentDetailActivity.class);
-                        bundle.putInt("notification_id", notificationMobileResponse.getId());
+                        String subString[] = notificationMobileResponse.getContent().split("#");
+                        String subStringId[] = subString[subString.length - 1].split("\\s");
+                        bundle.putInt("consignment_id", Integer.valueOf(subStringId[0]));
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
-                    case 4:
+                    case 2:
                         intent = new Intent(context, MaintainFragment.class);
                         bundle.putInt("notification_id", notificationMobileResponse.getId());
                         intent.putExtras(bundle);

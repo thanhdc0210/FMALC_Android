@@ -1,14 +1,20 @@
 package com.demo.fmalc_android.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.myworker.MyWorker;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import static com.demo.fmalc_android.entity.App.FCM_CHANNEL_ID;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -26,7 +32,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
-
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
@@ -34,7 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
                 scheduleJob();
@@ -48,6 +52,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            String title = remoteMessage.getNotification().getTitle();
+            String content = remoteMessage.getNotification().getBody();
+
+            Notification notification = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(content)
+                    .build();
+
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.notify(1002, notification);
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -70,5 +85,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .build();
         WorkManager.getInstance().beginWith(work).enqueue();
         // [END dispatch_job]
+    }
+
+    @Override
+    public void onDeletedMessages() {
+        super.onDeletedMessages();
     }
 }
