@@ -12,6 +12,6 @@ public interface FuelTypeContract {
     }
 
     interface Presenter{
-        void getListFuelTypes(String username, List<Integer> status);
+        void getListFuelTypes(String username, List<Integer> status, String auth);
     }
 }

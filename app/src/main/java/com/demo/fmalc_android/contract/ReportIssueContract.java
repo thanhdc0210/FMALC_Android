@@ -9,6 +9,6 @@ public interface ReportIssueContract {
     }
 
     interface Presenter {
-        void createReportIssueForDelivery(ReportIssueRequest reportIssueRequest);
+        void createReportIssueForDelivery(ReportIssueRequest reportIssueRequest, String auth);
     }
 }

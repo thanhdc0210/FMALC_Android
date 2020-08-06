@@ -6,6 +6,7 @@ import com.demo.fmalc_android.entity.VehicleInspection;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
@@ -20,5 +21,5 @@ public interface DriverService {
 
     @Headers({ "Content-Type: text/html;charset=UTF-8"})
     @PATCH("api/v1.0/drivers/token-device/{id}")
-    Call<String> updateTokenDevice(@Path("id") Integer id, @Body String token);
+    Call<String> updateTokenDevice(@Path("id") Integer id, @Body String token, @Header("Authorization") String auth);
 }

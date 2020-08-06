@@ -25,8 +25,8 @@ public class FuelTypePresenter implements FuelTypeContract.Presenter {
 
 
     @Override
-    public void getListFuelTypes(String username, List<Integer> status) {
-        Call<FuelTypeResponse> call = fuelTypeService.getFuelTypeResponse(username, status);
+    public void getListFuelTypes(String username, List<Integer> status, String auth) {
+        Call<FuelTypeResponse> call = fuelTypeService.getFuelTypeResponse(username, status, auth);
         call.enqueue(new Callback<FuelTypeResponse>() {
             @Override
             public void onResponse(Call<FuelTypeResponse> call, Response<FuelTypeResponse> response) {

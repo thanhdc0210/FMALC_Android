@@ -6,6 +6,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 import com.demo.fmalc_android.entity.ReportIssueResponse;
@@ -28,15 +29,17 @@ import retrofit2.http.POST;
 public interface ReportIssueService {
 
     @POST("api/v1.0/report-issues/report-issue")
-    Call<ReportIssueRequest> createReportIssue(@Body ReportIssueRequest reportIssueRequest);
+    Call<ReportIssueRequest> createReportIssue(@Body ReportIssueRequest reportIssueRequest, @Header("Authorization") String auth);
 
     @Multipart
     @POST("api/v1.0/inspection/upload-image")
-    Call<ResponseBody> uploadImage(@Part MultipartBody.Part file);
+    Call<ResponseBody> uploadImage(@Part MultipartBody.Part file, @Header("Authorization") String auth);
 
     @GET("api/v1.0/report-issues/information-report-issue")
-    Call<ReportIssueResponse> getIssueInformationOfAVehicle(@Query("username") String username, @Query("status") List<Integer> status);
+    Call<ReportIssueResponse> getIssueInformationOfAVehicle(@Query("username") String username, @Query("status") List<Integer> status
+            , @Header("Authorization") String auth);
 
     @PUT("api/v1.0/report-issues/report-issue")
-    Call<ReportIssueInformationForUpdating> updateReportIssue(@Body ReportIssueInformationForUpdating reportIssueInformationForUpdating);
+    Call<ReportIssueInformationForUpdating> updateReportIssue(@Body ReportIssueInformationForUpdating reportIssueInformationForUpdating
+            , @Header("Authorization") String auth);
 }

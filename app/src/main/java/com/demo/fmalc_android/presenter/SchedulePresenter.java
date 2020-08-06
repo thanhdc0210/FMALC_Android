@@ -23,8 +23,8 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
     ScheduleService scheduleService = NetworkingUtils.getScheduleService();
 
     @Override
-    public void findByConsignmentStatusAndUsername(List<Integer> status, String username) {
-        Call<List<Schedule>> call = scheduleService.findByConsignmentStatusAndUsernameForDriver(status, username);
+    public void findByConsignmentStatusAndUsername(List<Integer> status, String username, String auth) {
+        Call<List<Schedule>> call = scheduleService.findByConsignmentStatusAndUsernameForDriver(status, username, auth);
         call.enqueue(new Callback<List<Schedule>>() {
             @Override
             public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {

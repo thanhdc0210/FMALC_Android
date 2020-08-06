@@ -12,6 +12,6 @@ public interface SearchingContract {
     }
 
     interface Presenter {
-        void searchConsignment(SearchTypeForDriverEnum searchType, String searchValue);
+        void searchConsignment(SearchTypeForDriverEnum searchType, String searchValue, String auth);
     }
 }

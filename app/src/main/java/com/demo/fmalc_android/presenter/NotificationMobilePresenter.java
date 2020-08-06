@@ -22,8 +22,8 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
     NotificationService notificationService = NetworkingUtils.getNotificationService();
 
     @Override
-    public void findNotificationByDriverId(Integer id) {
-        Call<List<NotificationMobileResponse>> call =notificationService.findNotificationByDriverId(id);
+    public void findNotificationByDriverId(Integer id, String auth) {
+        Call<List<NotificationMobileResponse>> call =notificationService.findNotificationByDriverId(id, auth);
         call.enqueue(new Callback<List<NotificationMobileResponse>>() {
             @Override
             public void onResponse(Call<List<NotificationMobileResponse>> call, Response<List<NotificationMobileResponse>> response) {

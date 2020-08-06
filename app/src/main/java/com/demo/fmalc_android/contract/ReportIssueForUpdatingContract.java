@@ -9,6 +9,6 @@ public interface ReportIssueForUpdatingContract {
     }
 
     interface Presenter{
-        void updateReportIssue(ReportIssueInformationForUpdating reportIssueInformationForUpdating);
+        void updateReportIssue(ReportIssueInformationForUpdating reportIssueInformationForUpdating, String auth);
     }
 }

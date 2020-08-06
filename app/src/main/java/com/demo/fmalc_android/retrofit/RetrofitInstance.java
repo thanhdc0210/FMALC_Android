@@ -21,7 +21,7 @@ public class RetrofitInstance {
     public static synchronized Retrofit getInstance() {
 
 //        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-//                .callTimeout(2, TimeUnit.MINUTES)
+//                .callTimeout(2, TimeUnit.MINUTES)..
 //                .connectTimeout(20, TimeUnit.SECONDS)
 //                .readTimeout(30, TimeUnit.SECONDS)
 //                .writeTimeout(30, TimeUnit.SECONDS);

@@ -11,6 +11,6 @@ public interface ReportIssueResponseContract {
     }
 
     interface Presenter{
-        void getIssueInformationOfAVehicle(String username, List<Integer> status);
+        void getIssueInformationOfAVehicle(String username, List<Integer> status, String auth);
     }
 }

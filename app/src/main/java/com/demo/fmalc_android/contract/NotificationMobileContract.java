@@ -11,6 +11,6 @@ public interface NotificationMobileContract {
     }
 
     interface Presenter{
-        void findNotificationByDriverId(Integer id);
+        void findNotificationByDriverId(Integer id, String auth);
     }
 }

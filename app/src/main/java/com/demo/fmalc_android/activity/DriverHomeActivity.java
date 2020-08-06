@@ -67,9 +67,8 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                         }
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-                        System.out.println("tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn: " + token);
                         globalVariable = (GlobalVariable) getApplicationContext();
-                        tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), token);
+                        tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), token, globalVariable.getToken());
                     }
                 });
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);

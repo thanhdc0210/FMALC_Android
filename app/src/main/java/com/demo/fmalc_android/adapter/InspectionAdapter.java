@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amazonaws.services.s3.AmazonS3;
 import com.demo.fmalc_android.contract.ReportIssueContract;
 import com.demo.fmalc_android.contract.ReportIssueImageContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.ReportIssueContentRequest;
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.presenter.ReportIssueImagePresenter;
@@ -77,6 +78,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
     private Context context;
     public HashMap<Integer, ReportIssueContentRequest> listIssue = new HashMap();
 
+    private String auth;
 
     private Uri fileUri;
     private Bitmap bitmap;
@@ -103,10 +105,11 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
         return id;
     }
 
-    public InspectionAdapter(List<Inspection> inspectionList, Context context) {
+    public InspectionAdapter(List<Inspection> inspectionList, Context context, String auth) {
         this.inspectionList = inspectionList;
         inspectionListFull = new ArrayList<>(inspectionList);
         this.context = context;
+        this.auth = auth;
     }
 
     private void init() {
@@ -204,7 +207,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                                 //
                                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                                 init();
-                                reportIssueImagePresenter.getLinkImage(body);
+                                reportIssueImagePresenter.getLinkImage(body, auth);
 
 //
                             } else {

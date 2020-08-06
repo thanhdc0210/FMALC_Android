@@ -14,7 +14,7 @@ public interface ScheduleContract {
     }
 
     interface Presenter{
-        void findByConsignmentStatusAndUsername(List<Integer> status, String username);
+        void findByConsignmentStatusAndUsername(List<Integer> status, String username, String auth);
 
     }
 }

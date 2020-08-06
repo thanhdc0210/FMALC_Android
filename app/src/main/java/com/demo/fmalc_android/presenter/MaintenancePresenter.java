@@ -29,8 +29,8 @@ public class MaintenancePresenter implements MaintenanceContract.Presenter {
 
 
     @Override
-    public void getMaintenanceList(Integer driverId) {
-        Call<List<MaintainResponse>> call = maintenanceService.getMaintenanceList(driverId);
+    public void getMaintenanceList(Integer driverId, String auth) {
+        Call<List<MaintainResponse>> call = maintenanceService.getMaintenanceList(driverId, auth);
         call.enqueue(new Callback<List<MaintainResponse>>() {
             @Override
             public void onResponse(Call<List<MaintainResponse>> call, Response<List<MaintainResponse>> response) {
@@ -55,8 +55,8 @@ public class MaintenancePresenter implements MaintenanceContract.Presenter {
     }
 
     @Override
-    public void updateMaintenance(Integer driverId, Integer kmOld, MultipartBody.Part file) throws URISyntaxException {
-        Call<ResponseBody> call = maintenanceService.updateMaintenance(driverId, kmOld, file);
+    public void updateMaintenance(Integer driverId, Integer kmOld, MultipartBody.Part file, String auth) throws URISyntaxException {
+        Call<ResponseBody> call = maintenanceService.updateMaintenance(driverId, kmOld, file, auth);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

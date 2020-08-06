@@ -7,6 +7,6 @@ public interface TokenDeviceContract {
     }
 
     interface Presenter{
-        void updateTokenDevice(Integer id, String tokenDevice);
+        void updateTokenDevice(Integer id, String tokenDevice, String auth);
     }
 }

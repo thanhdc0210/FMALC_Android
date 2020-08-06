@@ -69,10 +69,10 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
             setTitle("Báo cáo trước khi chạy");
-            vehicleInspectionPresenter.getListLicensePlate(globalVariable.getUsername());
+            vehicleInspectionPresenter.getListLicensePlate(globalVariable.getUsername(), globalVariable.getToken());
         }else{
             setTitle("Báo cáo sau khi chạy");
-            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(globalVariable.getUsername());
+            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(globalVariable.getUsername(), globalVariable.getToken());
         }
 
     }
@@ -81,7 +81,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        inspectionAdapter = new InspectionAdapter(inspectionList,this);
+        inspectionAdapter = new InspectionAdapter(inspectionList,this, globalVariable.getToken());
         recyclerView.setAdapter(inspectionAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -140,7 +140,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                         reportIssueRequest.setUsername(globalVariable.getUsername());
                         reportIssueRequest.setVehicleLicensePlates(txtCurrentLicensePlate.getText().toString());
                         reportIssueRequest.setType(0);
-                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
+                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest, globalVariable.getToken());
                     }
                 }
             });
@@ -205,7 +205,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                         reportIssueRequest.setVehicleLicensePlates(vehicleLicensePlates);
                         reportIssueRequest.setType(0);
 
-                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest);
+                        reportIssuePresenter.createReportIssueForDelivery(reportIssueRequest, globalVariable.getToken());
                     }
                 }
             });

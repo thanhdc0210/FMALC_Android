@@ -18,7 +18,7 @@ public interface MaintenanceContract {
     }
 
     interface Presenter{
-        void getMaintenanceList(Integer driverId);
-        void updateMaintenance(Integer driverId, Integer kmOld, MultipartBody.Part file) throws URISyntaxException;
+        void getMaintenanceList(Integer driverId, String auth);
+        void updateMaintenance(Integer driverId, Integer kmOld, MultipartBody.Part file, String auth) throws URISyntaxException;
     }
 }

@@ -25,9 +25,9 @@ public class ReportIssueImagePresenter implements ReportIssueImageContract.Prese
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void getLinkImage(MultipartBody.Part file) throws URISyntaxException {
+    public void getLinkImage(MultipartBody.Part file, String auth) throws URISyntaxException {
 
-        Call<ResponseBody> call = reportIssueService.uploadImage(file );
+        Call<ResponseBody> call = reportIssueService.uploadImage(file, auth);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

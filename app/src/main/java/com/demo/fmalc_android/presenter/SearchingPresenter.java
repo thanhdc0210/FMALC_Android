@@ -25,8 +25,8 @@ public class SearchingPresenter implements SearchingContract.Presenter {
 
 
     @Override
-    public void searchConsignment(SearchTypeForDriverEnum searchType, String searchValue) {
-        Call<List<Schedule>> call = searchingService.searchConsignment(searchType, searchValue);
+    public void searchConsignment(SearchTypeForDriverEnum searchType, String searchValue, String auth) {
+        Call<List<Schedule>> call = searchingService.searchConsignment(searchType, searchValue, auth);
         call.enqueue(new Callback<List<Schedule>>() {
             @Override
             public void onResponse(Call<List<Schedule>> call, Response<List<Schedule>> response) {

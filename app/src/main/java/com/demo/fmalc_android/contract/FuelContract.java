@@ -9,6 +9,6 @@ public interface FuelContract {
     }
 
     interface Presenter{
-        void saveFuelFilling(FuelRequest fuelRequest);
+        void saveFuelFilling(FuelRequest fuelRequest, String auth);
     }
 }

@@ -62,7 +62,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         List<Integer> status = new ArrayList<>();
         status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 
         return view;
 
@@ -199,7 +199,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(0);
-                schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+                schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 800);

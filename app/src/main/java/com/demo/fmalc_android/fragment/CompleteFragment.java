@@ -64,7 +64,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
         status.add(3);
         status.add(5);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+        schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -202,7 +202,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
                 List<Integer> status = new ArrayList<>();
                 status.add(3);
                 status.add(5);
-                schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
+                schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 //                consignmentRecyclerView.setAdapter(new Re );
                 swipeRefreshLayout.setRefreshing(false);
             }

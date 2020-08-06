@@ -14,6 +14,6 @@ public interface ReportIssueImageContract {
     }
 
     interface Presenter{
-        void getLinkImage(MultipartBody.Part file) throws URISyntaxException;
+        void getLinkImage(MultipartBody.Part file, String auth) throws URISyntaxException;
     }
 }

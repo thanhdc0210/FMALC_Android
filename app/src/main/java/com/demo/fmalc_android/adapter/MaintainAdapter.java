@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amazonaws.Response;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.contract.MaintenanceContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.MaintainResponse;
 import com.demo.fmalc_android.entity.ReportIssueContentResponse;
 import com.demo.fmalc_android.presenter.MaintenancePresenter;
@@ -63,10 +64,12 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
     private AlertDialog alertDialog;
 
     private MaintenancePresenter maintenancePresenter;
+    private String auth;
 
-    public MaintainAdapter(List<MaintainResponse> maintainResponseList, Context context) {
+    public MaintainAdapter(List<MaintainResponse> maintainResponseList, Context context, String auth) {
         this.maintainList = maintainResponseList;
         this.context = context;
+        this.auth = auth;
     }
 
 
@@ -187,7 +190,7 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
                         RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
                         //
                         MultipartBody.Part image = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-                        maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image);
+                        maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image, auth);
                     }
                 }
             };

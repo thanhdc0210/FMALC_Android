@@ -63,7 +63,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
         init();
 
-        notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId());
+        notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId(), globalVariable.getToken());
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutNotification);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -197,7 +197,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
             @Override public void run() {
                 List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
                 List<NotificationMobileResponse> showData = new ArrayList<>();
-                notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId());
+                notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId(), globalVariable.getToken());
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 800);

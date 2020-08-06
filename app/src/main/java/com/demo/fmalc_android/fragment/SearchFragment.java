@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.SearchingContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.enumType.SearchTypeForDriverEnum;
 import com.demo.fmalc_android.presenter.SchedulePresenter;
@@ -57,6 +58,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
     private SearchingPresenter searchingPresenter;
     private ScheduleViewCardAdapter scheduleViewCardAdapter;
     private TextView txtEmpty;
+    private GlobalVariable globalVariable;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -93,6 +95,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle("Tìm kiếm lịch trình");
@@ -128,7 +131,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()){
-                searchingPresenter.searchConsignment(searchType, query);
+                searchingPresenter.searchConsignment(searchType, query, globalVariable.getToken());
                 } else {
                     return false;
                 }

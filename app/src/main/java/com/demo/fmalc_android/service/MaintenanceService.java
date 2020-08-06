@@ -9,6 +9,7 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -20,7 +21,7 @@ public interface MaintenanceService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/maintenances")
-    Call<List<MaintainResponse>> getMaintenanceList(@Query("driverId") Integer driverId);
+    Call<List<MaintainResponse>> getMaintenanceList(@Query("driverId") Integer driverId, @Header("Authorization") String auth);
 
 
     @Multipart
@@ -28,6 +29,6 @@ public interface MaintenanceService {
     Call<ResponseBody> updateMaintenance(
             @Query("id") Integer id,
             @Query("km") Integer kmOld,
-            @Part MultipartBody.Part file);
+            @Part MultipartBody.Part file, @Header("Authorization") String auth);
 
 }

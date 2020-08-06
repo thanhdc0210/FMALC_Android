@@ -20,8 +20,8 @@ public class FuelPresenter implements FuelContract.Presenter {
     FuelService fuelService = NetworkingUtils.getFuelService();
 
     @Override
-    public void saveFuelFilling(FuelRequest fuelRequest) {
-        Call<FuelRequest> call = fuelService.saveFuelFilling(fuelRequest);
+    public void saveFuelFilling(FuelRequest fuelRequest, String auth) {
+        Call<FuelRequest> call = fuelService.saveFuelFilling(fuelRequest, auth);
 
         call.enqueue(new Callback<FuelRequest>() {
             @Override

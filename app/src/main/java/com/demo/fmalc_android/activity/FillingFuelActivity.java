@@ -56,7 +56,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         List<Integer> status = new ArrayList<>();
         status.add(1);
         status.add(2);
-        fuelTypePresenter.getListFuelTypes(globalVariable.getUsername(), status);
+        fuelTypePresenter.getListFuelTypes(globalVariable.getUsername(), status, globalVariable.getToken());
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
         txtTotalPrice.setText("0 VNĐ");
         edtCurrentKm = findViewById(R.id.edtCurrentKm);
@@ -142,7 +142,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                             fuelRequest.setVolume(volume);
                             fuelRequest.setVehicleLicensePlates(vehicleLicensePlate);
 
-                            fuelPresenter.saveFuelFilling(fuelRequest);
+                            fuelPresenter.saveFuelFilling(fuelRequest, globalVariable.getToken());
                         } else {
                             Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
                         }

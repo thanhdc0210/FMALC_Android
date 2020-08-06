@@ -20,8 +20,8 @@ public class TokenDevicePresenter implements TokenDeviceContract.Presenter {
     DriverService driverService = NetworkingUtils.getDriverService();
 
     @Override
-    public void updateTokenDevice(Integer id, String tokenDevice) {
-        Call<String> call = driverService.updateTokenDevice(id, tokenDevice);
+    public void updateTokenDevice(Integer id, String tokenDevice, String auth) {
+        Call<String> call = driverService.updateTokenDevice(id, tokenDevice, auth);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {

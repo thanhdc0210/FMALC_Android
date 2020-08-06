@@ -20,8 +20,8 @@ public class ReportIssueForUpdatingPresenter implements ReportIssueForUpdatingCo
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void updateReportIssue(ReportIssueInformationForUpdating reportIssueInformationForUpdating) {
-        Call<ReportIssueInformationForUpdating> call = reportIssueService.updateReportIssue(reportIssueInformationForUpdating);
+    public void updateReportIssue(ReportIssueInformationForUpdating reportIssueInformationForUpdating, String auth) {
+        Call<ReportIssueInformationForUpdating> call = reportIssueService.updateReportIssue(reportIssueInformationForUpdating, auth);
 
         call.enqueue(new Callback<ReportIssueInformationForUpdating>() {
             @Override

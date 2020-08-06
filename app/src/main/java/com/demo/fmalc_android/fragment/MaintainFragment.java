@@ -92,7 +92,7 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
         init();
         //TODO sửa lại truyền id driver
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        maintenancePresenter.getMaintenanceList(globalVariable.getId());
+        maintenancePresenter.getMaintenanceList(globalVariable.getId(), globalVariable.getToken());
 
         return view;
     }
@@ -108,7 +108,7 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
             txtEmptyMaintain.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            maintainAdapter = new MaintainAdapter(maintainResponseList, getActivity());
+            maintainAdapter = new MaintainAdapter(maintainResponseList, getActivity(), globalVariable.getToken());
             recyclerView.setAdapter(maintainAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             txtEmptyMaintain.setVisibility(View.GONE);
@@ -131,7 +131,7 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
 //        status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
-        maintenancePresenter.getMaintenanceList(globalVariable.getId());
+        maintenancePresenter.getMaintenanceList(globalVariable.getId(), globalVariable.getToken());
     }
 
     @Override

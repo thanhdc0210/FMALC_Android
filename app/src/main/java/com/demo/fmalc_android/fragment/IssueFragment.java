@@ -67,7 +67,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         btnUpdateReportIssue = view.findViewById(R.id.btnUpdateIssue);
         txtEmptyView = view.findViewById(R.id.txtEmptyView);
         status.add(0);
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
+        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status, globalVariable.getToken());
 
         setUserVisibleHint(false);
 
@@ -107,7 +107,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
                     ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
                     reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
                     reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
-                    reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating);
+                    reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating, globalVariable.getToken());
                 }
             });
         }
@@ -129,7 +129,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
         status.add(0);
-        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status);
+        reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status, globalVariable.getToken());
     }
 
     @Override

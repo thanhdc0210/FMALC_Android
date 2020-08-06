@@ -19,8 +19,8 @@ public class ReportIssuePresenter implements ReportIssueContract.Presenter {
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void createReportIssueForDelivery(ReportIssueRequest reportIssueRequest) {
-        Call<ReportIssueRequest> call = reportIssueService.createReportIssue(reportIssueRequest);
+    public void createReportIssueForDelivery(ReportIssueRequest reportIssueRequest, String auth) {
+        Call<ReportIssueRequest> call = reportIssueService.createReportIssue(reportIssueRequest, auth);
         call.enqueue(new Callback<ReportIssueRequest>() {
             @Override
             public void onResponse(Call<ReportIssueRequest> call, Response<ReportIssueRequest> response) {

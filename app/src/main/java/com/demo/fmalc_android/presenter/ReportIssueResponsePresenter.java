@@ -22,8 +22,8 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
     ReportIssueService reportIssueService = NetworkingUtils.getReportIssueService();
 
     @Override
-    public void getIssueInformationOfAVehicle(String username, List<Integer> status) {
-        Call<ReportIssueResponse> call = reportIssueService.getIssueInformationOfAVehicle(username, status);
+    public void getIssueInformationOfAVehicle(String username, List<Integer> status, String auth) {
+        Call<ReportIssueResponse> call = reportIssueService.getIssueInformationOfAVehicle(username, status, auth);
 
         call.enqueue(new Callback<ReportIssueResponse>() {
             @Override
