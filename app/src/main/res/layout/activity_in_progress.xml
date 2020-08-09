@@ -10,6 +10,7 @@
 
 	<Button
 			android:id="@+id/btnLevel1"
+			android:enabled="false"
 			android:layout_width="203dp"
 			android:layout_height="97dp"
 			android:background="@drawable/border_cardview"
@@ -32,6 +33,7 @@
 
 	<Button
 			android:id="@+id/btnLevel2"
+			android:enabled="false"
 			android:layout_width="203dp"
 			android:layout_height="97dp"
 			android:background="@drawable/border_cardview"
@@ -55,6 +57,7 @@
 
 	<Button
 			android:id="@+id/btnLevel3"
+			android:enabled="false"
 			android:layout_width="203dp"
 			android:layout_height="97dp"
 			android:background="@drawable/border_cardview"
@@ -78,6 +81,7 @@
 
 	<Button
 			android:id="@+id/btnLevel4"
+			android:enabled="false"
 			android:layout_width="203dp"
 			android:layout_height="97dp"
 			android:background="@drawable/border_cardview"

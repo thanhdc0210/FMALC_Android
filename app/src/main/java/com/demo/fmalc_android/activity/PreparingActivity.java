@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,7 @@ import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.presenter.ReportIssuePresenter;
 import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
-import com.demo.fmalc_android.presenter.VehicleInspectionPresenter;
+import com.demo.fmalc_android.presenter.VehiclePresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +38,7 @@ import java.util.Map;
 public class PreparingActivity extends AppCompatActivity implements VehicleContract.View, ReportIssueContract.View, VehicleAfterDeliveryContract.View {
 
     private VehicleInspection vehicleInspection;
-    private VehicleInspectionPresenter vehicleInspectionPresenter;
+    private VehiclePresenter vehiclePresenter;
     private ReportIssuePresenter reportIssuePresenter;
     private VehicleAfterDeliveryPresenter vehicleAfterDeliveryPresenter;
     private  List<String> spinnerArray = new ArrayList<>();
@@ -69,7 +67,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
             setTitle("Báo cáo trước khi chạy");
-            vehicleInspectionPresenter.getListLicensePlate(globalVariable.getUsername(), globalVariable.getToken());
+            vehiclePresenter.getListLicensePlate(globalVariable.getUsername(), globalVariable.getToken());
         }else{
             setTitle("Báo cáo sau khi chạy");
             vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(globalVariable.getUsername(), globalVariable.getToken());
@@ -88,8 +86,8 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
 
     private void init(){
-        vehicleInspectionPresenter = new VehicleInspectionPresenter();
-        vehicleInspectionPresenter.setView(this);
+        vehiclePresenter = new VehiclePresenter();
+        vehiclePresenter.setView(this);
 
         reportIssuePresenter = new ReportIssuePresenter();
         reportIssuePresenter.setView(this);
@@ -152,6 +150,26 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     @Override
     public void getListLicensePlateAndInspectionFailure(String message) {
         Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getVehicleRunningSuccess(int vehicleId) {
+
+    }
+
+    @Override
+    public void getVehicleRunningFailure(String message) {
+
+    }
+
+    @Override
+    public void sendRequestWhileRunningSuccess(String s) {
+
+    }
+
+    @Override
+    public void sendRequestWhileRunningFailure(String message) {
+
     }
 
     @Override
