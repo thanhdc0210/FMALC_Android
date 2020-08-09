@@ -20,6 +20,7 @@ import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.ScheduleContract;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
@@ -61,8 +62,8 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
         List<Integer> status = new ArrayList<>();
-        status.add(1);
-        status.add(2);
+        status.add(ConsignmentStatusEnum.DELIVERING.getValue());
+        status.add(ConsignmentStatusEnum.OBTAINING.getValue());
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 
@@ -199,8 +200,8 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 List<Integer> status = new ArrayList<>();
-                status.add(1);
-                status.add(2);
+                status.add(ConsignmentStatusEnum.DELIVERING.getValue());
+                status.add(ConsignmentStatusEnum.OBTAINING.getValue());
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 //                consignmentRecyclerView.setAdapter(new Re );
                 swipeRefreshLayout.setRefreshing(false);

@@ -129,7 +129,6 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
     @Override
     public void updateMaintenanceSuccessful(boolean isSuccessful) {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-//        status.add(0);
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         maintenancePresenter.getMaintenanceList(globalVariable.getId(), globalVariable.getToken());
     }

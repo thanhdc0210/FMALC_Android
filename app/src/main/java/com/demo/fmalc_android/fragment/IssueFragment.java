@@ -24,6 +24,7 @@ import com.demo.fmalc_android.entity.ReportIssueContentResponse;
 import com.demo.fmalc_android.entity.ReportIssueInformationForUpdating;
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.entity.ReportIssueResponse;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.ReportIssueForUpdatingPresenter;
 import com.demo.fmalc_android.presenter.ReportIssueResponsePresenter;
 
@@ -66,7 +67,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         btnUpdateReportIssue = view.findViewById(R.id.btnUpdateIssue);
         txtEmptyView = view.findViewById(R.id.txtEmptyView);
-        status.add(0);
+        status.add(ConsignmentStatusEnum.WAITING.getValue());
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status, globalVariable.getToken());
 
         setUserVisibleHint(false);
@@ -128,7 +129,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     @Override
     public void updateReportIssueForSuccess() {
         Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-        status.add(0);
+        status.add(ConsignmentStatusEnum.WAITING.getValue());
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status, globalVariable.getToken());
     }
 

@@ -21,6 +21,7 @@ import com.demo.fmalc_android.entity.FuelRequest;
 import com.demo.fmalc_android.entity.FuelType;
 import com.demo.fmalc_android.entity.FuelTypeResponse;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.FuelPresenter;
 import com.demo.fmalc_android.presenter.FuelTypePresenter;
 
@@ -54,8 +55,8 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         fuelTypeRecyclerView = findViewById(R.id.recyclerViewFuel);
         globalVariable = (GlobalVariable) getApplicationContext();
         List<Integer> status = new ArrayList<>();
-        status.add(1);
-        status.add(2);
+        status.add(ConsignmentStatusEnum.OBTAINING.getValue());
+        status.add(ConsignmentStatusEnum.DELIVERING.getValue());
         fuelTypePresenter.getListFuelTypes(globalVariable.getUsername(), status, globalVariable.getToken());
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
         txtTotalPrice.setText("0 VNĐ");

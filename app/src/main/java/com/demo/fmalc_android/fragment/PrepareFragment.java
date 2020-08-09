@@ -23,6 +23,7 @@ import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.ScheduleContract;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.SchedulePresenter;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
 
         List<Integer> status = new ArrayList<>();
-        status.add(0);
+        status.add(ConsignmentStatusEnum.WAITING.getValue());
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
 
@@ -198,7 +199,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 scheduleList.clear();
                 showData.clear();
                 List<Integer> status = new ArrayList<>();
-                status.add(0);
+                status.add(ConsignmentStatusEnum.WAITING.getValue());
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
                 swipeRefreshLayout.setRefreshing(false);
             }

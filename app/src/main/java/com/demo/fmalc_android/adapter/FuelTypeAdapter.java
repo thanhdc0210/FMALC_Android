@@ -70,7 +70,7 @@ public class FuelTypeAdapter extends RecyclerView.Adapter<FuelTypeAdapter.ViewHo
                     setId(fuelTypeChecked.getId());
                     fuelType.setId(fuelTypeChecked.getId());
                     fuelType.setPrice(fuelTypeChecked.getPrice());
-                    Toast.makeText(context, fuelTypeChecked.getPrice()+" id: " + fuelTypeChecked.getId(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, fuelTypeChecked.getPrice()+" id: " + fuelTypeChecked.getId(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
