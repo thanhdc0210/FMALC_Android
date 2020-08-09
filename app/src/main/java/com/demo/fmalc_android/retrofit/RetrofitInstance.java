@@ -15,8 +15,12 @@ public class RetrofitInstance {
     private static Retrofit retrofit;
     private static Gson gson;
 
-    private static final String BASE_URL = "http://192.168.1.55:8080/fmalc/";
+
+    private static final String BASE_URL = "http://10.1.129.246:8080/fmalc/";
 //private static final String BASE_URL = "http://fmalc-env.eba-epptzq6v.ap-southeast-1.elasticbeanstalk.com/";
+
+
+
     public static synchronized Retrofit getInstance() {
 
 //        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()

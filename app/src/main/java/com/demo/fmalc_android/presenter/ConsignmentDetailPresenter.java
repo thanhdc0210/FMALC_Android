@@ -10,6 +10,7 @@ import com.demo.fmalc_android.entity.VehicleDetail;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 //import com.demo.fmalc_android.service.ConsignmentService;
 import com.demo.fmalc_android.service.LocationConsignmentService;
+import com.demo.fmalc_android.service.MaintenanceService;
 import com.demo.fmalc_android.service.ScheduleService;
 
 import okhttp3.ResponseBody;
@@ -29,6 +30,7 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
 
     LocationConsignmentService service = NetworkingUtils.getLocationConsignmentService();
 
+    MaintenanceService maintenanceService = NetworkingUtils.getMaintenanceService();
 
     public void findByConsignmentId(Integer id) {
         Call<DetailedSchedule> call = consignmentService.findByScheduleId(id);
@@ -48,25 +50,6 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
            }
        });
-
-
-//        call.enqueue(new Callback<DetailedSchedule>() {
-//            @Override
-//            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
-//                if (!response.isSuccessful()) {
-//                    view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
-//                } else {
-//                    DetailedSchedule consignmentDetail = response.body();
-//                    view.findByConsignmentIdSuccess(consignmentDetail);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ConsignmentDetail> call, Throwable t) {
-//                view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
-//
-//            }
-//        });
     }
 
     @Override
@@ -159,6 +142,46 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
             @Override
             public void onFailure(Call<Place> call, Throwable t) {
                 view.updateActualTimeFailed("Có lỗi xảy ra!");
+            }
+        });
+    }
+
+    @Override
+    public void updatePlannedTime(Integer id, Integer km) {
+        Call<ResponseBody> call = maintenanceService.updatePlannedTime(id,km);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    view.updatePlannedTimeSuccess(response.body());
+                }else{
+                    view.updateActualTimeFailed("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                view.updateActualTimeFailed("");
+            }
+        });
+    }
+
+    @Override
+    public void stopTracking(Integer id) {
+        Call<String> call = service.stopTracking(id);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(response.isSuccessful()){
+                    view.stopTrackingSuccess("Thành công");
+                }else{
+                    view.updateActualTimeFailed("Có lỗi xảy ra");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                view.updateActualTimeFailed("Có lỗi xảy ra");
             }
         });
     }

@@ -25,7 +25,7 @@ public class DistanceParse extends AsyncTask<String, Integer,Integer> {
     @Override
     protected Integer doInBackground(String... strings) {
         JSONObject jObject;
-        Integer meter =0;
+        Integer meter =-1;
 
         try {
             jObject = new JSONObject(strings[0]);

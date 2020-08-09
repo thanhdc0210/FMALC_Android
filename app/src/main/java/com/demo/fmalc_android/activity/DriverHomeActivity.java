@@ -16,6 +16,7 @@ import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.fragment.AccountFragment;
 import com.demo.fmalc_android.fragment.HomeFragment;
 import com.demo.fmalc_android.fragment.InspectionFragment;
+import com.demo.fmalc_android.fragment.NotificationFragment;
 import com.demo.fmalc_android.presenter.TokenDevicePresenter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -66,6 +67,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                         }
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
+                        System.out.println("tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn: " + token);
                         globalVariable = (GlobalVariable) getApplicationContext();
                         tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), token);
                     }
@@ -82,8 +84,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
         switch (item.getItemId()){
             case R.id.navigation_home:
                 item.setChecked(true);
-                HomeFragment fgm= new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, fgm).detach(fgm).attach(fgm).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
                 break;
             case R.id.navigation_inspection:
                 item.setChecked(true);
@@ -91,7 +92,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 break;
             case  R.id.navigation_noti:
                 item.setChecked(true);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,new InspectionFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new NotificationFragment()).commit();
                 break;
             case R.id.navigation_search:
                 item.setChecked(true);

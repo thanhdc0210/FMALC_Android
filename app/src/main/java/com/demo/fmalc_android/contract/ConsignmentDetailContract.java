@@ -28,6 +28,12 @@ public interface ConsignmentDetailContract {
 
         void updateActualTimeSuccess(Place place);
         void updateActualTimeFailed(String message);
+
+        void updatePlannedTimeSuccess(ResponseBody responseBody);
+        void updatePlannedTimeFailed(String responseBody);
+
+        void stopTrackingSuccess(String string);
+        void stopTrackingFailed(String message);
     }
 
     interface Presenter{
@@ -36,5 +42,7 @@ public interface ConsignmentDetailContract {
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);
         void updateActualTime(Integer placeId);
+        void updatePlannedTime(Integer id, Integer km);
+        void stopTracking(Integer id);
     }
 }

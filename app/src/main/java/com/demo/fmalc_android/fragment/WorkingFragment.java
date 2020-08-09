@@ -106,7 +106,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if (showData.size() > 10) {
+        if (showData.size() > 4) {
             initScrollListener();
         }
     }
@@ -169,8 +169,8 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
                 int scrollPosition = showData.size();
                 scheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition+1;
-                if (currentSize < scheduleList.size() - 5){
-                    nextLimit = currentSize + 5;
+                if (currentSize < scheduleList.size() - 4){
+                    nextLimit = currentSize + 4;
                 }else{
                     nextLimit = scheduleList.size();
                 }
@@ -188,7 +188,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
                 });
                 isLoading = false;
             }
-        }, 2000);
+        }, 800);
 
 
     }
@@ -199,12 +199,13 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 List<Integer> status = new ArrayList<>();
-                status.add(0);
+                status.add(1);
+                status.add(2);
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername());
 //                consignmentRecyclerView.setAdapter(new Re );
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 1000);
+        }, 800);
 
     }
 

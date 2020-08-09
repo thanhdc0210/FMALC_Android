@@ -52,7 +52,7 @@ public class CompletedScheduleViewCardAdapter extends  RecyclerView.Adapter<Comp
         holder.txtDeliveryPlace.setText(schedule.getPlaces().get(0).getName());
         holder.txtWeight.setText(schedule.getWeight().toString() + " kg ");
         holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
-        holder.txtTimeCountDown.setText("Hoàn thành lúc:" + finishPlace.getActualTime());
+        holder.txtTimeCountDown.setText("Hoàn thành lúc: " + format.format(finishPlace.getActualTime()));
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override

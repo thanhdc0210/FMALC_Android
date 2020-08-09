@@ -14,6 +14,7 @@ import com.demo.fmalc_android.service.LocationConsignmentService;
 
 import com.demo.fmalc_android.service.MaintenanceService;
 
+import com.demo.fmalc_android.service.NotificationService;
 import com.demo.fmalc_android.service.ReportIssueService;
 import com.demo.fmalc_android.service.ScheduleService;
 import com.demo.fmalc_android.service.SearchingService;
@@ -35,7 +36,7 @@ public class NetworkingUtils {
     private static FuelService fuelService;
     private static MaintenanceService maintenanceService;
     private static SearchingService searchingService;
-
+    private static NotificationService notificationService;
 
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
@@ -104,5 +105,12 @@ public class NetworkingUtils {
         if (searchingService == null)
             searchingService = RetrofitInstance.getInstance().create(SearchingService.class);
         return searchingService;
+    }
+
+    public static NotificationService getNotificationService(){
+        if (notificationService == null){
+            notificationService = RetrofitInstance.getInstance().create(NotificationService.class);
+        }
+        return notificationService;
     }
 }

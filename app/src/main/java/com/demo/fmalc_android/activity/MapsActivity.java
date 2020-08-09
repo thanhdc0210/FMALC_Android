@@ -99,9 +99,9 @@ private Polyline currentPolyline;
 //            PolylineOptions rectOptions = new PolylineOptions();
             for(int i=0; i< places.size()-1; i++){
 
-                place1 = new MarkerOptions().position(new LatLng(places.get(i).getLatitude(),places.get(i).getLongitude())).title(places.get(i).getAddress());
+                place1 = new MarkerOptions().position(new LatLng(places.get(i).getLatitude(),places.get(i).getLongitude())).title((i+1)+"."+places.get(i).getAddress());
 //                rectOptions.add(sydney);
-                place2 = new MarkerOptions().position(new LatLng(places.get(i+1).getLatitude(),places.get(i+1).getLongitude())).title(places.get(i+1).getAddress());
+                place2 = new MarkerOptions().position(new LatLng(places.get(i+1).getLatitude(),places.get(i+1).getLongitude())).title((i+2)+"."+places.get(i+1).getAddress());
                 mMap.addMarker(place1);
                 mMap.addMarker(place2);
                 mUrls.add(getUrl(place1.getPosition(), place2.getPosition(), "driving"));
@@ -117,7 +117,7 @@ private Polyline currentPolyline;
                 }
             }
 //            Polyline polyline = mMap.addPolyline(rectOptions);
-            mMap.moveCamera(CameraUpdateFactory.zoomTo(30));
+            mMap.moveCamera(CameraUpdateFactory.zoomTo(12));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(places.get(0).getLatitude(),places.get(0).getLongitude())));
         }
 //        Log.d("mylog", "Added Markers");

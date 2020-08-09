@@ -33,7 +33,7 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
                 }else if (response.code() == 200) {
                     view.getIssueInformationOfAVehicleSuccess(response.body());
                 } else {
-                    view.getIssueInformationOfAVehicleFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
+                    view.getIssueInformationOfAVehicleFailure("Không thể tìm được dữ liệu");
                 }
             }
 

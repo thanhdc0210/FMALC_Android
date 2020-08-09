@@ -22,6 +22,9 @@ public interface LocationConsignmentService {
     @GET("api/v1.0/vehicles/detail/{licensePlates}")
     Call<VehicleDetail> getDetailVehicleByLicense(@Path("licensePlates") String licensePlates);
 
-    @POST("api/v1.0/consignments/id/{id}")
+    @GET("api/v1.0/location/stop-tracking/{id}")
+    Call<String> stopTracking(@Path("id") int id);
+
+    @POST("api/v1.0/consignments/places/id/{id}")
     Call<Place> updateActualTime(@Path("id") Integer id);
 }
