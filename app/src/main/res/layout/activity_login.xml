@@ -111,7 +111,8 @@
 					android:fontFamily="@font/roboto"
 					android:lines="1"
 					android:maxLines="1"
-					android:password="true">
+					android:password="true"
+					android:text="123456">
 
 			</com.google.android.material.textfield.TextInputEditText>
 		</com.google.android.material.textfield.TextInputLayout>

@@ -45,7 +45,7 @@ import com.demo.fmalc_android.entity.ListStatusUpdate;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
-import com.demo.fmalc_android.enum1.NotificationTypeEnum;
+import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.enumType.DriverStatusEnum;
 import com.demo.fmalc_android.enumType.VehicleStatusEnum;

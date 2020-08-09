@@ -1,4 +1,4 @@
-package com.demo.fmalc_android.enum1;
+package com.demo.fmalc_android.enumType;
 
 public enum  NotificationTypeEnum {
     ODD_HOURS_ALERTS("Chạy xe ngoài giờ làm việc"){@Override public int getValue(){return 0;}},
