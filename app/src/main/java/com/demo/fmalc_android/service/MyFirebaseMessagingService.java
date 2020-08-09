@@ -4,7 +4,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -56,7 +55,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String content = remoteMessage.getNotification().getBody();
 
             Notification notification = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.mipmap.ic_logo)
                     .setContentTitle(title)
                     .setContentText(content)
                     .build();
