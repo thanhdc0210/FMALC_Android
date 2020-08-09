@@ -31,4 +31,9 @@ public interface MaintenanceService {
             @Query("km") Integer kmOld,
             @Part MultipartBody.Part file, @Header("Authorization") String auth);
 
+
+    @POST("api/v1.0/maintenances/update-plannedtime")
+    Call<ResponseBody> updatePlannedTime(
+            @Query("id") Integer id,
+            @Query("km") Integer kmOld);
 }

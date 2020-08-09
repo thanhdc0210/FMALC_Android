@@ -24,6 +24,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, MapContract.view , TaskLoadedCallback {
@@ -87,7 +89,12 @@ private Polyline currentPolyline;
     public void getScheduleSuccess(DetailedSchedule detailedSchedule) {
         this.places = detailedSchedule.getPlaces();
 //        mMap =  googleMap;
-
+        Collections.sort(places, new Comparator<Place>() {
+            @Override
+            public int compare(Place o1, Place o2) {
+                return o1.getPlannedTime().compareTo(o2.getPlannedTime());
+            }
+        });
         if(places.size()>0){
 //            PolylineOptions rectOptions = new PolylineOptions();
             for(int i=0; i< places.size()-1; i++){
@@ -104,7 +111,7 @@ private Polyline currentPolyline;
             if(mUrls.size()>0){
                 for (int i = 0; i < mUrls.size(); i++) {
                     String url = mUrls.get(i);
-                     new FetchURL(MapsActivity.this).execute(url, "driving");
+                     new FetchURL(MapsActivity.this,"directions").execute(url, "driving");
                     // Start downloading json data from Google Directions API
 //                    downloadTask.execute(url);
                 }
@@ -135,6 +142,7 @@ private Polyline currentPolyline;
         String output = "json";
         // Building the url to the web service
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + key;
+//        String url = "https://maps.googleapis.com/maps/api/distancematrix/" + output + "?" + parameters + "&key=" + key;
 //        System.out.println(url);
         return url;
     }
@@ -149,5 +157,10 @@ private Polyline currentPolyline;
         if (currentPolyline != null)
             currentPolyline.remove();
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
+    }
+
+    @Override
+    public void onDistanceDone(Integer... meter) {
+
     }
 }

@@ -15,12 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GlobalVariable extends Application {
-    private String token;
-    private String username;
-    private String role;
-    private Integer id;
-
+public class GlobalPlace extends Application {
     private List<Place> placeList;
     private int idSchedule;
     private int idDriver;

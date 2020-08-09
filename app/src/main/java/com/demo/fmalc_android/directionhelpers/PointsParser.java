@@ -39,7 +39,6 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 //            Log.d("mylog", jsonData[0].toString());
             DataParser parser = new DataParser();
 //            Log.d("mylog", parser.toString());
-
             // Starts parsing data
             routes = parser.parse(jObject);
 //            Log.d("mylog", "Executing routes");
@@ -54,7 +53,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
     // Executes in UI thread, after the parsing process
     @Override
-    protected void onPostExecute(List<List<HashMap<String, String>>> result) {
+        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
         ArrayList<LatLng> points;
         PolylineOptions lineOptions = null;
         // Traversing through all the routes
@@ -73,7 +72,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             }
             // Adding all the points in the route to LineOptions
             lineOptions.addAll(points);
-            if (directionMode.equalsIgnoreCase("walking")) {
+            if (directionMode.equalsIgnoreCase("driving")) {
                 lineOptions.width(10);
                 lineOptions.color(Color.MAGENTA);
             } else {

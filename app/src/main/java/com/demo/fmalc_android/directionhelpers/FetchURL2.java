@@ -2,9 +2,6 @@ package com.demo.fmalc_android.directionhelpers;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,25 +10,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Vishal on 10/20/2018.
- */
+public class FetchURL2 extends AsyncTask<String, Void, String> {
 
-public class FetchURL extends AsyncTask<String, Void, String> {
     Context mContext;
     String directionMode = "driving";
     String mode ;
-    public FetchURL(Context mContext, String mode) {
+    public FetchURL2(Context mContext, String mode) {
         this.mContext = mContext;
         this.mode=mode;
     }
 
     @Override
     protected String doInBackground(String... strings) {
-        // For storing data from web service
-//        if(mContext == ConsignmentDetailActivity.class){
-//
-//        }
         String data = "";
         directionMode = strings[1];
         try {
@@ -43,21 +33,15 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         }
         return data;
     }
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if(mode.equals("distancematrix")){
             DistanceParse distanceParse = new DistanceParse(mContext,directionMode);
             distanceParse.execute(s);
-        }else{
-            PointsParser parserTask = new PointsParser(mContext, directionMode);
-            // Invokes the thread for parsing the JSON data
-            parserTask.execute(s);
         }
 
     }
-
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -88,4 +72,3 @@ public class FetchURL extends AsyncTask<String, Void, String> {
         return data;
     }
 }
-

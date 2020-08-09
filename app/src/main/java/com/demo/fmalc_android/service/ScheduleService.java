@@ -34,4 +34,9 @@ public interface ScheduleService {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("api/v1.0/schedules/id/{id}")
     Call<ListStatusUpdate> updateStatusAndUsernameForDriver(@Path("id") Integer id, @Body ListStatusUpdate statusUpdate);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("api/v1.0/schedules/driver/{id}")
+    Call<Integer> countConsignment(@Path("id") Integer id);
+
 }
