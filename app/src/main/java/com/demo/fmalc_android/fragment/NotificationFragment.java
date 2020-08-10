@@ -63,7 +63,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
         init();
 
-        notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId(), globalVariable.getToken());
+        notificationMobilePresenter.findNotificationByDriverId(globalVariable.getUsername(), globalVariable.getToken());
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutNotification);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,7 +99,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     public void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
         getNotificationMobileResponseList(notificationMobileResponses);
         populateData();
-        notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity());
+        notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken());
         notificationRecyclerView.setAdapter(notificationViewCardAdapter);
         notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (showData.size() > 4) {
@@ -110,6 +110,16 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     @Override
     public void findNotificationByDriverIdFailure(String message) {
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateStatusSuccess() {
+
+    }
+
+    @Override
+    public void updateStatusFailure(String message) {
+
     }
 
     private void populateData() {
@@ -197,7 +207,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
             @Override public void run() {
                 List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
                 List<NotificationMobileResponse> showData = new ArrayList<>();
-                notificationMobilePresenter.findNotificationByDriverId(globalVariable.getId(), globalVariable.getToken());
+                notificationMobilePresenter.findNotificationByDriverId(globalVariable.getUsername(), globalVariable.getToken());
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 800);

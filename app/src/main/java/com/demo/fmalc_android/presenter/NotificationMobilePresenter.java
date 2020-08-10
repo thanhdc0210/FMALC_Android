@@ -22,8 +22,8 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
     NotificationService notificationService = NetworkingUtils.getNotificationService();
 
     @Override
-    public void findNotificationByDriverId(Integer id, String auth) {
-        Call<List<NotificationMobileResponse>> call =notificationService.findNotificationByDriverId(id, auth);
+    public void findNotificationByDriverId(String username, String auth) {
+        Call<List<NotificationMobileResponse>> call =notificationService.findNotificationByDriverId(username, auth);
         call.enqueue(new Callback<List<NotificationMobileResponse>>() {
             @Override
             public void onResponse(Call<List<NotificationMobileResponse>> call, Response<List<NotificationMobileResponse>> response) {
@@ -43,6 +43,28 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
                 }else{
                     view.findNotificationByDriverIdFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
+            }
+        });
+    }
+
+    @Override
+    public void updateStatus(Integer id, String auth) {
+        Call<Boolean> call = notificationService.updateStatus(id, auth);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.code() == 204){
+                    view.updateStatusFailure("");
+                }else if (response.isSuccessful()){
+                    view.updateStatusSuccess();
+                }else{
+                    view.updateStatusFailure("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                view.findNotificationByDriverIdFailure("");
             }
         });
     }

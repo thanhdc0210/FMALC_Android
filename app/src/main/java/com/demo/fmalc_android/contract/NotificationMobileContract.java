@@ -8,9 +8,13 @@ public interface NotificationMobileContract {
     interface View{
         void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses);
         void findNotificationByDriverIdFailure(String message);
+
+        void updateStatusSuccess();
+        void updateStatusFailure(String message);
     }
 
     interface Presenter{
-        void findNotificationByDriverId(Integer id, String auth);
+        void findNotificationByDriverId(String username, String auth);
+        void updateStatus(Integer id, String auth);
     }
 }

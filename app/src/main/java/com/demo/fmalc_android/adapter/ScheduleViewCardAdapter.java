@@ -116,7 +116,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getPlannedTime()));
         List<Place> places = schedule.getPlaces();
         places.sort(Comparator.comparing(Place::getPlannedTime));
-        Place finishPlace = places.get(0);
+        Place finishPlace = places.get(places.size()-1);
         holder.txtFinishTime.setText(format.format(finishPlace.getPlannedTime()));
         holder.txtReceivedPlace.setText(finishPlace.getName());
         holder.txtDeliveryPlace.setText(places.get(0).getName());
@@ -124,7 +124,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
 
         // Kiểm tra còn bao nhiêu thời gian
-        Long plannedTime = finishPlace.getPlannedTime().getTime();
+        Long plannedTime = places.get(0).getPlannedTime().getTime();
         Long nowTime = new Date().getTime();
         long diff = plannedTime - nowTime;
         int diffDays = (int) diff / (24 * 60 * 60 * 1000);
@@ -133,7 +133,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
 
         String s = "";
 
-        if (diffDays > 0 && diffHours > 0 && diffMinutes >= 0){
+        if (diffDays >= 0 && diffHours >= 0 && diffMinutes >= 0){
             s = "Còn ";
         }else{
             s = "Trễ ";
