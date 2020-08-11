@@ -79,12 +79,12 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     @Override
-    public void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
+    public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
 
     }
 
     @Override
-    public void findNotificationByDriverIdFailure(String message) {
+    public void findNotificationByUsernameFailure(String message) {
 
     }
 
@@ -95,6 +95,16 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
 
     @Override
     public void updateStatusFailure(String message) {
+
+    }
+
+    @Override
+    public void takeDayOffSuccess(boolean status) {
+
+    }
+
+    @Override
+    public void takeDayOffFailure(String message) {
 
     }
 

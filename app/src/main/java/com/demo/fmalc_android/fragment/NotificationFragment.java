@@ -96,7 +96,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     };
 
     @Override
-    public void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
+    public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
         getNotificationMobileResponseList(notificationMobileResponses);
         populateData();
         notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken());
@@ -108,18 +108,20 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     }
 
     @Override
-    public void findNotificationByDriverIdFailure(String message) {
+    public void findNotificationByUsernameFailure(String message) {
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void updateStatusSuccess() {
+    public void updateStatusSuccess() {}
 
+    public void takeDayOffSuccess(boolean status) {
     }
 
     @Override
-    public void updateStatusFailure(String message) {
+    public void updateStatusFailure(String message) {}
 
+    public void takeDayOffFailure(String message) {
     }
 
     private void populateData() {
