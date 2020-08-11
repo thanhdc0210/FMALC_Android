@@ -1,39 +1,51 @@
 package com.demo.fmalc_android.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.LoginActivity;
 import com.demo.fmalc_android.contract.DriverContract;
+import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.DriverInformation;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.entity.Notification;
+import com.demo.fmalc_android.entity.NotificationMobileResponse;
+import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.presenter.DriverPresenter;
+import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment implements DriverContract.View{
+public class AccountFragment extends Fragment implements DriverContract.View, DatePickerDialog.OnDateSetListener, NotificationMobileContract.View {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,12 +55,16 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView txtUsernameProfile,txtPhoneNumber,txtWorkedTime,txtIdentityNo, txtDoB;
-    ImageView imgProfile;
-    Button btnLogout;
+    private TextView txtUsernameProfile, txtPhoneNumber, txtWorkedTime, txtIdentityNo, txtDoB, startDate, endDate;
+    private ImageView imgProfile;
+    private Button btnLogout, btnDatePicker, btnUnexpectedRequest;
+    private LinearLayout linearLayout5;
     GlobalVariable globalVariable;
+    boolean flag;
 
-    private  DriverInformation driverInformation;
+    private NotificationMobilePresenter notificationPresenter;
+
+    private DriverInformation driverInformation;
 
     public DriverInformation getDriverInformation() {
         return driverInformation;
@@ -60,9 +76,12 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     public AccountFragment() {
         // Required empty public constructor
     }
-    private void init(){
+
+    private void init() {
         driverPresenter = new DriverPresenter();
         driverPresenter.setView(this);
+        notificationPresenter = new NotificationMobilePresenter();
+        notificationPresenter.setView(this);
     }
 
     /**
@@ -104,34 +123,126 @@ public class AccountFragment extends Fragment implements DriverContract.View{
         txtDoB = view.findViewById(R.id.txtDoB);
         imgProfile = view.findViewById(R.id.imgProfile);
         btnLogout = view.findViewById(R.id.btnLogout);
+        btnDatePicker = view.findViewById(R.id.btnPickDate);
+        startDate = view.findViewById(R.id.startDate);
+        endDate = view.findViewById(R.id.endDate);
+        linearLayout5 = view.findViewById(R.id.linearLayout5);
+        btnUnexpectedRequest = view.findViewById(R.id.btnUnexpectedRequest);
+        flag = false;
         init();
         //TODO thay id user hiện tại vào
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         driverPresenter.getDriverInformation(globalVariable.getId());
 
+        linearLayout5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar now = Calendar.getInstance();
+                DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
+                        AccountFragment.this,
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+//                dpd.setAutoHighlight(mAutoHighlight);
+                dpd.setStartTitle("Từ ngày");
+                dpd.setEndTitle("Đến ngày");
+                dpd.setAccentColor(Color.DKGRAY);
+                dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+
+            }
+        });
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!flag) {
+                    Calendar now = Calendar.getInstance();
+                    DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
+                            AccountFragment.this,
+                            now.get(Calendar.YEAR),
+                            now.get(Calendar.MONTH),
+                            now.get(Calendar.DAY_OF_MONTH)
+                    );
+//                dpd.setAutoHighlight(mAutoHighlight);
+                    dpd.setStartTitle("Từ ngày");
+                    dpd.setEndTitle("Đến ngày");
+                    dpd.setAccentColor(Color.DKGRAY);
+                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+                } else {
+                    //gửi
+                    Notification notification = new Notification();
+                    notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+                    notification.setDriver_id(globalVariable.getId());
+                    notification.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
+                    notification.setStatus(false);
+                    notificationPresenter.takeDayOff(notification);
+                }
+            }
+        });
+        btnUnexpectedRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText editText = new EditText(getContext());
+                editText.setTextColor(Color.BLACK);
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Báo nghỉ đột xuất?")
+                        .setContentText("Lí do nghỉ độ xuất")
+                        .setConfirmText("Gửi")
+                        .setCustomView(editText)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                Notification notification = new Notification();
+                                notification.setContent(editText.getText().toString());
+                                notification.setDriver_id(globalVariable.getId());
+                                notification.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
+                                notification.setStatus(false);
+                                notificationPresenter.takeDayOff(notification);
+                            }
+                        })
+                        .setCancelButton("Hủy", Dialog::dismiss)
+                        .show();
+            }
+        });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Xác nhận đăng xuất").
-                        setMessage("Bạn có chắc muốn đăng xuất?");
-                builder.setPositiveButton("Có",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(getContext(),LoginActivity.class);
+//                final EditText editText = new EditText(getContext());
+//                editText.setTextColor(Color.BLACK);
+//                new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+//                        .setTitleText("Are you sure?")
+//                        .setContentText("Won't be able to recover this file!")
+//                        .setConfirmText("Yes,delete it!")
+//                        .setCustomView(editText)
+//                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                            @Override
+//                            public void onClick(SweetAlertDialog sDialog) {
+//
+//                            }
+//                        })
+//                        .setCancelButton("Hủy", Dialog::dismiss)
+//                        .show();
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Xác nhận đăng xuất")
+                        .setContentText("Bạn có muốn đăng xuất")
+                        .setConfirmText("Có")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                                Intent i = new Intent(getContext(), LoginActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
-
+//
                             }
-                        });
-                builder.setNegativeButton("Không",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+                        })
+                        .setCancelButton("Không", new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
                             }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                        })
+                        .show();
             }
         });
         return view;
@@ -140,7 +251,7 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     @Override
     public void getDriverInformationSuccessful(DriverInformation driverInformation) {
         // set ảnh
-        if (driverInformation.getImage() != null){
+        if (driverInformation.getImage() != null) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             try {
@@ -164,5 +275,47 @@ public class AccountFragment extends Fragment implements DriverContract.View{
     @Override
     public void getDriverInformationFailure(String message) {
         Toast.makeText(getContext(), "Có lỗi trong quá trình lấy thông tin " + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Datepickerdialog");
+        if (dpd != null) dpd.setOnDateSetListener(this);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
+        String date = "You picked the following date: From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
+        startDate.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
+        endDate.setText(dayOfMonthEnd + "-" + monthOfYearEnd + "-" + yearEnd);
+        btnDatePicker.setText("Gửi");
+        flag = true;
+    }
+
+    @Override
+    public void findNotificationByDriverIdSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
+
+    }
+
+    @Override
+    public void findNotificationByDriverIdFailure(String message) {
+
+    }
+
+    @Override
+    public void takeDayOffSuccess(boolean status) {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Gửi thành công")
+                .setContentText("Thông tin nghỉ phép đã được gửi, vui lòng chờ phản hồi từ quản lí")
+                .show();
+    }
+
+    @Override
+    public void takeDayOffFailure(String message) {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Xin lỗi...")
+                .setContentText("Có lỗi xảy ra!")
+                .show();
     }
 }

@@ -8,7 +8,6 @@
 		<item name="colorControlNormal">#979797</item>
 		<item name="colorControlActivated">#FF834F</item>
 		<item name="colorControlHighlight">#FF834F</item>
-		<item name="editTextStyle">@style/Theme.MyApp</item>
 
 	</style>
 
@@ -22,18 +21,8 @@
 
 	<style name="AlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
 		<item name="colorPrimary">#FF834F</item>
-		<!-- Used for the buttons -->
-		<item name="colorAccent">#FF834F</item>
-		<item name="android:textColor">#000</item>
-		<!-- Used for the title and text -->
-		<item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-		<!-- Used for the background -->
-		<item name="android:background">@color/colorPrimaryDark</item>
-		<item name="fontFamily">@font/roboto</item>
-	</style>
-
-	<style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
-		<item name="android:textColor">@color/colorWhite</item>
+		<item name="colorSecondary">#A8F6F6F6</item>
+		<item name="colorOnSurface">#FFFFFF</item>
 		<item name="fontFamily">@font/roboto</item>
 	</style>
 

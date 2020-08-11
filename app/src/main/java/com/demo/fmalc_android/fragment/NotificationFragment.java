@@ -112,6 +112,16 @@ public class NotificationFragment extends Fragment implements NotificationMobile
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void takeDayOffSuccess(boolean status) {
+
+    }
+
+    @Override
+    public void takeDayOffFailure(String message) {
+
+    }
+
     private void populateData() {
         i = 0;
         showData.clear();
