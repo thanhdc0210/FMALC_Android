@@ -15,6 +15,8 @@ public interface SearchingService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/schedules/search")
-    Call<List<Schedule>> searchConsignment(@Query("searchType") SearchTypeForDriverEnum searchType, @Query("searchValue") String value
-            , @Header("Authorization") String auth);
+    Call<List<Schedule>> searchConsignment(@Query("searchType") SearchTypeForDriverEnum searchType,
+                                           @Query("searchValue") String value,
+                                           @Query("driverId") Integer driverId,
+                                           @Header("Authorization") String auth);
 }
