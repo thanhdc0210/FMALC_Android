@@ -55,15 +55,23 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         View view = inflater.inflate(R.layout.fragment_prepare, container, false);
 
         init();
+
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
         consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
-
         List<Integer> status = new ArrayList<>();
         status.add(ConsignmentStatusEnum.WAITING.getValue());
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshList();
+            }
+        });
 
         return view;
 
@@ -88,8 +96,6 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-        if(scheduleList.size()>0){
-
         getConsignmentList(scheduleList);
         populateData();
 
@@ -98,7 +104,6 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (showData.size() > 4) {
             initScrollListener();
-        }
         }
 
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
@@ -118,7 +123,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     private void populateData() {
         showData.clear();
         i = 0;
-        if (scheduleList.size() < 5){
+        if (scheduleList.size() < 5 && scheduleList.size()>0){
             showData = scheduleList;
         }else{
             while (i < 5){

@@ -102,7 +102,6 @@ dependencies {
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.android.support:appcompat-v7:25.3.1'
 
-
     //Custom Dialog
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 

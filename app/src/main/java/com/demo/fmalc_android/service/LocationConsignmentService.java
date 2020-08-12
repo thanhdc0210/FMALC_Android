@@ -4,6 +4,7 @@ import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface LocationConsignmentService {
     @POST("api/v1.0/location/sendLocation")
@@ -25,6 +27,6 @@ public interface LocationConsignmentService {
     @GET("api/v1.0/location/stop-tracking/{id}")
     Call<String> stopTracking(@Path("id") int id);
 
-    @POST("api/v1.0/consignments/places/id/{id}")
-    Call<Place> updateActualTime(@Path("id") Integer id);
+    @POST("api/v1.0/consignments/places/id")
+    Call<Place> updateActualTime(@Query("id") int id, @Query("schedule") int idSchedule);
 }

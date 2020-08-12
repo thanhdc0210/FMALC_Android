@@ -18,8 +18,8 @@ public class MapPresenter implements MapContract.presenter {
 
     ScheduleService scheduleService = NetworkingUtils.getScheduleService();
     @Override
-    public void getSchedule(int consignementId, int driverId) {
-        Call<DetailedSchedule>  call = scheduleService.findScheduleByConsignment_IdAndDriver_Id(consignementId, driverId);
+    public void getSchedule(int consignmentId) {
+        Call<DetailedSchedule>  call = scheduleService.findScheduleById(consignmentId);
         call.enqueue(new Callback<DetailedSchedule>() {
             @Override
             public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {

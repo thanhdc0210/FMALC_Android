@@ -32,8 +32,8 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
 
     MaintenanceService maintenanceService = NetworkingUtils.getMaintenanceService();
 
-    public void findByConsignmentId(Integer consignmentId, Integer driverId) {
-        Call<DetailedSchedule> call = consignmentService.findScheduleByConsignment_IdAndDriver_Id(consignmentId, driverId);
+    public void findByConsignmentId(Integer scheduleId) {
+        Call<DetailedSchedule> call = consignmentService.findScheduleById(scheduleId);
        call.enqueue(new Callback<DetailedSchedule>() {
            @Override
            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
@@ -126,9 +126,11 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
         });
     }
 
+
     @Override
-    public void updateActualTime(Integer placeId) {
-        Call<Place> call = service.updateActualTime(placeId);
+    public void updateActualTime(Integer placeId,Integer idSchedule) {
+
+        Call<Place> call = service.updateActualTime(placeId,idSchedule );
         call.enqueue(new Callback<Place>() {
             @Override
             public void onResponse(Call<Place> call, Response<Place> response) {
@@ -155,13 +157,13 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
                 if(response.isSuccessful()){
                     view.updatePlannedTimeSuccess(response.body());
                 }else{
-                    view.updateActualTimeFailed("");
+                    view.updatePlannedTimeFailed("");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view.updateActualTimeFailed("");
+                view.updatePlannedTimeFailed("");
             }
         });
     }

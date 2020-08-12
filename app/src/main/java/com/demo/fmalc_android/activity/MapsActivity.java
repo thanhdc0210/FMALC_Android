@@ -51,7 +51,7 @@ private Polyline currentPolyline;
 //        int id = 0;
         id = intent.getIntExtra("consignment_id",0);
         init();
-        presenter.getSchedule(id, globalVariable.getId());
+        presenter.getSchedule(id);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

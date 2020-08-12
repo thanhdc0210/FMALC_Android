@@ -21,30 +21,30 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
     ScheduleService scheduleService = NetworkingUtils.getScheduleService();
 
 
-    public void findScheduleByConsignment_IdAndDriver_Id(Integer consignmentId, Integer driverId) {
-        Call<DetailedSchedule> call = scheduleService.findScheduleByConsignment_IdAndDriver_Id(consignmentId, driverId);
-        call.enqueue(new Callback<DetailedSchedule>() {
-            @Override
-            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
-                if (response.code() == 204){
-                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Dữ liệu bạn yêu cầu hiện không có");
-                }if (response.code() == 200) {
-                    view.findScheduleByConsignment_IdAndDriver_IdSuccess(response.body());
-                } else {
-                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DetailedSchedule> call, Throwable t) {
-                if (t.getMessage().contains("timed out")){
-                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else{
-                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Server đang gặp sự cố. Xin thử lại sau!");
-                }
-            }
-        });
-    }
+//    public void findScheduleByConsignment_IdAndDriver_Id(Integer consignmentId, Integer driverId) {
+//        Call<DetailedSchedule> call = scheduleService.findScheduleByConsignment_IdAndDriver_Id(consignmentId, driverId);
+//        call.enqueue(new Callback<DetailedSchedule>() {
+//            @Override
+//            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
+//                if (response.code() == 204){
+//                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Dữ liệu bạn yêu cầu hiện không có");
+//                }if (response.code() == 200) {
+//                    view.findScheduleByConsignment_IdAndDriver_IdSuccess(response.body());
+//                } else {
+//                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<DetailedSchedule> call, Throwable t) {
+//                if (t.getMessage().contains("timed out")){
+//                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Vui lòng kiểm tra lại kết nối mạng");
+//                }else{
+//                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Server đang gặp sự cố. Xin thử lại sau!");
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public void numOfConsignment(Integer id) {
@@ -83,6 +83,46 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
             @Override
             public void onFailure(Call<ListStatusUpdate> call, Throwable t) {
                 view.updateConsDriVehFailed("Có lỗi xày ra");
+            }
+        });
+    }
+
+    @Override
+    public void checkConsignmentInDay(Integer id) {
+        Call<Integer> call = scheduleService.checkConsignmentInDay(id);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(response.isSuccessful()){
+                    view.checkConsignmentInDaySuccess(response.body());
+                }else{
+                    view.checkConsignmentInDayFailed("Có lỗi xảy ra!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                view.checkConsignmentInDayFailed("Có lỗi xảy ra!");
+            }
+        });
+    }
+
+    @Override
+    public void getScheduleRunningForDriver(Integer id) {
+        Call<DetailedSchedule> call = scheduleService.getScheduleRunningForDriver(id);
+        call.enqueue(new Callback<DetailedSchedule>() {
+            @Override
+            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
+                if(response.isSuccessful()){
+                    view.getScheduleRunningForDriverSuccess(response.body());
+                }else{
+                    view.getScheduleRunningForDriverFailed("Có lỗi xảy ra!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailedSchedule> call, Throwable t) {
+                view.getScheduleRunningForDriverFailed("Có lỗi xảy ra!");
             }
         });
     }

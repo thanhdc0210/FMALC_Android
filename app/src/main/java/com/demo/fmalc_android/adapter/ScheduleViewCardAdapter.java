@@ -176,6 +176,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("consignment_id", schedule.getConsignmentId());
+                bundle.putInt("schedule_id", schedule.getScheduleId());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
