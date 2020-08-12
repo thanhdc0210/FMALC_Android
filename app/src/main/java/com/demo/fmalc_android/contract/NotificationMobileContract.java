@@ -21,7 +21,7 @@ public interface NotificationMobileContract {
     interface Presenter{
         void findNotificationByUsername(String username, String auth);
         
-        void updateStatus(Integer id, String auth);
+        void updateStatus(Integer notificationId, String username, String auth);
 
         void takeDayOff(Notification notification);
     }

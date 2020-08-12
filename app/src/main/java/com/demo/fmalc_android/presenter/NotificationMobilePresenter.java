@@ -49,8 +49,8 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
     }
 
     @Override
-    public void updateStatus(Integer id, String auth) {
-        Call<Boolean> call = notificationService.updateStatus(id, auth);
+    public void updateStatus(Integer id, String username, String auth) {
+        Call<Boolean> call = notificationService.updateStatus(id, username, auth);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

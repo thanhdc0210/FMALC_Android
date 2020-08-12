@@ -14,6 +14,7 @@ import retrofit2.http.PATCH;
 import retrofit2.http.PUT;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NotificationService {
 
@@ -22,8 +23,8 @@ public interface NotificationService {
     Call<List<NotificationMobileResponse>> findNotificationByUsername(@Path("username") String username, @Header("Authorization") String auth);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @PATCH("api/v1.0/notification/driver/read/{id}")
-    Call<Boolean> updateStatus(@Path("id") Integer id, @Header("Authorization") String auth);
+    @GET("api/v1.0/notification/read")
+    Call<Boolean> updateStatus(@Query("id") Integer notificationId, @Query("username") String username, @Header("Authorization") String auth);
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

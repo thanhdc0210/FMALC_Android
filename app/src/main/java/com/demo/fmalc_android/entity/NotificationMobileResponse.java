@@ -15,6 +15,7 @@ public class NotificationMobileResponse {
     private Timestamp time;
     private String content;
     private boolean status;
-    private Integer id;
+    private String username;
+    private Integer notificationId;
     private Integer type;
 }

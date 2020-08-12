@@ -211,7 +211,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             Bundle bundle = new Bundle();
             @Override
             public void onClick(View view) {
-                notificationMobilePresenter.updateStatus(notificationMobileResponse.getId(), auth);
+                notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
                 switch (type){
                     case 3:
                         intent = new Intent(context, ConsignmentDetailActivity.class);
@@ -223,7 +223,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
                         break;
                     case 2:
                         intent = new Intent(context, MaintainFragment.class);
-                        bundle.putInt("notification_id", notificationMobileResponse.getId());
+                        bundle.putInt("notification_id", notificationMobileResponse.getNotificationId());
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
