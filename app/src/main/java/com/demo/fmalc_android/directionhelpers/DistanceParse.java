@@ -47,14 +47,8 @@ public class DistanceParse extends AsyncTask<String, Integer,Integer> {
     @Override
     protected void onPostExecute(Integer meters) {
 
-
-        // Drawing polyline in the Google Map for the i-th route
-//        if (lineOptions != null) {
-            //mMap.addPolyline(lineOptions);
             taskCallback.onDistanceDone(meters);
 
-//        } else {
-////            Log.d("mylog", "without Polylines drawn");
-//        }
     }
+
 }

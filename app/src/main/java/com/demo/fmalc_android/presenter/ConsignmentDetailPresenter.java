@@ -126,9 +126,11 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
         });
     }
 
+
     @Override
-    public void updateActualTime(Integer placeId) {
-        Call<Place> call = service.updateActualTime(placeId);
+    public void updateActualTime(Integer placeId,Integer idSchedule) {
+
+        Call<Place> call = service.updateActualTime(placeId,idSchedule );
         call.enqueue(new Callback<Place>() {
             @Override
             public void onResponse(Call<Place> call, Response<Place> response) {

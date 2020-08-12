@@ -41,7 +41,7 @@ public interface ConsignmentDetailContract {
         void trackingLocation(Location location);
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);
-        void updateActualTime(Integer placeId);
+        void updateActualTime(Integer placeId, Integer idSchedule);
         void updatePlannedTime(Integer id, Integer km);
         void stopTracking(Integer id);
     }

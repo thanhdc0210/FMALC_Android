@@ -14,11 +14,19 @@ public interface DetailedScheduleContract {
 
         void numOfConsignmentSuccess(Integer statusUpdate);
         void numOfConsignmentFailed(String message);
+
+        void checkConsignmentInDaySuccess(Integer numberConsignment);
+        void checkConsignmentInDayFailed(String message);
+
+        void getScheduleRunningForDriverSuccess(DetailedSchedule detailedSchedule);
+        void getScheduleRunningForDriverFailed(String message);
     }
 
     interface Presenter{
         void findByScheduleId(Integer id);
         void numOfConsignment(Integer id);
         void updateConsDriVeh(ListStatusUpdate statusUpdate, Integer id);
+        void checkConsignmentInDay(Integer id);
+        void getScheduleRunningForDriver(Integer id);
     }
 }

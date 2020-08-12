@@ -25,4 +25,8 @@ public class GlobalVariable extends Application {
     private int idSchedule;
     private int idDriver;
     private List<Place> places;
+    private DetailedSchedule consignmentDetail;
+    private int idScheduleNow;
+    public static final double latitudePark=10.8418079;
+    public static final double longitudePark=106.8091882;
 }

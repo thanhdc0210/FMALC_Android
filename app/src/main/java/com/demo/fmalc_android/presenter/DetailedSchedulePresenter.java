@@ -86,4 +86,44 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
             }
         });
     }
+
+    @Override
+    public void checkConsignmentInDay(Integer id) {
+        Call<Integer> call = scheduleService.checkConsignmentInDay(id);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(response.isSuccessful()){
+                    view.checkConsignmentInDaySuccess(response.body());
+                }else{
+                    view.checkConsignmentInDayFailed("Có lỗi xảy ra!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                view.checkConsignmentInDayFailed("Có lỗi xảy ra!");
+            }
+        });
+    }
+
+    @Override
+    public void getScheduleRunningForDriver(Integer id) {
+        Call<DetailedSchedule> call = scheduleService.getScheduleRunningForDriver(id);
+        call.enqueue(new Callback<DetailedSchedule>() {
+            @Override
+            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
+                if(response.isSuccessful()){
+                    view.getScheduleRunningForDriverSuccess(response.body());
+                }else{
+                    view.getScheduleRunningForDriverFailed("Có lỗi xảy ra!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailedSchedule> call, Throwable t) {
+                view.getScheduleRunningForDriverFailed("Có lỗi xảy ra!");
+            }
+        });
+    }
 }

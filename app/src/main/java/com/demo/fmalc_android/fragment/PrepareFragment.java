@@ -89,23 +89,25 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-        getConsignmentList(scheduleList);
-        populateData();
+        if(scheduleList.size()>0){
+            getConsignmentList(scheduleList);
+            populateData();
 
-        scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
-        consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 4) {
-            initScrollListener();
-        }
-
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
+            scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
+            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (showData.size() > 4) {
+                initScrollListener();
             }
-        });
+
+            swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refreshList();
+                }
+            });
+        }
     }
 
     @Override
@@ -116,7 +118,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     private void populateData() {
         showData.clear();
         i = 0;
-        if (scheduleList.size() < 5){
+        if (scheduleList.size() < 5 && scheduleList.size()>0){
             showData = scheduleList;
         }else{
             while (i < 5){
