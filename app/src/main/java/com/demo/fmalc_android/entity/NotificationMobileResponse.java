@@ -12,11 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationMobileResponse {
-    private Integer vehicleId;
-    private Integer driverId;
     private Timestamp time;
     private String content;
     private boolean status;
-    private Integer id;
+    private String username;
+    private Integer notificationId;
     private Integer type;
 }

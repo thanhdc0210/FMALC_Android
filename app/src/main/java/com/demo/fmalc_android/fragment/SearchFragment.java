@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
     private SearchingPresenter searchingPresenter;
     private ScheduleViewCardAdapter scheduleViewCardAdapter;
     private TextView txtEmpty;
-    private GlobalVariable globalVariable;
+    public GlobalVariable globalVariable;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -131,7 +131,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()){
-                searchingPresenter.searchConsignment(searchType, query, globalVariable.getToken());
+                    searchingPresenter.searchConsignment(searchType, query,globalVariable.getToken());
                 } else {
                     return false;
                 }

@@ -17,30 +17,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
+import com.demo.fmalc_android.contract.NotificationMobileContract;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.fragment.MaintainFragment;
 import com.demo.fmalc_android.enumType.NotificationTypeEnum;
+import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NotificationMobileContract.View {
     private List<NotificationMobileResponse> notificationMobileResponses;
     private Context context;
+    private String auth;
     private final int VIEW_TYPE_ITEM=0,VIEW_TYPE_LOADING=1;
+    private NotificationMobilePresenter notificationMobilePresenter;
 
-    public NotificationViewCardAdapter(List<NotificationMobileResponse> notificationMobileResponses, Context context){
+    public NotificationViewCardAdapter(List<NotificationMobileResponse> notificationMobileResponses, Context context, String auth){
         this.notificationMobileResponses = notificationMobileResponses;
         this.context = context;
+        this.auth = auth;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        notificationMobilePresenter = new NotificationMobilePresenter();
+        notificationMobilePresenter.setView(this);
+
         if(viewType == VIEW_TYPE_ITEM){
             View view = LayoutInflater.from(context).inflate(R.layout.view_card_notification, parent, false);
             return new ItemViewHolder(view);
@@ -66,6 +76,36 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
 
     public int getItemViewType(int position) {
         return notificationMobileResponses.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
+
+    @Override
+    public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
+
+    }
+
+    @Override
+    public void findNotificationByUsernameFailure(String message) {
+
+    }
+
+    @Override
+    public void updateStatusSuccess() {
+
+    }
+
+    @Override
+    public void updateStatusFailure(String message) {
+
+    }
+
+    @Override
+    public void takeDayOffSuccess(boolean status) {
+
+    }
+
+    @Override
+    public void takeDayOffFailure(String message) {
+
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -171,6 +211,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             Bundle bundle = new Bundle();
             @Override
             public void onClick(View view) {
+                notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
                 switch (type){
                     case 3:
                         intent = new Intent(context, ConsignmentDetailActivity.class);
@@ -182,7 +223,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
                         break;
                     case 2:
                         intent = new Intent(context, MaintainFragment.class);
-                        bundle.putInt("notification_id", notificationMobileResponse.getId());
+                        bundle.putInt("notification_id", notificationMobileResponse.getNotificationId());
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;

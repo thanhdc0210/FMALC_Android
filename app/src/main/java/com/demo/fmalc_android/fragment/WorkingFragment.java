@@ -99,10 +99,17 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
+<<<<<<< HEAD
         if(scheduleList.size()>0){
             getConsignmentList(scheduleList);
             populateData();
 
+=======
+
+        if(scheduleList.size()>0){
+            getConsignmentList(scheduleList);
+            populateData();
+>>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
             scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
 
             consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
@@ -111,8 +118,11 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
             if (showData.size() > 4) {
                 initScrollListener();
             }
+<<<<<<< HEAD
         }else{
             Toast.makeText(getContext(), "Bạn không đang chạy lô hàng nào!", Toast.LENGTH_SHORT).show();
+=======
+>>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
         }
     }
 
