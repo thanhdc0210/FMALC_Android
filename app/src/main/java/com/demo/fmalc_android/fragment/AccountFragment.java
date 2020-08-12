@@ -325,7 +325,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     public void takeDayOffFailure(String message) {
         new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
                 .setTitleText("Xin lỗi...")
-                .setContentText("Có lỗi xảy ra!")
+                .setContentText("Có lỗi xảy ra, xin thử lại!")
                 .show();
     }
 }

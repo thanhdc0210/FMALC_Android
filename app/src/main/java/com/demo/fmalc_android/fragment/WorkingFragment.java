@@ -99,16 +99,18 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-        getConsignmentList(scheduleList);
-        populateData();
 
-        scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
+        if(scheduleList.size()>0){
+            getConsignmentList(scheduleList);
+            populateData();
+            scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
 
-        consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        if (showData.size() > 4) {
-            initScrollListener();
+            if (showData.size() > 4) {
+                initScrollListener();
+            }
         }
     }
 

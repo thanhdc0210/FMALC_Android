@@ -88,6 +88,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
+        if(scheduleList.size()>0){
 
         getConsignmentList(scheduleList);
         populateData();
@@ -97,6 +98,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (showData.size() > 4) {
             initScrollListener();
+        }
         }
 
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);

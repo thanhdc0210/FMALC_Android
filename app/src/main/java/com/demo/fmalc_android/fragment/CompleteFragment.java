@@ -98,6 +98,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
+        if(scheduleList.size()>0){
 
         getConsignmentList(scheduleList);
         populateData();
@@ -109,6 +110,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
         if (showData.size() > 4) {
             initScrollListener();
+        }
         }
     }
 
