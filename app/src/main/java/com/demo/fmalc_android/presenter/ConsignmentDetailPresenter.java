@@ -157,13 +157,13 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
                 if(response.isSuccessful()){
                     view.updatePlannedTimeSuccess(response.body());
                 }else{
-                    view.updateActualTimeFailed("");
+                    view.updatePlannedTimeFailed("");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view.updateActualTimeFailed("");
+                view.updatePlannedTimeFailed("");
             }
         });
     }

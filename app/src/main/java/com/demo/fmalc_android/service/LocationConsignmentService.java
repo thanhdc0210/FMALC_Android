@@ -27,6 +27,6 @@ public interface LocationConsignmentService {
     @GET("api/v1.0/location/stop-tracking/{id}")
     Call<String> stopTracking(@Path("id") int id);
 
-    @POST("api/v1.0/consignments/places/id/{id}")
+    @POST("api/v1.0/consignments/places/id")
     Call<Place> updateActualTime(@Query("id") int id, @Query("schedule") int idSchedule);
 }

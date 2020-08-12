@@ -636,10 +636,16 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 } else {
                 }
                 if (place.getType() != null) {
-                    LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
-                    LatLng destination = new LatLng(place.getLatitude(), place.getLongitude());
-                    String s = new FetchURL(ConsignmentDetailActivity.this, DISTANCE_MATRIX).execute(getUrl(origin, destination, MODE_DRIVING), MODE_DRIVING).get();
-                    int me = new DistanceParse(ConsignmentDetailActivity.this, MODE_DRIVING).execute(s).get();
+                    int me =-1;
+                    try{
+                        LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
+                        LatLng destination = new LatLng(place.getLatitude(), place.getLongitude());
+                        String s = new FetchURL(ConsignmentDetailActivity.this, DISTANCE_MATRIX).execute(getUrl(origin, destination, MODE_DRIVING), MODE_DRIVING).get();
+                         me = new DistanceParse(ConsignmentDetailActivity.this, MODE_DRIVING).execute(s).get();
+                    }catch (Exception e){
+
+                    }
+
                     System.out.println("VALUEEEE" + me);
                     if (place.getType() == 1) {
                         if (place.getActualTime() != null) {
@@ -962,9 +968,14 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                         globalVariable.getPlaces().add(detailedSchedule.getPlaces().get(i));
                     }
                 }
-                if (globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()) {
+                if (globalVariable.getPlaces().size() == detailedSchedule.getPlaces().size()) {
                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                    btnTracking.setClickable(true);
+                    if(detailedSchedule.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))){
+                        btnTracking.setClickable(false);
+                    }else{
+                        btnTracking.setClickable(true);
+                    }
+
                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
                     btnTracking.setTextColor(Color.WHITE);
                     btnTracking.setOnClickListener(new View.OnClickListener() {
