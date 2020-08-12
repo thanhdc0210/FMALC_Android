@@ -30,4 +30,7 @@ public class DetailedSchedule implements Serializable {
 
     @SerializedName("status")
     private String status;
+
+    @SerializedName("consignmentId")
+    private Integer consignmentId;
 }

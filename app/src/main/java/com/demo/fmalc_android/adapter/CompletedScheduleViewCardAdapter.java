@@ -40,7 +40,7 @@ public class CompletedScheduleViewCardAdapter extends  RecyclerView.Adapter<Comp
     @Override
     public void onBindViewHolder(@NonNull CompletedScheduleViewCardAdapter.ViewHolder holder, int position) {
         Schedule schedule = scheduleList.get(position);
-        holder.txtId.setText(schedule.getScheduleId().toString());
+        holder.txtId.setText(schedule.getConsignmentId().toString());
         holder.txtCompanyName.setText(schedule.getOwnerName());
         //Giờ làm
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -59,7 +59,7 @@ public class CompletedScheduleViewCardAdapter extends  RecyclerView.Adapter<Comp
             public void onClick(View view) {
                 Intent intent = new Intent(context, ConsignmentDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("consignment_id", schedule.getScheduleId());
+                bundle.putInt("consignment_id", schedule.getConsignmentId());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

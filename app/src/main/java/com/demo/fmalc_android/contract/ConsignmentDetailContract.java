@@ -37,7 +37,7 @@ public interface ConsignmentDetailContract {
     }
 
     interface Presenter{
-        void findByConsignmentId(Integer id);
+        void findByConsignmentId(Integer consignmentId, Integer driverId);
         void trackingLocation(Location location);
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);

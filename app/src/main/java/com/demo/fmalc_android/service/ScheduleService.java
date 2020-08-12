@@ -23,8 +23,9 @@ public interface ScheduleService {
 //    Call<List<Schedule>> findByConsignmentStatusAndUsernameForFleetManager(@Query("status") List<Integer> status, @Query("username") String username);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @GET("api/v1.0/schedules/id/{id}")
-    Call<DetailedSchedule> findByScheduleId(@Path("id") Integer id);
+    @GET("api/v1.0/schedules/{consignmentId}/{driverId}")
+    Call<DetailedSchedule> findScheduleByConsignment_IdAndDriver_Id(@Path("consignmentId") Integer consignmentId,
+                                                                    @Path("driverId") Integer driverId);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/schedules/driver")

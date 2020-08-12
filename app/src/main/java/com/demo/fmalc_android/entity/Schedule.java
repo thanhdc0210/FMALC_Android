@@ -36,4 +36,9 @@ public class Schedule implements Serializable {
     @SerializedName("status")
     private String status; // Trạng thái đơn hàng
 
+    @SerializedName("isInheritance")
+    private Boolean isInheritance;
+
+    @SerializedName("consignmentId")
+    private Integer consignmentId;
   }

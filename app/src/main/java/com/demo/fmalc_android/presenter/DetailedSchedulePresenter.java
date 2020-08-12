@@ -21,26 +21,26 @@ public class DetailedSchedulePresenter implements DetailedScheduleContract.Prese
     ScheduleService scheduleService = NetworkingUtils.getScheduleService();
 
 
-    public void findByScheduleId(Integer id) {
-        Call<DetailedSchedule> call = scheduleService.findByScheduleId(id);
+    public void findScheduleByConsignment_IdAndDriver_Id(Integer consignmentId, Integer driverId) {
+        Call<DetailedSchedule> call = scheduleService.findScheduleByConsignment_IdAndDriver_Id(consignmentId, driverId);
         call.enqueue(new Callback<DetailedSchedule>() {
             @Override
             public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
                 if (response.code() == 204){
-                    view.findByScheduleIdFailure("Dữ liệu bạn yêu cầu hiện không có");
+                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Dữ liệu bạn yêu cầu hiện không có");
                 }if (response.code() == 200) {
-                    view.findByScheduleIdSuccess(response.body());
+                    view.findScheduleByConsignment_IdAndDriver_IdSuccess(response.body());
                 } else {
-                    view.findByScheduleIdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
+                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                 }
             }
 
             @Override
             public void onFailure(Call<DetailedSchedule> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
-                    view.findByScheduleIdFailure("Vui lòng kiểm tra lại kết nối mạng");
+                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else{
-                    view.findByScheduleIdFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.findScheduleByConsignment_IdAndDriver_IdFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
             }
         });

@@ -10,6 +10,7 @@ import com.demo.fmalc_android.contract.MapContract;
 import com.demo.fmalc_android.directionhelpers.FetchURL;
 import com.demo.fmalc_android.directionhelpers.TaskLoadedCallback;
 import com.demo.fmalc_android.entity.DetailedSchedule;
+import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.presenter.MapPresenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private List<String> mUrls = new ArrayList<>();
     private List<Place> places = new ArrayList<>();
+    private GlobalVariable globalVariable;
 
     
 //    private GoogleMap googleMap;
@@ -43,12 +45,13 @@ private Polyline currentPolyline;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        globalVariable = (GlobalVariable) getApplicationContext();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         Intent intent =getIntent();
 //        int id = 0;
-        id = intent.getIntExtra("SCHEDULE_ID",0);
+        id = intent.getIntExtra("consignment_id",0);
         init();
-        presenter.getSchedule(id);
+        presenter.getSchedule(id, globalVariable.getId());
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

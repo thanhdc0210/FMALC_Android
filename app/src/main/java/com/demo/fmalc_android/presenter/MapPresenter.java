@@ -18,14 +18,15 @@ public class MapPresenter implements MapContract.presenter {
 
     ScheduleService scheduleService = NetworkingUtils.getScheduleService();
     @Override
-    public void getSchedule(int id) {
-        Call<DetailedSchedule>  call = scheduleService.findByScheduleId(id);
+    public void getSchedule(int consignementId, int driverId) {
+        Call<DetailedSchedule>  call = scheduleService.findScheduleByConsignment_IdAndDriver_Id(consignementId, driverId);
         call.enqueue(new Callback<DetailedSchedule>() {
             @Override
             public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
                 if(response.isSuccessful()){
                     view.getScheduleSuccess(response.body());
                 }else{
+
                     view.getScheduleFailed("Vui lòng kiểm tra lại");
                 }
             }

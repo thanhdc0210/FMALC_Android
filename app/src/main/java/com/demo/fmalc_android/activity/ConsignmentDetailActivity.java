@@ -2,24 +2,17 @@ package com.demo.fmalc_android.activity;
 
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +20,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,7 +31,6 @@ import com.demo.fmalc_android.directionhelpers.DistanceParse;
 import com.demo.fmalc_android.directionhelpers.FetchURL;
 import com.demo.fmalc_android.directionhelpers.TaskLoadedCallback;
 import com.demo.fmalc_android.entity.DetailedSchedule;
-import com.demo.fmalc_android.entity.GlobalPlace;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.ListStatusUpdate;
 import com.demo.fmalc_android.entity.Notification;
@@ -66,12 +57,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
-import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
 
 
@@ -162,13 +150,13 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
             }
         };
 
-        detailedSchedulePresenter.findByScheduleId(id);
+        detailedSchedulePresenter.findScheduleByConsignment_IdAndDriver_Id(id, globalVariable.getId());
 
         btnLocationConsignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                intent.putExtra("SCHEDULE_ID", id);
+                intent.putExtra("consignment_id", id);
                 startActivity(intent);
             }
         });
@@ -177,7 +165,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
             @Override
             public void onClick(View v) {
                 if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
-                    System.out.println(consignmentDetail.getStatus());
+//                    System.out.println(consignmentDetail.getStatus());
                     ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
@@ -275,12 +263,12 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     }
 
     @Override
-    public void findByScheduleIdSuccess(DetailedSchedule consignmentDetail) {
+    public void findScheduleByConsignment_IdAndDriver_IdSuccess(DetailedSchedule consignmentDetail) {
         scheduleTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
         consignmentDetailRecycleView.setAdapter(scheduleTimeStepAdapter);
         detailedSchedulePresenter.numOfConsignment(globalVariable.getId());
         consignmentDetailRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        txtTitleConsignmentNo.setText("CHI TIẾT DỊCH VỤ " + consignmentDetail.getScheduleId());
+        txtTitleConsignmentNo.setText("CHI TIẾT DỊCH VỤ " + consignmentDetail.getConsignmentId());
         txtLicensePlates.setText(consignmentDetail.getLicensePlates());
         consignmentDetailPresenter.getVehicleDetailByLicense(consignmentDetail.getLicensePlates());
         if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
@@ -323,7 +311,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
 
     @Override
-    public void findByScheduleIdFailure(String message) {
+    public void findScheduleByConsignment_IdAndDriver_IdFailure(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

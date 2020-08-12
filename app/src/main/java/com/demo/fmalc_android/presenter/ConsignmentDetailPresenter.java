@@ -32,8 +32,8 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
 
     MaintenanceService maintenanceService = NetworkingUtils.getMaintenanceService();
 
-    public void findByConsignmentId(Integer id) {
-        Call<DetailedSchedule> call = consignmentService.findByScheduleId(id);
+    public void findByConsignmentId(Integer consignmentId, Integer driverId) {
+        Call<DetailedSchedule> call = consignmentService.findScheduleByConsignment_IdAndDriver_Id(consignmentId, driverId);
        call.enqueue(new Callback<DetailedSchedule>() {
            @Override
            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {

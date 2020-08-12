@@ -6,8 +6,8 @@ import com.demo.fmalc_android.entity.ListStatusUpdate;
 
 public interface DetailedScheduleContract {
     interface View{
-        void findByScheduleIdSuccess(DetailedSchedule consignmentDetail);
-        void findByScheduleIdFailure(String message);
+        void findScheduleByConsignment_IdAndDriver_IdSuccess(DetailedSchedule consignmentDetail);
+        void findScheduleByConsignment_IdAndDriver_IdFailure(String message);
 
         void updateConsDriVehSuccess(ListStatusUpdate statusUpdate);
         void updateConsDriVehFailed(String message);
@@ -17,7 +17,7 @@ public interface DetailedScheduleContract {
     }
 
     interface Presenter{
-        void findByScheduleId(Integer id);
+        void findScheduleByConsignment_IdAndDriver_Id(Integer consignmentId, Integer driverId);
         void numOfConsignment(Integer id);
         void updateConsDriVeh(ListStatusUpdate statusUpdate, Integer id);
     }
