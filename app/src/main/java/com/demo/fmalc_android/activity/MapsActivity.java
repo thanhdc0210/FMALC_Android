@@ -49,7 +49,7 @@ private Polyline currentPolyline;
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         Intent intent =getIntent();
 //        int id = 0;
-        id = intent.getIntExtra("consignment_id",0);
+        id = intent.getIntExtra("schedule_id",0);
         init();
         presenter.getSchedule(id);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

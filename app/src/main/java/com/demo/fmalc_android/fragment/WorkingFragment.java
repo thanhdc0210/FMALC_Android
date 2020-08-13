@@ -53,7 +53,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prepare, container, false);
+        View view = inflater.inflate(R.layout.fragment_working, container, false);
 
         init();
 

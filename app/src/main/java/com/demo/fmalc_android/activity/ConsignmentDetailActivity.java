@@ -179,7 +179,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                intent.putExtra("consignment_id", schedule_id);
+                intent.putExtra("schedule_id", schedule_id);
                 startActivity(intent);
             }
         });
