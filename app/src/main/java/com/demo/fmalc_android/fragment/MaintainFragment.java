@@ -90,7 +90,6 @@ public class MaintainFragment extends Fragment implements MaintenanceContract.Vi
         recyclerView = (RecyclerView)  view.findViewById(R.id.recycleViewMaintain);
         txtEmptyMaintain = view.findViewById(R.id.txtEmptyMaintain);
         init();
-        //TODO sửa lại truyền id driver
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         maintenancePresenter.getMaintenanceList(globalVariable.getId(), globalVariable.getToken());
 

@@ -99,16 +99,17 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-        getConsignmentList(scheduleList);
-        populateData();
+        if ((scheduleList.size()>0)) {
+            getConsignmentList(scheduleList);
+            populateData();
 
-        completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(showData, getActivity());
-        consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 4) {
-            initScrollListener();
+            completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(showData, getActivity());
+            consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
+            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (showData.size() > 4) {
+                initScrollListener();
+            }
         }
-
         swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -29,6 +29,8 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
     private int vehicleId = 0;
     private GlobalVariable globalVariable;
     private VehiclePresenter vehiclePresenter;
+    private AlertDialog.Builder alert;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
         edittext.setPadding(20,0,20,0);
 //        edittext.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
         final String[] content = new String[1];
-        AlertDialog.Builder alert = new AlertDialog.Builder (this)
+        alert = new AlertDialog.Builder (this)
                 .setTitle("Báo cáo sự cố")
                 .setMessage("Ghi chú lí do")
                 .setView(edittext)
@@ -102,7 +104,7 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btnLevel4:
                 level[0] = LevelInAlertEnum.SUPER_HIGH.getValue();
-                AlertDialog alertDialog = new AlertDialog.Builder(this)
+                 alertDialog = new AlertDialog.Builder(this)
                         .setTitle("Yêu cầu đổi xe")
                         .setMessage("Bạn có chắc chắn yêu cầu đổi xe?")
                         .setPositiveButton("Yêu cầu",
@@ -153,21 +155,26 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void getVehicleRunningFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Có lỗi xảy ra")
+                .setContentText(message)
+                .show();
     }
 
     @Override
     public void sendRequestWhileRunningSuccess(String s) {
         new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("Gửi yêu cầu")
-                .setContentText("Thành công")
+                .setTitleText("Gửi báo cáo")
+                .setContentText("Đã gửi thành công")
                 .show();
-            Toast.makeText(this, "Đã gửi yêu cầu", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void sendRequestWhileRunningFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Có lỗi xảy ra")
+                .setContentText(message)
+                .show();
     }
 }

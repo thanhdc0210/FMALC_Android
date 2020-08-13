@@ -2,6 +2,8 @@ package com.demo.fmalc_android.entity;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -41,4 +43,9 @@ public class Schedule implements Serializable {
 
     @SerializedName("consignmentId")
     private Integer consignmentId;
-  }
+
+    public List<Place> getPlaces() {
+        Collections.sort(places,Comparator.comparing(Place::getPlannedTime));
+      return  places;
+    }
+}

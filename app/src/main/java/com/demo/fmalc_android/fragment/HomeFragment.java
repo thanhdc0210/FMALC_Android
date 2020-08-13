@@ -1,7 +1,11 @@
 package com.demo.fmalc_android.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,16 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.activity.DriverHomeActivity;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -130,10 +125,10 @@ public class HomeFragment extends Fragment {
 
 
 
-        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
-        badgeDrawable.setVisible(true);
-        //set tổng số cho tab đó
-        badgeDrawable.setNumber(12);
+//        BadgeDrawable badgeDrawable = tabLayout.getTabAt(0).getOrCreateBadge();
+//        badgeDrawable.setVisible(true);
+//        //set tổng số cho tab đó
+//        badgeDrawable.setNumber(12);
         return view;
     }
 
