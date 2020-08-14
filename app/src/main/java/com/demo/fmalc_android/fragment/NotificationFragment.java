@@ -102,7 +102,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
             getNotificationMobileResponseList(notificationMobileResponses);
             populateData();
 
-            notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken());
+            notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken(), globalVariable.getId());
             notificationRecyclerView.setAdapter(notificationViewCardAdapter);
             notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             if (showData.size() > 4) {

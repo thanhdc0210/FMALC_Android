@@ -24,7 +24,7 @@ public interface NotificationService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/notification/read")
-    Call<Boolean> updateStatus(@Query("id") Integer notificationId, @Query("username") String username, @Header("Authorization") String auth);
+    Call<Boolean> updateStatus(@Query("notificationId") Integer notificationId, @Query("username") String username, @Header("Authorization") String auth);
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
