@@ -1,13 +1,6 @@
 package com.demo.fmalc_android.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +8,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
 import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.ScheduleContract;
-import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.SchedulePresenter;
 
@@ -36,7 +34,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     RecyclerView consignmentRecyclerView;
     LinearLayout consignmentRecyclerViewLayout;
-    CompletedScheduleViewCardAdapter completedScheduleViewCardAdapter;
+    ScheduleViewCardAdapter scheduleViewCardAdapter;
     private SchedulePresenter schedulePresenter;
     private GlobalVariable globalVariable;
     List<Schedule> scheduleList = new ArrayList<>();
@@ -103,8 +101,8 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
             getConsignmentList(scheduleList);
             populateData();
 
-            completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(showData, getActivity());
-            consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
+            scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
+            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
             consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             if (showData.size() > 4) {
                 initScrollListener();
@@ -167,7 +165,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
         showData.add(null);
         consignmentRecyclerView.post(new Runnable() {
             public void run() {
-                completedScheduleViewCardAdapter.notifyItemInserted(showData.size()-1);
+                scheduleViewCardAdapter.notifyItemInserted(showData.size()-1);
             }
         });
         Handler handler = new Handler();
@@ -176,7 +174,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
             public void run() {
                 showData.remove(showData.size() - 1);
                 int scrollPosition = showData.size();
-                completedScheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
+                scheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition+1;
                 if (currentSize < scheduleList.size() - 4){
                     nextLimit = currentSize + 4;
@@ -192,7 +190,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 //                scheduleViewCardAdapter.notifyDataSetChanged();
                 consignmentRecyclerView.post(new Runnable() {
                     public void run() {
-                        completedScheduleViewCardAdapter.notifyDataSetChanged();
+                        scheduleViewCardAdapter.notifyDataSetChanged();
                     }
                 });
                 isLoading = false;

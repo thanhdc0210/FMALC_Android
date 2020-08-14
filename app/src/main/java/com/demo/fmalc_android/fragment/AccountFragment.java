@@ -173,7 +173,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                     Notification notification = new Notification();
                     notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
                     notification.setDriver_id(globalVariable.getId());
-                    notification.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
+                    notification.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
                     notification.setStatus(false);
                     notificationPresenter.takeDayOff(notification);
                 }

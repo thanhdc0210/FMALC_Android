@@ -362,12 +362,16 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }
                 btnNote.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-                        new MaterialAlertDialogBuilder(ConsignmentDetailActivity.this, R.style.AlertDialog)
-                                .setIcon(getDrawable(R.drawable.ic_chat_24px))
-                                .setTitle("Ghi chú")
-                                .setMessage(consignmentDetail.getOwnerNote())
-                                .setPositiveButton("OK", null)
+                        new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                                .setTitleText("Ghi chú")
+                                .setContentText(consignmentDetail.getOwnerNote())
                                 .show();
+//                        new MaterialAlertDialogBuilder(ConsignmentDetailActivity.this, R.style.AlertDialog)
+//                                .setIcon(getDrawable(R.drawable.ic_chat_24px))
+//                                .setTitle("Ghi chú")
+//                                .setMessage(consignmentDetail.getOwnerNote())
+//                                .setPositiveButton("OK", null)
+//                                .show();
 
                     }
                 });
@@ -412,11 +416,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }
                 btnNote.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
-                        new MaterialAlertDialogBuilder(ConsignmentDetailActivity.this, R.style.AlertDialog)
-                                .setIcon(getDrawable(R.drawable.ic_chat_24px))
-                                .setTitle("Ghi chú")
-                                .setMessage(consignmentDetail.getOwnerNote())
-                                .setPositiveButton("OK", null)
+                        new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                                .setTitleText("Ghi chú")
+                                .setContentText(consignmentDetail.getOwnerNote())
                                 .show();
 
                     }
@@ -469,11 +471,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
             btnNote.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    new MaterialAlertDialogBuilder(ConsignmentDetailActivity.this, R.style.AlertDialog)
-                            .setIcon(getDrawable(R.drawable.ic_chat_24px))
-                            .setTitle("Ghi chú")
-                            .setMessage(consignmentDetail.getOwnerNote())
-                            .setPositiveButton("OK", null)
+                    new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("Ghi chú")
+                            .setContentText(consignmentDetail.getOwnerNote())
                             .show();
 
                 }

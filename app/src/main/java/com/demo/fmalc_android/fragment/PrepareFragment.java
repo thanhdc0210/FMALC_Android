@@ -102,7 +102,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 objectToSortList.add(new ObjectToSort(e,e.getPlaces().get(0).getPlannedTime()));
             });
             objectToSortList.sort(Comparator.comparing(ObjectToSort::getPlannedTime));
-            List<Schedule> finalScheduleList = scheduleList;
+            List<Schedule> finalScheduleList = new ArrayList<>();
             objectToSortList.forEach(objectToSort -> {
                finalScheduleList.add(objectToSort.schedule);
             });
