@@ -23,8 +23,8 @@ public class VehicleAfterDeliveryPresenter implements VehicleAfterDeliveryContra
     VehicleService vehicleService = NetworkingUtils.getVehicleService();
 
     @Override
-    public void getListLicensePlateAndInspectionAfterDelivery( String username, String auth) {
-        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionAfterDelivery(username, auth);
+    public void getListLicensePlateAndInspectionAfterDelivery(List<Integer> status, String username, String auth) {
+        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionAfterDelivery(status, username, auth);
         call.enqueue(new Callback<VehicleInspection>() {
             @Override
             public void onResponse(Call<VehicleInspection> call, Response<VehicleInspection> response) {

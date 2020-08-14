@@ -102,11 +102,16 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 objectToSortList.add(new ObjectToSort(e,e.getPlaces().get(0).getPlannedTime()));
             });
             objectToSortList.sort(Comparator.comparing(ObjectToSort::getPlannedTime));
-            List<Schedule> finalScheduleList = new ArrayList<>();
+//            List<Schedule> finalScheduleList = scheduleList;
+//            objectToSortList.forEach(objectToSort -> {
+//               finalScheduleList.add(objectToSort.schedule);
+//            });
+            scheduleList.removeAll(scheduleList);
             objectToSortList.forEach(objectToSort -> {
-               finalScheduleList.add(objectToSort.schedule);
+                scheduleList.add(objectToSort.getSchedule());
             });
-            getConsignmentList(finalScheduleList);
+//            getConsignmentList(finalScheduleList);
+            getConsignmentList(scheduleList);
             populateData();
 
             scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
@@ -116,13 +121,13 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 initScrollListener();
             }
         }
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
-            }
-        });
+//        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshList();
+//            }
+//        });
     }
 
     @Override

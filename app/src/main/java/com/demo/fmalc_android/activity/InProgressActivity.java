@@ -135,12 +135,12 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
 
 
     @Override
-    public void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection) {
+    public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliverySuccess(VehicleInspection vehicleInspection) {
 
     }
 
     @Override
-    public void getListLicensePlateAndInspectionFailure(String message) {
+    public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure(String message) {
 
     }
 

@@ -25,6 +25,7 @@ import com.demo.fmalc_android.entity.Inspection;
 import com.demo.fmalc_android.entity.ReportIssueContentRequest;
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.entity.VehicleInspection;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.ReportIssuePresenter;
 import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
 import com.demo.fmalc_android.presenter.VehiclePresenter;
@@ -66,11 +67,16 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
         if(vehicleStatus.contains("0")){
+            List<Integer> status = new ArrayList<>();
+            status.add(ConsignmentStatusEnum.WAITING.getValue());
             setTitle("Báo cáo trước khi chạy");
-            vehiclePresenter.getListLicensePlate(globalVariable.getUsername(), globalVariable.getToken());
+            vehiclePresenter.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(status, globalVariable.getUsername(), globalVariable.getToken());
         }else{
             setTitle("Báo cáo sau khi chạy");
-            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(globalVariable.getUsername(), globalVariable.getToken());
+            List<Integer> status = new ArrayList<>();
+            status.add(ConsignmentStatusEnum.COMPLETED.getValue());
+            status.add(ConsignmentStatusEnum.MISSING_DOCUMENT.getValue());
+            vehicleAfterDeliveryPresenter.getListLicensePlateAndInspectionAfterDelivery(status, globalVariable.getUsername(), globalVariable.getToken());
         }
 
     }
@@ -99,7 +105,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         this.vehicleInspection = vehicleInspection;
     }
     @Override
-    public void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection) {
+    public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliverySuccess(VehicleInspection vehicleInspection) {
 
         if (vehicleInspection.getVehicleLicensePlates().equals("")){
             inforLicensePlate.setVisibility(View.GONE);
@@ -148,7 +154,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
     }
 
     @Override
-    public void getListLicensePlateAndInspectionFailure(String message) {
+    public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure(String message) {
         Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 

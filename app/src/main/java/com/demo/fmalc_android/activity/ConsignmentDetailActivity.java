@@ -277,6 +277,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     @Override
 
     public void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail) {
+        getDetail(consignmentDetail);
         consignmentTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
         consignmentDetailRecycleView.setAdapter(consignmentTimeStepAdapter);
         this.consignmentDetail  = consignmentDetail;

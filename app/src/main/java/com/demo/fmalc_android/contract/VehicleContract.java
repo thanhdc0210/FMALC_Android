@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface VehicleContract {
     interface View{
-        void getListLicensePlateAndInspectionSuccess(VehicleInspection vehicleInspection);
-        void getListLicensePlateAndInspectionFailure(String message);
+        void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliverySuccess(VehicleInspection vehicleInspection);
+        void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure(String message);
 
         void getVehicleRunningSuccess(int vehicleId);
         void getVehicleRunningFailure(String message);
@@ -20,7 +20,7 @@ public interface VehicleContract {
     }
 
     interface Presenter{
-        void getListLicensePlate(String username, String auth);
+        void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(List<Integer> status, String username, String auth);
 
         void getVehicleRunning(String username, String auth);
         void sendRequestWhileRunning(AlertRequestDTO requestDTO,String auth);
