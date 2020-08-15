@@ -51,7 +51,7 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         //default là navigation Home, có sửa lại để test fragment khác
-        bottomNavigationView.setSelectedItemId(R.id.navigation_inspection);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
 
         tokenDevicePresenter = new TokenDevicePresenter();
         tokenDevicePresenter.setView(this);

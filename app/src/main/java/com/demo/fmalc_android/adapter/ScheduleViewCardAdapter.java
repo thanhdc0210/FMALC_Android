@@ -18,6 +18,7 @@ import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.Place;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -122,52 +123,57 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.txtDeliveryPlace.setText(places.get(0).getName());
         holder.txtWeight.setText(schedule.getWeight().toString() + " kg ");
         holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
+        if(schedule.getStatus().equals(ConsignmentStatusEnum.COMPLETED.getConsignmentStatusEnum())){
+            holder.txtTimeCountDown.setText("Hoàn thành lúc: " + format.format(finishPlace.getActualTime().getTime()));
+        } else {
 
-        // Kiểm tra còn bao nhiêu thời gian
-        Long plannedTime = places.get(0).getPlannedTime().getTime();
-        Long nowTime = new Date().getTime();
-        long diff = plannedTime - nowTime;
-        int diffDays = (int) diff / (24 * 60 * 60 * 1000);
-        int diffHours = (int) diff / (60 * 60 *1000) % 24;
-        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
 
-        String s = "";
+            // Kiểm tra còn bao nhiêu thời gian
+            Long plannedTime = places.get(0).getPlannedTime().getTime();
+            Long nowTime = new Date().getTime();
+            long diff = plannedTime - nowTime;
+            int diffDays = (int) diff / (24 * 60 * 60 * 1000);
+            int diffHours = (int) diff / (60 * 60 * 1000) % 24;
+            int diffMinutes = (int) diff / (60 * 1000) % 60 % 24;
 
-        if (diffDays >= 0 && diffHours >= 0 && diffMinutes >= 0){
-            s = "Còn ";
-        }else{
-            s = "Trễ ";
-            holder.txtTimeCountDown.setTextColor(Color.RED);
-        }
+            String s = "";
 
-        if (diffDays < 0){
-            s = s + Math.abs(diffDays) + " ngày ";
-            holder.txtTimeCountDown.setText(s);
-        }
+            if (diffDays >= 0 && diffHours >= 0 && diffMinutes >= 0) {
+                s = "Còn ";
+            } else {
+                s = "Trễ ";
+                holder.txtTimeCountDown.setTextColor(Color.RED);
+            }
 
-        if (diffHours < 0){
-            s = s + Math.abs(diffHours) + " giờ ";
-            holder.txtTimeCountDown.setText(s);
-        }
+            if (diffDays < 0) {
+                s = s + Math.abs(diffDays) + " ngày ";
+                holder.txtTimeCountDown.setText(s);
+            }
 
-        if (diffMinutes <= 0){
-            s = s + Math.abs(diffMinutes) + " phút";
-            holder.txtTimeCountDown.setText(s);
-        }
+            if (diffHours < 0) {
+                s = s + Math.abs(diffHours) + " giờ ";
+                holder.txtTimeCountDown.setText(s);
+            }
 
-        if (diffDays > 0){
-            s = s + Math.abs(diffDays) + " ngày ";
-            holder.txtTimeCountDown.setText(s);
-        }
+            if (diffMinutes <= 0) {
+                s = s + Math.abs(diffMinutes) + " phút";
+                holder.txtTimeCountDown.setText(s);
+            }
 
-        if (diffHours > 0){
-            s = s + Math.abs(diffHours) + " giờ ";
-            holder.txtTimeCountDown.setText(s);
-        }
+            if (diffDays > 0) {
+                s = s + Math.abs(diffDays) + " ngày ";
+                holder.txtTimeCountDown.setText(s);
+            }
 
-        if (diffMinutes >= 0){
-            s = s + Math.abs(diffMinutes) + " phút";
-            holder.txtTimeCountDown.setText(s);
+            if (diffHours > 0) {
+                s = s + Math.abs(diffHours) + " giờ ";
+                holder.txtTimeCountDown.setText(s);
+            }
+
+            if (diffMinutes >= 0) {
+                s = s + Math.abs(diffMinutes) + " phút";
+                holder.txtTimeCountDown.setText(s);
+            }
         }
 
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {

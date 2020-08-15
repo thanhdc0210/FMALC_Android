@@ -34,7 +34,7 @@ public class MaintainAndIssueActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Báo cáo và Sự cố");
+        setTitle("Bảo trì và Sự cố");
 //        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         setContentView(R.layout.activity_report_and_issue);
         ViewPager viewPager = findViewById(R.id.view_pager_maintain_issue);
