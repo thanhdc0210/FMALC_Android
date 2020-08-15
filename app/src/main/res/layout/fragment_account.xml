@@ -26,8 +26,7 @@
 				android:id="@+id/imgProfile"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:scaleType="centerCrop"
-				app:srcCompat="@drawable/girl_profile" />
+				android:scaleType="centerCrop"/>
 	</com.google.android.material.card.MaterialCardView>
 
 	<View
@@ -47,7 +46,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="10dp"
 			android:fontFamily="@font/roboto_bold"
-			android:text="Trịnh Lê Bảo Giang"
+			android:text=""
 			android:textSize="20dp"
 			android:textStyle="bold"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +71,7 @@
 				android:layout_marginTop="15dp"
 				android:drawableLeft="@drawable/ic_phone_android_24px"
 				android:drawablePadding="30sp"
-				android:text="0960601203"
+				android:text=""
 				android:textColor="#000"
 				android:textSize="18dp" />
 
@@ -85,7 +84,7 @@
 				android:drawableLeft="@drawable/ic_cake_24px"
 				android:drawablePadding="35sp"
 				android:paddingLeft="3dp"
-				android:text="30-12-1997"
+				android:text=""
 				android:textColor="#000"
 				android:textSize="18dp" />
 
@@ -98,7 +97,7 @@
 				android:drawableLeft="@drawable/ic_timer_24px"
 				android:drawablePadding="35sp"
 				android:paddingLeft="3dp"
-				android:text="20 giờ / tuần"
+				android:text=""
 				android:textColor="#000"
 				android:textSize="18dp" />
 
@@ -111,7 +110,7 @@
 				android:drawableLeft="@drawable/ic_credit_card_24px"
 				android:drawablePadding="35sp"
 				android:paddingLeft="3dp"
-				android:text="272631506"
+				android:text=""
 				android:textColor="#000"
 				android:textSize="18dp" />
 
@@ -146,7 +145,7 @@
 			android:id="@+id/description"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Chọn thời gian xin nghỉ phép: \n (Ít nhất trước 3 ngày)"
+			android:text="Chọn thời gian xin nghỉ phép: \n (Ít nhất trước 7 ngày)"
 			android:textAlignment="viewStart"
 			android:textSize="16dp"
 			app:layout_constraintEnd_toEndOf="@+id/title"

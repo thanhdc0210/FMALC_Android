@@ -26,6 +26,7 @@ import com.demo.fmalc_android.entity.ReportIssueContentRequest;
 import com.demo.fmalc_android.entity.ReportIssueRequest;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
+import com.demo.fmalc_android.fragment.InspectionFragment;
 import com.demo.fmalc_android.presenter.ReportIssuePresenter;
 import com.demo.fmalc_android.presenter.VehicleAfterDeliveryPresenter;
 import com.demo.fmalc_android.presenter.VehiclePresenter;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class PreparingActivity extends AppCompatActivity implements VehicleContract.View, ReportIssueContract.View, VehicleAfterDeliveryContract.View {
@@ -58,7 +61,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preparing);
         Bundle bundle = getIntent().getExtras();
-        String vehicleStatus = bundle.getString("VEHICLE_STATUS");
+        int consignmentStatus = bundle.getInt("CONSIGNMENT_STATUS");
         txtEmptyView = findViewById(R.id.txtEmptyView);
         recyclerView = findViewById(R.id.recyclerViewInspection);
         txtCurrentLicensePlate = findViewById(R.id.txtCurrentLicensePlate);
@@ -66,7 +69,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
         btnSubmit = findViewById(R.id.btnSubmit);
         init();
         globalVariable = (GlobalVariable) getApplicationContext();
-        if(vehicleStatus.contains("0")){
+        if(consignmentStatus == ConsignmentStatusEnum.WAITING.getValue()){
             List<Integer> status = new ArrayList<>();
             status.add(ConsignmentStatusEnum.WAITING.getValue());
             setTitle("Báo cáo trước khi chạy");
@@ -132,7 +135,9 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
                     globalVariable = (GlobalVariable) getApplicationContext();
                     // Report Issue Before Delivery
                     if ( listResult.isEmpty() ) {
-                        Toast.makeText(getApplicationContext(), "Vui lòng chọn sự cố để báo cáo", Toast.LENGTH_SHORT).show();
+                        new SweetAlertDialog(PreparingActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Vui lòng chọn sự cố cần báo cáo")
+                                .show();
                     } else {
                         ReportIssueRequest reportIssueRequest = new ReportIssueRequest();
                         for (Map.Entry<Integer, String> image : inspectionAdapter.getImageList().entrySet()) {
@@ -155,7 +160,10 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure(String message) {
-        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Hiện tại không có xe nào phù hợp để báo cáo", Toast.LENGTH_SHORT).show();
+        onBackPressed();
+
+
     }
 
     @Override
@@ -180,13 +188,22 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void createReportIssueForDeliveryForSuccess(ReportIssueRequest reportIssueRequest) {
-        Toast.makeText(this, "Báo cáo thành công", Toast.LENGTH_SHORT).show();
-        onBackPressed();
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Báo cáo thành công")
+                .setContentText("Báo cáo sự cố của bạn đã được ghi nhận")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        onBackPressed();
+                    }
+                })
+                .show();
+
     }
 
     @Override
     public void createReportIssueForDeliveryForFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -238,7 +255,8 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     @Override
     public void getListLicensePlateAndInspectionAfterDeliveryFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Hiện tại không có xe nào phù hợp để báo cáo", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
 

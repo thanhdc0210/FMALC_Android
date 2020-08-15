@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
 import com.demo.fmalc_android.adapter.IssueAdapter;
 import com.demo.fmalc_android.contract.ReportIssueForUpdatingContract;
 import com.demo.fmalc_android.contract.ReportIssueResponseContract;
@@ -30,6 +31,8 @@ import com.demo.fmalc_android.presenter.ReportIssueResponsePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +54,8 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
     Button btnUpdateReportIssue;
     List<Integer> status = new ArrayList<>();
 
-    public IssueFragment(){}
+    public IssueFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +79,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
         return view;
     }
 
-    private void init(){
+    private void init() {
         reportIssueResponsePresenter = new ReportIssueResponsePresenter();
         reportIssueResponsePresenter.setView(this);
 
@@ -89,12 +93,12 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleSuccess(ReportIssueResponse reportIssueResponse) {
-        if (reportIssueResponse.getReportIssueContentResponses().isEmpty()){
+        if (reportIssueResponse.getReportIssueContentResponses().isEmpty()) {
             txtEmptyView.setVisibility(View.VISIBLE);
             issueInformationRecyclerView.setVisibility(View.GONE);
             txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
             btnUpdateReportIssue.setVisibility(View.GONE);
-        }else {
+        } else {
             txtCurrentLicensePlate.setText(reportIssueResponse.getVehicleLicensePlates());
             issueAdapter = new IssueAdapter(reportIssueResponse.getReportIssueContentResponses(), getActivity());
             issueInformationRecyclerView.setAdapter(issueAdapter);
@@ -104,11 +108,17 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
             btnUpdateReportIssue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    List<Integer> listReportIssueId = issueAdapter.getListIssue();
-                    ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
-                    reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
-                    reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
-                    reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating, globalVariable.getToken());
+                    if (issueAdapter.getListIssue().isEmpty()) {
+                        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Vui lòng chọn sự cố cần cập nhật")
+                                .show();
+                    } else {
+                        List<Integer> listReportIssueId = issueAdapter.getListIssue();
+                        ReportIssueInformationForUpdating reportIssueInformationForUpdating = new ReportIssueInformationForUpdating();
+                        reportIssueInformationForUpdating.setUsername(globalVariable.getUsername());
+                        reportIssueInformationForUpdating.setReportIssueIdList(listReportIssueId);
+                        reportIssueForUpdatingPresenter.updateReportIssue(reportIssueInformationForUpdating, globalVariable.getToken());
+                    }
                 }
             });
         }
@@ -116,26 +126,32 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
 
     @Override
     public void getIssueInformationOfAVehicleFailure(String message) {
-        if (message.contains("Dữ liệu bạn yêu cầu hiện không có")){
+        if (message.contains("Dữ liệu bạn yêu cầu hiện không có")) {
             txtEmptyView.setVisibility(View.VISIBLE);
             issueInformationRecyclerView.setVisibility(View.GONE);
             btnUpdateReportIssue.setVisibility(View.GONE);
             txtCurrentLicensePlate.setVisibility(View.GONE);
-        }else{
+        } else {
             Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void updateReportIssueForSuccess() {
-        Toast.makeText(this.getContext(), "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Cập nhật thành công")
+                .setContentText("Thông tin sự cố đã được chập nhật")
+                .show();
         status.add(ConsignmentStatusEnum.WAITING.getValue());
         reportIssueResponsePresenter.getIssueInformationOfAVehicle(globalVariable.getUsername(), status, globalVariable.getToken());
     }
 
     @Override
     public void updateReportIssueForFailure(String message) {
-        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Opps!")
+                .setContentText("Có lỗi xảy ra, xin thử lại!")
+                .show();
     }
 
     @Override
@@ -152,7 +168,7 @@ public class IssueFragment extends Fragment implements ReportIssueResponseContra
                     .detach(this)
                     .attach(this)
                     .commit();
-        }else{
+        } else {
 
         }
     }

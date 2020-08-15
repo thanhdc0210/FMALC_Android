@@ -156,8 +156,8 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void getVehicleRunningFailure(String message) {
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Có lỗi xảy ra")
-                .setContentText(message)
+                .setTitleText("Opps")
+                .setContentText("Tính năng chỉ hữu dụng khi bạn đang chạy xe")
                 .show();
     }
 

@@ -175,6 +175,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
                 holder.txtTimeCountDown.setText(s);
             }
         }
+
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

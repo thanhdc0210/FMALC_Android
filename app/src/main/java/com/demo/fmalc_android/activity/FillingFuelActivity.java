@@ -161,17 +161,24 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
     @Override
     public void getListFuelTypeFailure(String message) {
-        Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void saveFuelFillingSuccess() {
-        Toast.makeText(this.getApplicationContext(), "Lưu thành công ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Hiện tại không có xe nào phù hợp để báo cáo", Toast.LENGTH_SHORT).show();
         onBackPressed();
     }
 
     @Override
+    public void saveFuelFillingSuccess() {
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Lưu thành công")
+                .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")
+                .show();
+    }
+
+    @Override
     public void saveFuelFillingFailure(String message) {
+        new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Opps...!")
+                .setContentText("Có lỗi xảy ra, vui lòng thử lại")
+                .show();
         Toast.makeText(this.getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
