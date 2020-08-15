@@ -175,10 +175,10 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 //        detailedSchedulePresenter.findScheduleByConsignment_IdAndDriver_Id(id, globalVariable.getId());
         globalVariable.setIdScheduleNow(schedule_id);
         consignmentDetailPresenter.findByConsignmentId(schedule_id);
-            public void onClick(View v) {
 
         btnLocationConsignment.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("schedule_id", schedule_id);
                 startActivity(intent);
