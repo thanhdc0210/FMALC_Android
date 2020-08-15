@@ -6,6 +6,8 @@ import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.retrofit.NetworkingUtils;
 import com.demo.fmalc_android.service.VehicleService;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,27 +25,27 @@ public class VehiclePresenter implements VehicleContract.Presenter {
 
 
     @Override
-    public void getListLicensePlate(String username, String auth) {
-        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(username, auth);
+    public void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(List<Integer> status, String username, String auth) {
+        Call<VehicleInspection> call = vehicleService.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(status, username, auth);
 
         call.enqueue(new Callback<VehicleInspection>() {
             @Override
             public void onResponse(Call<VehicleInspection> call, Response<VehicleInspection> response) {
                 if (response.code() == 204){
-                    view.getListLicensePlateAndInspectionFailure("Dữ liệu bạn yêu cầu hiện không có");
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Dữ liệu bạn yêu cầu hiện không có");
                 }else if (response.code() == 200){
-                    view.getListLicensePlateAndInspectionSuccess(response.body());
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliverySuccess(response.body());
                 }else{
-                    view.getListLicensePlateAndInspectionFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<VehicleInspection> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
-                    view.getListLicensePlateAndInspectionFailure("Vui lòng kiểm tra lại kết nối mạng");
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else {
-                    view.getListLicensePlateAndInspectionFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Server đang gặp sự cố. Xin thử lại sau!");
                 }
             }
 

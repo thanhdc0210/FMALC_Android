@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
 import com.demo.fmalc_android.adapter.NotificationViewCardAdapter;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
@@ -97,13 +98,16 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     @Override
     public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
-        getNotificationMobileResponseList(notificationMobileResponses);
-        populateData();
-        notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken());
-        notificationRecyclerView.setAdapter(notificationViewCardAdapter);
-        notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 4) {
-            initScrollListener();
+        if ((notificationMobileResponses.size()>0)) {
+            getNotificationMobileResponseList(notificationMobileResponses);
+            populateData();
+
+            notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken(), globalVariable.getId());
+            notificationRecyclerView.setAdapter(notificationViewCardAdapter);
+            notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (showData.size() > 4) {
+                initScrollListener();
+            }
         }
     }
 

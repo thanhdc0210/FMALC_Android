@@ -8,6 +8,6 @@ public interface MapContract {
         void getScheduleFailed(String message);
     }
     interface presenter{
-        void getSchedule(int id);
+        void getSchedule(int consignmentId);
     }
 }

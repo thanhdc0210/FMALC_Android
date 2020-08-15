@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
+import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.ScheduleContract;
 import com.demo.fmalc_android.entity.Schedule;
 import com.demo.fmalc_android.entity.GlobalVariable;
@@ -53,7 +54,7 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prepare, container, false);
+        View view = inflater.inflate(R.layout.fragment_complete, container, false);
 
         init();
 
@@ -98,20 +99,24 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-        if(scheduleList.size()>0){
+        if ((scheduleList.size()>0)) {
+            getConsignmentList(scheduleList);
+            populateData();
 
-        getConsignmentList(scheduleList);
-        populateData();
-
-        completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(scheduleList, getActivity());
-
-        consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        if (showData.size() > 4) {
-            initScrollListener();
+            completedScheduleViewCardAdapter = new CompletedScheduleViewCardAdapter(showData, getActivity());
+            consignmentRecyclerView.setAdapter(completedScheduleViewCardAdapter);
+            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (showData.size() > 4) {
+                initScrollListener();
+            }
         }
-        }
+//        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshList();
+//            }
+//        });
     }
 
     @Override

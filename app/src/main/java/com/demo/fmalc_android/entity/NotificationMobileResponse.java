@@ -18,4 +18,5 @@ public class NotificationMobileResponse {
     private String username;
     private Integer notificationId;
     private Integer type;
+    private Integer scheduleId;
 }

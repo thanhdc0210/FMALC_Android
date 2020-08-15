@@ -53,7 +53,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prepare, container, false);
+        View view = inflater.inflate(R.layout.fragment_working, container, false);
 
         init();
 
@@ -99,30 +99,19 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-
-        if (scheduleList.size() > 0) {
+        if ((scheduleList.size()>0)) {
             getConsignmentList(scheduleList);
             populateData();
 
-
-            if (scheduleList.size() > 0) {
-                getConsignmentList(scheduleList);
-                populateData();
-
-                scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
-
-                consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-                consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                if (showData.size() > 4) {
-                    initScrollListener();
-                }
-
-            } else {
-                Toast.makeText(getContext(), "Bạn không đang chạy lô hàng nào!", Toast.LENGTH_SHORT).show();
+            scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
+            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            if (showData.size() > 4) {
+                initScrollListener();
 
             }
         }
+
     }
     @Override
     public void findByConsignmentStatusAndUsernameForFailure(String message) {

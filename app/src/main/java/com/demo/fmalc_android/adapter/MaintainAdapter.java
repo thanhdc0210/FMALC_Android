@@ -1,7 +1,10 @@
 package com.demo.fmalc_android.adapter;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +35,7 @@ import com.demo.fmalc_android.contract.MaintenanceContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.MaintainResponse;
 import com.demo.fmalc_android.entity.ReportIssueContentResponse;
+import com.demo.fmalc_android.fragment.MaintainFragment;
 import com.demo.fmalc_android.presenter.MaintenancePresenter;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
@@ -48,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import lombok.SneakyThrows;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -178,6 +183,8 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
             @SneakyThrows
             @Override
             public void onClick(View v) {
+                try {
+
                 if (pathImg[0] != null) {
                     Uri uri = Uri.fromFile(new File(pathImg[0]));
                     if (uri != null) {
@@ -192,6 +199,13 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
                         MultipartBody.Part image = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                         maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image, auth);
                     }
+                }
+                } catch (Exception e){
+                    new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Thiếu chứng từ")
+                            .setContentText("Vui lòng thêm hình ảnh bảo trì")
+                            .show();
+
                 }
             };
         });
@@ -225,14 +239,19 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
 
     @Override
     public void updateMaintenanceSuccessful(boolean isSuccessful) {
-        if (isSuccessful){
-            Toast.makeText(context, "Lưu thành công", Toast.LENGTH_SHORT).show();
-            alertDialog.dismiss();
-        }
+        alertDialog.dismiss();
+            new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Cập nhật thành công")
+                    .setContentText("Bạn đã hoàn tất bảo trì")
+                    .show();
     }
 
     @Override
     public void updateMaintenanceFailure(String message) {
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Không gửi được, xin thử lại")
+                .setContentText(message)
+                .show();
 
     }
 

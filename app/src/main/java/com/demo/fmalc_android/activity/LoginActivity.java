@@ -26,6 +26,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
     private TextInputEditText edtUsername, edtPassword;
@@ -92,14 +94,22 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void loginSuccess(LoginResponse loginResponse) {
-        Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
-        final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
-        globalVariable.setUsername(loginResponse.getUsername());
-        globalVariable.setRole(loginResponse.getRole());
-        globalVariable.setToken(loginResponse.getToken());
-        globalVariable.setId(loginResponse.getId());
-        loginProgressBar.setVisibility(-1);
-        startActivity(intent);
+        if (loginResponse.getRole().equals("ROLE_DRIVER")){
+            Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
+            final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
+            globalVariable.setUsername(loginResponse.getUsername());
+            globalVariable.setRole(loginResponse.getRole());
+            globalVariable.setToken(loginResponse.getToken());
+            globalVariable.setId(loginResponse.getId());
+            loginProgressBar.setVisibility(-1);
+            startActivity(intent);
+        }else{
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Xin lỗi...!")
+                    .setContentText("Tài khoản của bạn không hợp lệ")
+                    .show();
+            loginProgressBar.setVisibility(-1);
+        }
     }
 
     @Override

@@ -106,6 +106,12 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
 
 
+
+    //Date picker range
+    implementation 'com.borax12.materialdaterangepicker:library:2.0'
+
+
+
     //Date picker range
     implementation 'com.borax12.materialdaterangepicker:library:2.0'
 

@@ -53,7 +53,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                 if (t.getMessage().contains("timed out")){
                     view.loginFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else {
-                    view.loginFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.loginFailure("Server đang gặp sự cố. Xin thử lại sau! ");
                 }
             }
         });

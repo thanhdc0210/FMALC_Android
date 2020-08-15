@@ -28,6 +28,8 @@ import com.demo.fmalc_android.presenter.FuelTypePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class FillingFuelActivity extends AppCompatActivity implements FuelTypeContract.View, FuelContract.View {
 
     private List<FuelType> fuelTypeList = new ArrayList<>();
@@ -120,7 +122,10 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
             public void onClick(View v) {
                 String vehicleLicensePlate = txtCurrentLicensePlate.getText().toString();
                 if (vehicleLicensePlate.equals("")){
-                    Toast.makeText(FillingFuelActivity.this.getApplication(), "Hiện tại bạn không có lịch chạy", Toast.LENGTH_SHORT).show();
+                    new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
+                            .setTitleText("Không có xe")
+                            .setContentText("Không tìm thấy xe của bạn cho ngày hôm nay")
+                            .show();
                 }else{
                     String km = edtCurrentKm.getText().toString();
                     String vol = edtVolume.getText().toString();

@@ -131,7 +131,7 @@ public class SearchFragment extends Fragment implements SearchingContract.View {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (!query.isEmpty()){
-                    searchingPresenter.searchConsignment(searchType, query,globalVariable.getToken());
+                    searchingPresenter.searchConsignment(searchType, query, globalVariable.getId(),globalVariable.getToken());
                 } else {
                     return false;
                 }
