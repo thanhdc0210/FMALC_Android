@@ -31,14 +31,20 @@ import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.presenter.DriverPresenter;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import lombok.SneakyThrows;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +67,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     private LinearLayout linearLayout5;
     GlobalVariable globalVariable;
     boolean flag;
-
+    SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
     private NotificationMobilePresenter notificationPresenter;
 
     private DriverInformation driverInformation;
@@ -138,6 +144,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
             @Override
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
+                now.add(Calendar.DATE, 7);
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
                         AccountFragment.this,
                         now.get(Calendar.YEAR),
@@ -145,6 +152,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                         now.get(Calendar.DAY_OF_MONTH)
                 );
 //                dpd.setAutoHighlight(mAutoHighlight);
+                dpd.setMinDate(now);
                 dpd.setStartTitle("Từ ngày");
                 dpd.setEndTitle("Đến ngày");
                 dpd.setAccentColor(Color.DKGRAY);
@@ -173,7 +181,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                     Notification notification = new Notification();
                     notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
                     notification.setDriver_id(globalVariable.getId());
-                    notification.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
+                    notification.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
                     notification.setStatus(false);
                     notificationPresenter.takeDayOff(notification);
                 }
@@ -284,13 +292,23 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         if (dpd != null) dpd.setOnDateSetListener(this);
     }
 
+    @SneakyThrows
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
         String date = "You picked the following date: From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
-        startDate.setText(dayOfMonth + "-" + monthOfYear + "-" + year);
-        endDate.setText(dayOfMonthEnd + "-" + monthOfYearEnd + "-" + yearEnd);
-        btnDatePicker.setText("Gửi");
-        flag = true;
+        String startDateString = dayOfMonth + "-" + monthOfYear + "-" + year;
+        String endDateString = dayOfMonthEnd + "-" + monthOfYearEnd + "-" + yearEnd;
+        if (!checkDates(startDateString, endDateString)) {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Xin lỗi...")
+                    .setContentText("Chọn ngày không hợp lệ, xin thử lại!")
+                    .show();
+        } else {
+            startDate.setText(startDateString);
+            endDate.setText(endDateString);
+            btnDatePicker.setText("Gửi");
+            flag = true;
+        }
     }
 
     @Override
@@ -305,7 +323,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
 
     @Override
     public void updateStatusSuccess() {
-        
+
     }
 
     @Override
@@ -327,5 +345,62 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                 .setTitleText("Xin lỗi...")
                 .setContentText("Có lỗi xảy ra, xin thử lại!")
                 .show();
+    }
+
+
+    public boolean checkDates(String startDate, String endDate) throws ParseException {
+
+        Date now = new Date();
+        now = atStartOfDay(now);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.add(Calendar.DATE, 7);
+        now = cal.getTime();
+
+        Date start = formatDate.parse(startDate);
+        start = atStartOfDay(start);
+        Date end = formatDate.parse(endDate);
+        end = atEndOfDay(end);
+        if (start.after(now) || start.equals(now)) {
+            if (start.before(end)) {
+                return true;
+            } else return false;
+        }
+
+//        return calendar.getTime();
+//
+//        LocalDateTime s = LocalDateTime.parse(startDate, formatDate);
+//        LocalDateTime e = LocalDateTime.parse(endDate, formatDate);
+//        LocalDateTime now = LocalDateTime.now().with(LocalDateTime.MIN);
+//        now.plusDays(7);
+//        if (s.isAfter(now) || s.equals(now)) {
+//            if (s.isBefore(e) || s.isEqual(e)) {
+//                checkDate = true;//If start date is before end date
+//            } else {
+//                checkDate = false; //If start date is after the end date
+//            }
+//        }
+
+        return false;
+    }
+
+    public Date atEndOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
+    public Date atStartOfDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

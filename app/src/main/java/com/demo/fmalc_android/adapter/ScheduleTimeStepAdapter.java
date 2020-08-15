@@ -52,8 +52,8 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
             holder.txtTypePlace.setText(place.getTypeStr());
             //set màu
             holder.txtTypePlace.setTextColor(context.getResources().getColor(R.color.colorBlue));
-            holder.txtAddressDetails.setTextColor(R.color.range_transparent_black);
-            holder.txtPlannedTime.setTextColor(R.color.range_transparent_black);
+            holder.txtAddressDetails.setTextColor(R.color.colorBlack);
+            holder.txtPlannedTime.setTextColor(R.color.colorBlack);
             //đổi icon
             holder.iconCircle.setColorFilter(context.getResources().getColor(R.color.colorGreen));
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.colorGreen));

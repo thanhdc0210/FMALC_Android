@@ -22,8 +22,11 @@ import com.demo.fmalc_android.activity.InProgressActivity;
 import com.demo.fmalc_android.activity.InspectionActivity;
 import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
 import com.demo.fmalc_android.activity.PreparingActivity;
+import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.dialog.MaterialDialogs;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,7 +93,14 @@ public class InspectionFragment extends Fragment {
         btnComplete = view.findViewById(R.id.btnCompleted);
         btnMaintainAndIssue = view.findViewById(R.id.btnMaintainAndIssue);
         btnFillingFuel = view.findViewById(R.id.btnFillingFuel);
-
+//        if (getArguments()!= null) {
+//            if (getArguments().getString("NOT_AVAILABLE").equals("checked")) {
+//                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+//                        .setTitleText("Xin lỗi...!")
+//                        .setContentText("Hiện tại không có xe nào phù hợp để báo cáo")
+//                        .show();
+//            }
+//        }
 
         //Button xe chuẩn bị chạy
         btnPrepare.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +108,7 @@ public class InspectionFragment extends Fragment {
           public void onClick(View v) {
               Intent intent = new Intent(getContext(), PreparingActivity.class);
               Bundle bundle = new Bundle();
-              bundle.putString("VEHICLE_STATUS", "0");
+              bundle.putInt("CONSIGNMENT_STATUS", ConsignmentStatusEnum.WAITING.getValue());
               intent.putExtras(bundle);
               getContext().startActivity(intent);
           }
@@ -110,7 +120,7 @@ public class InspectionFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), PreparingActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("VEHICLE_STATUS", "3");
+                bundle.putInt("CONSIGNMENT_STATUS", ConsignmentStatusEnum.COMPLETED.getValue());
                 intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }
