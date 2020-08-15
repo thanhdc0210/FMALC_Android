@@ -1,6 +1,7 @@
 package com.demo.fmalc_android.enumType;
 
 public enum NotificationTypeEnum {
+
     ODD_HOURS_ALERTS("Chạy xe ngoài giờ làm việc") {
         @Override
         public int getValue() {
@@ -36,8 +37,20 @@ public enum NotificationTypeEnum {
         public int getValue() {
             return 5;
         }
-    };
+    },
 
+    ALERT("Cảnh báo"){
+        @Override
+        public int getValue(){return 6;}
+    },
+    APPROVED("Được chấp nhận"){
+        @Override
+        public int getValue(){return 7;}
+    },
+    REJECTED("Bị từ chối"){
+        @Override
+        public int getValue(){return 8;}
+    };
 
     String notificationTypeEnum;
 
@@ -65,6 +78,14 @@ public enum NotificationTypeEnum {
                 return DAY_OFF_BY_SCHEDULE.getNotificationTypeEnum();
             case 5:
                 return DAY_OFF_UNEXPECTED.getNotificationTypeEnum();
+            case 6:
+                return ALERT.getNotificationTypeEnum();
+
+            case 7:
+                return APPROVED.getNotificationTypeEnum();
+            case 8:
+                return REJECTED.getNotificationTypeEnum();
+
             default:
                 throw new AssertionError("Unknown operations");
         }
@@ -78,4 +99,5 @@ public enum NotificationTypeEnum {
         }
         return -1;
     }
+
 }

@@ -142,9 +142,9 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
 
 
         if(notificationMobileResponse.isStatus()){
-            holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#D8D8D8"));
-        }else{
             holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }else{
+            holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#D8D8D8"));
         }
 
         // Kiểm tra còn bao nhiêu thời gian
@@ -199,13 +199,19 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
                 holder.txtTitle.setText("Lịch chạy mới");
                 holder.imageView.setImageResource(R.drawable.ic_notification_important_24px);
                 break;
+            case 4:
+                break;
+            case 5:
+                break;
             case 6:
-                holder.txtTitle.setText("Yêu cầu xin nghỉ được chấp nhận");
-//                holder.imageView.setImageResource();
                 break;
             case 7:
+                holder.txtTitle.setText("Yêu cầu xin nghỉ được chấp nhận");
+                holder.imageView.setImageResource(R.drawable.ic_check_circle_24px);
+                break;
+            case 8:
                 holder.txtTitle.setText("Yêu cầu xin nghỉ không được chấp nhận");
-//                holder.imageView.setImageResource();
+                holder.imageView.setImageResource(R.drawable.ic_cancel_24px);
                 break;
         }
 
@@ -216,7 +222,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             Bundle bundle = new Bundle();
             @Override
             public void onClick(View view) {
-                holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
                 switch (type){
                     case 3:
