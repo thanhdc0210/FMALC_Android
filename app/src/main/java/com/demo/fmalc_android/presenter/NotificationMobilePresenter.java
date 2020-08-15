@@ -8,6 +8,7 @@ import com.demo.fmalc_android.service.NotificationService;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,10 +76,10 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
     }
 
     public void takeDayOff(Notification notification) {
-        Call<NotificationMobileResponse> call = notificationService.takeDayOff(notification);
-        call.enqueue(new Callback<NotificationMobileResponse>() {
+        Call<ResponseBody> call = notificationService.takeDayOff(notification);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<NotificationMobileResponse> call, Response<NotificationMobileResponse> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 204) {
                     view.takeDayOffFailure("Không thể gửi");
                 } else if (response.code() == 200) {
@@ -89,7 +90,7 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
             }
 
             @Override
-            public void onFailure(Call<NotificationMobileResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (t.getMessage().contains("timed out")) {
                     view.takeDayOffFailure("Vui lòng kiểm tra lại kết nối mạng");
                 } else {
