@@ -7,6 +7,7 @@ import com.demo.fmalc_android.service.AccountService;
 
 import com.demo.fmalc_android.entity.FuelType;
 import com.demo.fmalc_android.service.AccountService;
+import com.demo.fmalc_android.service.DayOffService;
 import com.demo.fmalc_android.service.DriverService;
 import com.demo.fmalc_android.service.FuelService;
 import com.demo.fmalc_android.service.FuelTypeService;
@@ -37,6 +38,7 @@ public class NetworkingUtils {
     private static MaintenanceService maintenanceService;
     private static SearchingService searchingService;
     private static NotificationService notificationService;
+    private static DayOffService dayOffService;
 
     public static AccountService getAccountApiInstance() {
         if (accountService == null)
@@ -112,5 +114,12 @@ public class NetworkingUtils {
             notificationService = RetrofitInstance.getInstance().create(NotificationService.class);
         }
         return notificationService;
+    }
+
+    public static DayOffService getDayOffService(){
+        if (dayOffService == null){
+            dayOffService = RetrofitInstance.getInstance().create(DayOffService.class);
+        }
+        return dayOffService;
     }
 }

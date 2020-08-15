@@ -5,7 +5,9 @@ import com.demo.fmalc_android.entity.NotificationMobileResponse;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -29,5 +31,5 @@ public interface NotificationService {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("api/v1.0/notification/")
-    Call<NotificationMobileResponse> takeDayOff(@Body Notification notification );
+    Call<ResponseBody> takeDayOff(@Body Notification notification );
 }

@@ -21,13 +21,17 @@ import androidx.fragment.app.Fragment;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.LoginActivity;
+import com.demo.fmalc_android.contract.DayOffContract;
 import com.demo.fmalc_android.contract.DriverContract;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
+import com.demo.fmalc_android.entity.DayOffDriverRequestDTO;
+import com.demo.fmalc_android.entity.DayOffResponseDTO;
 import com.demo.fmalc_android.entity.DriverInformation;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.enumType.NotificationTypeEnum;
+import com.demo.fmalc_android.presenter.DayOffPresenter;
 import com.demo.fmalc_android.presenter.DriverPresenter;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
@@ -51,7 +55,7 @@ import lombok.SneakyThrows;
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment implements DriverContract.View, DatePickerDialog.OnDateSetListener, NotificationMobileContract.View {
+public class AccountFragment extends Fragment implements DriverContract.View, DatePickerDialog.OnDateSetListener, NotificationMobileContract.View, DayOffContract.View {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,6 +73,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     boolean flag;
     SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
     private NotificationMobilePresenter notificationPresenter;
+    private DayOffPresenter dayOffPresenter;
 
     private DriverInformation driverInformation;
 
@@ -78,6 +83,9 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
 
     private DriverPresenter driverPresenter;
 
+    private int statusForNoti;
+    private String noteReason;
+    private SweetAlertDialog sweetAlertDialogCheckDayOff;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -88,6 +96,8 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         driverPresenter.setView(this);
         notificationPresenter = new NotificationMobilePresenter();
         notificationPresenter.setView(this);
+        dayOffPresenter = new DayOffPresenter();
+        dayOffPresenter.setView(this);
     }
 
     /**
@@ -122,6 +132,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+        sweetAlertDialogCheckDayOff = new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE);
         txtUsernameProfile = view.findViewById(R.id.txtUsernameProfile);
         txtIdentityNo = view.findViewById(R.id.txtIdentityNo);
         txtPhoneNumber = view.findViewById(R.id.txtPhoneNumber);
@@ -143,6 +154,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         linearLayout5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                statusForNoti = NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue();
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.DATE, 7);
                 DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
@@ -164,7 +176,9 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
             @Override
             public void onClick(View v) {
                 if (!flag) {
+                    statusForNoti = NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue();
                     Calendar now = Calendar.getInstance();
+                    now.add(Calendar.DATE, 7);
                     DatePickerDialog dpd = com.borax12.materialdaterangepicker.date.DatePickerDialog.newInstance(
                             AccountFragment.this,
                             now.get(Calendar.YEAR),
@@ -172,64 +186,62 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                             now.get(Calendar.DAY_OF_MONTH)
                     );
 //                dpd.setAutoHighlight(mAutoHighlight);
+                    dpd.setMinDate(now);
                     dpd.setStartTitle("Từ ngày");
                     dpd.setEndTitle("Đến ngày");
                     dpd.setAccentColor(Color.DKGRAY);
                     dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
                 } else {
                     //gửi
-                    Notification notification = new Notification();
-                    notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
-                    notification.setDriver_id(globalVariable.getId());
-                    notification.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
-                    notification.setStatus(false);
-                    notificationPresenter.takeDayOff(notification);
+                    DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
+                    requestDTO.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+                    requestDTO.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
+                    requestDTO.setDriverId(globalVariable.getId());
+                    requestDTO.setStartDate(startDate.getText().toString());
+                    requestDTO.setEndDate(endDate.getText().toString());
+                    dayOffPresenter.checkDayOff(requestDTO, globalVariable.getToken());
+//                    Notification notification = new Notification();
+//                    notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+//                    notification.setDriver_id(globalVariable.getId());
+//                    notification.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
+//                    notification.setStatus(false);
+//                    notificationPresenter.takeDayOff(notification);
                 }
             }
         });
         btnUnexpectedRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                statusForNoti = NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue();
                 final EditText editText = new EditText(getContext());
                 editText.setTextColor(Color.BLACK);
-                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Báo nghỉ đột xuất?")
-                        .setContentText("Lí do nghỉ độ xuất")
-                        .setConfirmText("Gửi")
-                        .setCustomView(editText)
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                Notification notification = new Notification();
-                                notification.setContent(editText.getText().toString());
-                                notification.setDriver_id(globalVariable.getId());
-                                notification.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
-                                notification.setStatus(false);
-                                notificationPresenter.takeDayOff(notification);
-                            }
-                        })
-                        .setCancelButton("Hủy", Dialog::dismiss)
-                        .show();
+                sweetAlertDialogCheckDayOff = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE);
+                sweetAlertDialogCheckDayOff.setTitleText("Báo nghỉ đột xuất?");
+                sweetAlertDialogCheckDayOff.setContentText("Lí do nghỉ độ xuất");
+                sweetAlertDialogCheckDayOff.setConfirmText("Gửi");
+                sweetAlertDialogCheckDayOff.setCustomView(editText);
+                sweetAlertDialogCheckDayOff.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        noteReason = editText.getText().toString();
+                        DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
+                        requestDTO.setContent(noteReason);
+                        requestDTO.setType(NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue());
+                        requestDTO.setDriverId(globalVariable.getId());
+                        Date now = new Date();
+                        requestDTO.setStartDate(formatDate.format(now));
+                        requestDTO.setEndDate(formatDate.format(now));
+                        dayOffPresenter.checkDayOff(requestDTO, globalVariable.getToken());
+                    }
+                });
+                sweetAlertDialogCheckDayOff.setCancelButton("Hủy", Dialog::dismiss);
+                sweetAlertDialogCheckDayOff.show();
             }
         });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                final EditText editText = new EditText(getContext());
-//                editText.setTextColor(Color.BLACK);
-//                new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
-//                        .setTitleText("Are you sure?")
-//                        .setContentText("Won't be able to recover this file!")
-//                        .setConfirmText("Yes,delete it!")
-//                        .setCustomView(editText)
-//                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                            @Override
-//                            public void onClick(SweetAlertDialog sDialog) {
-//
-//                            }
-//                        })
-//                        .setCancelButton("Hủy", Dialog::dismiss)
-//                        .show();
+
                 new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
                         .setTitleText("Xác nhận đăng xuất")
                         .setContentText("Bạn có muốn đăng xuất")
@@ -244,12 +256,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
 //
                             }
                         })
-                        .setCancelButton("Không", new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.dismissWithAnimation();
-                            }
-                        })
+                        .setCancelButton("Không", Dialog::dismiss)
                         .show();
             }
         });
@@ -295,9 +302,28 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     @SneakyThrows
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
-        String date = "You picked the following date: From- " + dayOfMonth + "/" + (++monthOfYear) + "/" + year + " To " + dayOfMonthEnd + "/" + (++monthOfYearEnd) + "/" + yearEnd;
-        String startDateString = dayOfMonth + "-" + monthOfYear + "-" + year;
-        String endDateString = dayOfMonthEnd + "-" + monthOfYearEnd + "-" + yearEnd;
+        monthOfYear = monthOfYearEnd + 1;
+        monthOfYearEnd = monthOfYearEnd + 1;
+        String month = monthOfYear + "";
+        String monthEnd = monthOfYearEnd + "";
+        String date = dayOfMonth + "";
+        String dateEnd = dayOfMonthEnd + "";
+        if (monthOfYear < 10) {
+            month = "0" + monthOfYear;
+        }
+        if (monthOfYearEnd < 10) {
+            monthEnd = "0" + monthOfYearEnd;
+        }
+        if (dayOfMonth < 10) {
+            date = "0" + dayOfMonth;
+
+        }
+        if (dayOfMonthEnd < 10) {
+            dateEnd = "0" + dayOfMonthEnd;
+        }
+
+        String startDateString = date + "-" + month + "-" + year;
+        String endDateString = dateEnd + "-" + monthEnd + "-" + yearEnd;
         if (!checkDates(startDateString, endDateString)) {
             new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Xin lỗi...")
@@ -402,5 +428,106 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
+    }
+
+    @Override
+    public void checkDayOffForDriverSuccess(DayOffResponseDTO responseDTO) {
+        sweetAlertDialogCheckDayOff.hide();
+        if (responseDTO.getDayOffId() == 0) {
+            Notification notification = new Notification();
+            notification.setDriver_id(globalVariable.getId());
+            notification.setType(statusForNoti);
+            notification.setStatus(false);
+            if (statusForNoti == NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue()) {
+                notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+            } else {
+                notification.setContent(noteReason);
+            }
+            notificationPresenter.takeDayOff(notification);
+        } else if (responseDTO.getDayOffId() > 0) {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Xác nhận thay đổi?")
+                    .setContentText("Bạn có muốn thay đổi ngày nghỉ "
+                            + responseDTO.getStartDate() + " đến " + responseDTO.getEndDate() + " thành " +
+                            startDate.getText().toString() + " đến " + endDate.getText().toString() + "?")
+                    .setCancelButton("Hủy", Dialog::dismiss)
+                    .setConfirmText("Có, thay đổi")
+                    .showCancelButton(true)
+//                    .setCancelButtonBackgroundColor(R.color.colorPrimary)
+//                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sDialog) {
+//                            // reuse previous dialog instance, keep widget user state, reset them if you need
+//                            sDialog.setTitleText("Hủy!")
+//                                    .setContentText("Bạn đã hủy yêu cầu")
+//                                    .setConfirmText("OK")
+//                                    .showCancelButton(false)
+//                                    .setCancelClickListener(null)
+//                                    .setConfirmClickListener(null)
+//                                    .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+//                        }
+//                    })
+//                    .setConfirmButtonBackgroundColor(R.color.colorGreen)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                            DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
+                            requestDTO.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+                            requestDTO.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
+                            requestDTO.setDriverId(globalVariable.getId());
+                            requestDTO.setStartDate(startDate.getText().toString());
+                            requestDTO.setEndDate(endDate.getText().toString());
+                            dayOffPresenter.updateDayOff(responseDTO.getDayOffId(), requestDTO, globalVariable.getToken());
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    @Override
+    public void checkDayOffForDriverFailure(String message) {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Xin lỗi...")
+                .setContentText(message)
+                .show();
+    }
+
+    @Override
+    public void updateDayOffForDriverSuccess(DayOffResponseDTO responseDTO) {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Cập nhật ngày nghỉ thành công")
+                .setContentText("Thông tin nghỉ phép đã được gửi, vui lòng chờ phản hồi từ quản lí")
+                .show();
+
+        Notification notification = new Notification();
+
+        notification.setDriver_id(globalVariable.getId());
+        notification.setType(statusForNoti);
+        if (statusForNoti == NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue()) {
+            notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+        } else {
+            notification.setContent(noteReason);
+        }
+        notification.setStatus(false);
+        notificationPresenter.takeDayOff(notification);
+    }
+
+    @Override
+    public void updateDayOffForDriverFailure(String message) {
+        new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Xin lỗi...")
+                .setContentText("Có lỗi xảy ra, xin thử lại!")
+                .show();
+    }
+
+    public String reverse(String str) {
+        String s[] = str.split("-");
+        String ans = "";
+        for (int i = s.length - 1; i >= 0; i--) {
+            ans += s[i] + "-";
+        }
+        return (ans.substring(0, ans.length() - 1));
     }
 }

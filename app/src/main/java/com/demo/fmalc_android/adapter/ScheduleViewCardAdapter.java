@@ -125,7 +125,13 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
         if(schedule.getStatus().equals(ConsignmentStatusEnum.COMPLETED.getConsignmentStatusEnum())){
             holder.txtTimeCountDown.setText("Hoàn thành lúc: " + format.format(finishPlace.getActualTime().getTime()));
-        } else {
+            holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getActualTime()));
+            holder.txtFinishTime.setText(format.format(finishPlace.getActualTime()));
+        } else if(schedule.getStatus().equals(ConsignmentStatusEnum.DELIVERING) || schedule.getStatus().equals(ConsignmentStatusEnum.OBTAINING)){
+            holder.txtTimeCountDown.setVisibility(View.GONE);
+        }
+
+        else {
 
 
             // Kiểm tra còn bao nhiêu thời gian
