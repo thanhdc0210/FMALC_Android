@@ -11,40 +11,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.activity.ConsignmentDetailActivity;
-import com.demo.fmalc_android.activity.DriverHomeActivity;
 import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
-import com.demo.fmalc_android.contract.ScheduleIdContract;
-import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.NotificationMobileResponse;
-import com.demo.fmalc_android.entity.Place;
-import com.demo.fmalc_android.entity.Schedule;
-import com.demo.fmalc_android.fragment.MaintainFragment;
-import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
-import com.demo.fmalc_android.presenter.ScheduleIdPresenter;
 
-import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NotificationMobileContract.View, ScheduleIdContract.View {
+public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements NotificationMobileContract.View{
     private List<NotificationMobileResponse> notificationMobileResponses;
     private Context context;
     private String auth;
     private Integer driverId;
     private final int VIEW_TYPE_ITEM=0,VIEW_TYPE_LOADING=1;
     private NotificationMobilePresenter notificationMobilePresenter;
-    private ScheduleIdPresenter scheduleIdPresenter;
     private Integer scheduleId;
 
     public NotificationViewCardAdapter(List<NotificationMobileResponse> notificationMobileResponses, Context context, String auth, Integer driverId){
@@ -60,9 +47,6 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
 
         notificationMobilePresenter = new NotificationMobilePresenter();
         notificationMobilePresenter.setView(this);
-
-        scheduleIdPresenter = new ScheduleIdPresenter();
-        scheduleIdPresenter.setView(this);
 
         if(viewType == VIEW_TYPE_ITEM){
             View view = LayoutInflater.from(context).inflate(R.layout.view_card_notification, parent, false);
@@ -119,16 +103,6 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public void takeDayOffFailure(String message) {
 
-    }
-
-    @Override
-    public void findScheduleIdByConsignmentIdAndDriverIdSuccess(Integer scheduleId) {
-        this.scheduleId = scheduleId;
-    }
-
-    @Override
-    public void findScheduleIdByConsignmentIdAndDriverIdFailure(String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -246,16 +220,10 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
                 notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
                 switch (type){
                     case 3:
-                        String subString[] = notificationMobileResponse.getContent().split("#");
-                        String subStringId[] = subString[subString.length - 1].split("\\s");
-                        Integer consignmentId =  Integer.valueOf(subStringId[0]);
-                        scheduleIdPresenter.findScheduleIdByConsignmentIdAndDriverId(consignmentId, driverId, auth);
-                        if (scheduleId > 0 || scheduleId != null){
                             intent = new Intent(context, ConsignmentDetailActivity.class);
-                            bundle.putInt("schedule_id", scheduleId);
+                            bundle.putInt("schedule_id", notificationMobileResponse.getScheduleId());
                             intent.putExtras(bundle);
                             context.startActivity(intent);
-                        }
                         break;
                     case 2:
                         intent = new Intent(context, MaintainAndIssueActivity.class);
