@@ -99,33 +99,31 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
-<<<<<<< HEAD
-        if(scheduleList.size()>0){
+
+        if (scheduleList.size() > 0) {
             getConsignmentList(scheduleList);
             populateData();
 
-=======
 
-        if(scheduleList.size()>0){
-            getConsignmentList(scheduleList);
-            populateData();
->>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
-            scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
+            if (scheduleList.size() > 0) {
+                getConsignmentList(scheduleList);
+                populateData();
 
-            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                scheduleViewCardAdapter = new ScheduleViewCardAdapter(scheduleList, getActivity());
 
-            if (showData.size() > 4) {
-                initScrollListener();
+                consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+                consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                if (showData.size() > 4) {
+                    initScrollListener();
+                }
+
+            } else {
+                Toast.makeText(getContext(), "Bạn không đang chạy lô hàng nào!", Toast.LENGTH_SHORT).show();
+
             }
-<<<<<<< HEAD
-        }else{
-            Toast.makeText(getContext(), "Bạn không đang chạy lô hàng nào!", Toast.LENGTH_SHORT).show();
-=======
->>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
         }
     }
-
     @Override
     public void findByConsignmentStatusAndUsernameForFailure(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();

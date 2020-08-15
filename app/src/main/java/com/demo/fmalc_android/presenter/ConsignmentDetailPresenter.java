@@ -4,6 +4,7 @@ import com.demo.fmalc_android.contract.ConsignmentDetailContract;
 //import com.demo.fmalc_android.entity.ConsignmentDetail;
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
+import com.demo.fmalc_android.entity.Maintenance;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
@@ -150,10 +151,10 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
 
     @Override
     public void updatePlannedTime(Integer id, Integer km) {
-        Call<ResponseBody> call = maintenanceService.updatePlannedTime(id,km);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<Maintenance> call = maintenanceService.updatePlannedTime(id,km);
+        call.enqueue(new Callback<Maintenance>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Maintenance> call, Response<Maintenance> response) {
                 if(response.isSuccessful()){
                     view.updatePlannedTimeSuccess(response.body());
                 }else{
@@ -162,7 +163,7 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Maintenance> call, Throwable t) {
                 view.updatePlannedTimeFailed("");
             }
         });
@@ -184,6 +185,24 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 view.updateActualTimeFailed("Có lỗi xảy ra");
+            }
+        });
+    }
+
+    @Override
+    public void notifyForManager(Notification notification) {
+        Call<ResponseBody> call = service.notifyForManager(notification);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    view.notifyForManagerSuccess("Lich bảo trì xe đã được gửi");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                view.notifyForManagerFailed("Có lỗi xảy ra!");
             }
         });
     }

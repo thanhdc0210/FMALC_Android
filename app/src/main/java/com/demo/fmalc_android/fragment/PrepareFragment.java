@@ -58,7 +58,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         // Adapter init and setup
 
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
-        consignmentRecyclerView = (RecyclerView)  view.findViewById(R.id.rvConsignment);
+        consignmentRecyclerView = (RecyclerView) view.findViewById(R.id.rvConsignment);
 
         List<Integer> status = new ArrayList<>();
         status.add(ConsignmentStatusEnum.WAITING.getValue());
@@ -77,56 +77,60 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         }
     }
 
-    private void init(){
+    private void init() {
         schedulePresenter = new SchedulePresenter();
         schedulePresenter.setView(this);
     }
 
-    private void getConsignmentList(List<Schedule> scheduleList){
+    private void getConsignmentList(List<Schedule> scheduleList) {
         this.scheduleList = scheduleList;
     }
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-        if(scheduleList.size()>0){
+        if (scheduleList.size() > 0) {
 
-<<<<<<< HEAD
-        if(scheduleList.size()>0){
-            getConsignmentList(scheduleList);
+
+            if (scheduleList.size() > 0) {
+                getConsignmentList(scheduleList);
             populateData();
 
-            scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
-            consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-            consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (showData.size() > 4) {
+                scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
+                consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+                consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                if (showData.size() > 4) {
                 initScrollListener();
-=======
-        getConsignmentList(scheduleList);
+//=======
+                    getConsignmentList(scheduleList);
         populateData();
 
-        scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
-        consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-        consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (showData.size() > 4) {
+                    scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
+                    consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
+                    consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    if (showData.size() > 4) {
             initScrollListener();
-        }
-        }
-
-        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshList();
->>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
-            }
-
-            swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    refreshList();
+                    }
                 }
-            });
+
+                swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+                swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        refreshList();
+//>>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
+//            }
+
+                        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
+                        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
+                                refreshList();
+                            }
+                        });
+//        }
+                    }
+                });
+            }
         }
     }
 
@@ -138,10 +142,10 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     private void populateData() {
         showData.clear();
         i = 0;
-        if (scheduleList.size() < 5 && scheduleList.size()>0){
+        if (scheduleList.size() < 5 && scheduleList.size() > 0) {
             showData = scheduleList;
-        }else{
-            while (i < 5){
+        } else {
+            while (i < 5) {
                 showData.add(scheduleList.get(i));
                 i++;
             }
@@ -178,7 +182,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         showData.add(null);
         consignmentRecyclerView.post(new Runnable() {
             public void run() {
-                scheduleViewCardAdapter.notifyItemInserted(showData.size()-1);
+                scheduleViewCardAdapter.notifyItemInserted(showData.size() - 1);
             }
         });
         Handler handler = new Handler();
@@ -188,15 +192,15 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
                 showData.remove(showData.size() - 1);
                 int scrollPosition = showData.size();
                 scheduleViewCardAdapter.notifyItemRemoved(scrollPosition);
-                int currentSize = scrollPosition+1;
-                if (currentSize < scheduleList.size() - 5){
+                int currentSize = scrollPosition + 1;
+                if (currentSize < scheduleList.size() - 5) {
                     nextLimit = currentSize + 5;
-                }else{
+                } else {
                     nextLimit = scheduleList.size();
                 }
 
                 while (currentSize - 1 < nextLimit) {
-                    showData.add(scheduleList.get(currentSize-1));
+                    showData.add(scheduleList.get(currentSize - 1));
                     currentSize++;
                 }
 
@@ -214,10 +218,10 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     }
 
 
-
-    private void refreshList(){
+    private void refreshList() {
         new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 scheduleList.clear();
                 showData.clear();
                 List<Integer> status = new ArrayList<>();

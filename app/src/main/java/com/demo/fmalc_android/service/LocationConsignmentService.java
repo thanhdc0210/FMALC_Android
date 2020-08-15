@@ -29,4 +29,7 @@ public interface LocationConsignmentService {
 
     @POST("api/v1.0/consignments/places/id")
     Call<Place> updateActualTime(@Query("id") int id, @Query("schedule") int idSchedule);
+
+    @POST("api/v1.0/notification/")
+    Call<ResponseBody> notifyForManager(@Body Notification notification);
 }

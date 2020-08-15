@@ -2,6 +2,7 @@ package com.demo.fmalc_android.service;
 
 import com.demo.fmalc_android.entity.DriverInformation;
 import com.demo.fmalc_android.entity.MaintainResponse;
+import com.demo.fmalc_android.entity.Maintenance;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface MaintenanceService {
 
 
     @POST("api/v1.0/maintenances/update-plannedtime")
-    Call<ResponseBody> updatePlannedTime(
+    Call<Maintenance> updatePlannedTime(
             @Query("id") Integer id,
             @Query("km") Integer kmOld);
 }

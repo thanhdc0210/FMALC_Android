@@ -4,6 +4,7 @@ package com.demo.fmalc_android.contract;
 //import com.demo.fmalc_android.entity.ConsignmentDetail;
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
+import com.demo.fmalc_android.entity.Maintenance;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.Place;
 import com.demo.fmalc_android.entity.VehicleDetail;
@@ -29,11 +30,14 @@ public interface ConsignmentDetailContract {
         void updateActualTimeSuccess(Place place);
         void updateActualTimeFailed(String message);
 
-        void updatePlannedTimeSuccess(ResponseBody responseBody);
+        void updatePlannedTimeSuccess(Maintenance responseBody);
         void updatePlannedTimeFailed(String responseBody);
 
         void stopTrackingSuccess(String string);
         void stopTrackingFailed(String message);
+
+        void notifyForManagerSuccess(String success);
+        void notifyForManagerFailed(String message);
     }
 
     interface Presenter{
@@ -44,5 +48,6 @@ public interface ConsignmentDetailContract {
         void updateActualTime(Integer placeId, Integer idSchedule);
         void updatePlannedTime(Integer id, Integer km);
         void stopTracking(Integer id);
+        void notifyForManager(Notification notification);
     }
 }
