@@ -47,7 +47,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
         //set màu nếu đến điểm đó rồi
         if(place.getActualTime() != null) {
 
-            holder.txtPlannedTime.setText(format.format(place.getPlannedTime())+"  ");
+            holder.txtPlannedTime.setText(format.format(place.getActualTime())+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
             holder.txtTypePlace.setText(place.getTypeStr());
             //set màu
@@ -63,7 +63,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
                 holder.iconFinish.setColorFilter(context.getResources().getColor(R.color.colorGreen));
             }
         } else {
-            holder.txtPlannedTime.setText(format.format(place.getActualTime())+"  ");
+            holder.txtPlannedTime.setText(format.format(place.getPlannedTime())+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
             holder.txtTypePlace.setText(place.getTypeStr());
             if (placeList.get(placeList.size()-1) == place){

@@ -730,7 +730,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                             sweetAlertDialog.setTitleText("Số km hiện tại");
                                             sweetAlertDialog.setConfirmText("Hoàn thành");
                                             sweetAlertDialog.setCustomView(editText);
-                                            sweetAlertDialog.show();
                                             sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                 @Override
                                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -764,6 +763,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                             });
 
 
+                                            sweetAlertDialog.show();
                                         }
 
                                     });
