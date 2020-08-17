@@ -43,8 +43,10 @@ public class FuelTypePresenter implements FuelTypeContract.Presenter {
             public void onFailure(Call<FuelTypeResponse> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getListFuelTypeFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.getListFuelTypeFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getListFuelTypeFailure("Mất kết nối mạng");
+                }else{
+                    view.getListFuelTypeFailure("Xin thử lại sau ít phút");
                 }
             }
         });

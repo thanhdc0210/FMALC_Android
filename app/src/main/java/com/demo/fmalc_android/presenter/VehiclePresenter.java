@@ -44,8 +44,10 @@ public class VehiclePresenter implements VehicleContract.Presenter {
             public void onFailure(Call<VehicleInspection> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Mất kết nối mạng");
+                }else{
+                    view.findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDeliveryFailure("Xin thử lại sau ít phút");
                 }
             }
 
@@ -71,8 +73,10 @@ public class VehiclePresenter implements VehicleContract.Presenter {
             public void onFailure(Call<Integer> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getVehicleRunningFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.getVehicleRunningFailure("Có lỗi xảy ra trong quá trình gửi yêu cầu");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getVehicleRunningFailure("Mất kết nối mạng");
+                }else{
+                    view.getVehicleRunningFailure("Xin thử lại sau ít phút");
                 }
             }
 
@@ -98,8 +102,10 @@ public class VehiclePresenter implements VehicleContract.Presenter {
             public void onFailure(Call<Boolean> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.sendRequestWhileRunningFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.sendRequestWhileRunningFailure("Có lỗi xảy ra trong quá trình gửi yêu cầu");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.sendRequestWhileRunningFailure("Mất kết nối mạng");
+                }else{
+                    view.sendRequestWhileRunningFailure("Xin thử lại sau ít phút");
                 }
             }
 

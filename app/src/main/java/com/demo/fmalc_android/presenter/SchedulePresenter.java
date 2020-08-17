@@ -41,8 +41,10 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
             public void onFailure(Call<List<Schedule>> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.findByConsignmentStatusAndUsernameForFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.findByConsignmentStatusAndUsernameForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.findByConsignmentStatusAndUsernameForFailure("Mất kết nối mạng");
+                }else{
+                    view.findByConsignmentStatusAndUsernameForFailure("Xin thử lại sau ít phút");
                 }
             }
         });

@@ -44,7 +44,13 @@ public class DayOffPresenter implements DayOffContract.Presenter {
 
             @Override
             public void onFailure(Call<DayOffResponseDTO> call, Throwable t) {
-                view.checkDayOffForDriverFailure("Thông tin không hợp lệ");
+                if (t.getMessage().contains("timed out")){
+                    view.checkDayOffForDriverFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.checkDayOffForDriverFailure("Mất kết nối mạng");
+                }else{
+                    view.checkDayOffForDriverFailure("Xin thử lại sau ít phút");
+                }
             }
         });
     }

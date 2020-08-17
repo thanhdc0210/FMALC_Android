@@ -40,10 +40,12 @@ public class NotificationMobilePresenter implements NotificationMobileContract.P
 
             @Override
             public void onFailure(Call<List<NotificationMobileResponse>> call, Throwable t) {
-                if (t.getMessage().contains("timed out")) {
+                if (t.getMessage().contains("timed out")){
                     view.findNotificationByUsernameFailure("Vui lòng kiểm tra lại kết nối mạng");
-                } else {
-                    view.findNotificationByUsernameFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.findNotificationByUsernameFailure("Mất kết nối mạng");
+                }else{
+                    view.findNotificationByUsernameFailure("Xin thử lại sau ít phút");
                 }
             }
         });

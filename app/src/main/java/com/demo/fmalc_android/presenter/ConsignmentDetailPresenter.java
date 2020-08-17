@@ -48,7 +48,13 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
 
            @Override
            public void onFailure(Call<DetailedSchedule> call, Throwable t) {
-               view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy thông tin");
+               if (t.getMessage().contains("timed out")){
+                   view.findByConsignmentIdFailure("Vui lòng kiểm tra lại kết nối mạng");
+               }else if (t.getMessage().contains("Unable to resolve host")) {
+                   view.findByConsignmentIdFailure("Mất kết nối mạng");
+               }else{
+                   System.out.println("Xin thử lại sau ít phút");
+               }
            }
        });
     }

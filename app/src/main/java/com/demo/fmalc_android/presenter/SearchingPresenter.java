@@ -39,7 +39,13 @@ public class SearchingPresenter implements SearchingContract.Presenter {
             }
             @Override
             public void onFailure(Call<List<Schedule>> call, Throwable t) {
-                view.searchConsignmentForFailure("Có lỗi xảy ra trong quá trình tìm kiếm");
+                if (t.getMessage().contains("timed out")){
+                    view.searchConsignmentForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.searchConsignmentForFailure("Mất kết nối mạng");
+                }else{
+                    view.searchConsignmentForFailure("Xin thử lại sau ít phút");
+                }
             }
         });
     }

@@ -47,8 +47,10 @@ public class MaintenancePresenter implements MaintenanceContract.Presenter {
             public void onFailure(Call<List<MaintainResponse>> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getMaintenanceListFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getMaintenanceListFailure("Mất kết nối mạng");
                 }else{
-                    view.getMaintenanceListFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.getMaintenanceListFailure("Xin thử lại sau ít phút");
                 }
             }
         });

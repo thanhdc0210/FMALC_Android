@@ -41,8 +41,10 @@ public class VehicleAfterDeliveryPresenter implements VehicleAfterDeliveryContra
             public void onFailure(Call<VehicleInspection> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getListLicensePlateAndInspectionAfterDeliveryFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Mất kết nối mạng");
+                }else{
+                    view.getListLicensePlateAndInspectionAfterDeliveryFailure("Xin thử lại sau ít phút");
                 }
             }
 

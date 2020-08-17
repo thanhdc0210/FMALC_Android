@@ -39,8 +39,10 @@ public class ReportIssueForUpdatingPresenter implements ReportIssueForUpdatingCo
             public void onFailure(Call<ReportIssueInformationForUpdating> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.updateReportIssueForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.updateReportIssueForFailure("Mất kết nối mạng");
                 }else{
-                    view.updateReportIssueForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.updateReportIssueForFailure("Xin thử lại sau ít phút");
                 }
             }
         });

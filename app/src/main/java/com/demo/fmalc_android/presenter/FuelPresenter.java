@@ -39,8 +39,10 @@ public class FuelPresenter implements FuelContract.Presenter {
             public void onFailure(Call<FuelRequest> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.saveFuelFillingFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.saveFuelFillingFailure("Mất kết nối mạng");
                 }else{
-                    view.saveFuelFillingFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.saveFuelFillingFailure("Xin thử lại sau ít phút");
                 }
             }
         });

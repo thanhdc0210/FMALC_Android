@@ -38,8 +38,10 @@ public class TokenDevicePresenter implements TokenDeviceContract.Presenter {
             public void onFailure(Call<String> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.updateTokenDeviceFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.updateTokenDeviceFailure("Mất kết nối mạng");
                 }else{
-                    view.updateTokenDeviceFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.updateTokenDeviceFailure("Xin thử lại sau ít phút");
                 }
             }
         });

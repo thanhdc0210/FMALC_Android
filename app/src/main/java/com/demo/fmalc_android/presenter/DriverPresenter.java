@@ -43,8 +43,10 @@ public class DriverPresenter implements DriverContract.Presenter {
             public void onFailure(Call<DriverInformation> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getDriverInformationFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.getDriverInformationFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getDriverInformationFailure("Mất kết nối mạng");
+                }else{
+                    view.getDriverInformationFailure("Xin thử lại sau ít phút");
                 }
             }
         });

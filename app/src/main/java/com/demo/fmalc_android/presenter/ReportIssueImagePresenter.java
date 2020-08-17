@@ -51,8 +51,10 @@ public class ReportIssueImagePresenter implements ReportIssueImageContract.Prese
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getLinkImageAfterUploadS3Failure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getLinkImageAfterUploadS3Failure("Mất kết nối mạng");
                 }else{
-                    view.getLinkImageAfterUploadS3Failure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.getLinkImageAfterUploadS3Failure("Xin thử lại sau ít phút");
                 }
             }
         });

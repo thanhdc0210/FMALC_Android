@@ -37,8 +37,10 @@ public class ReportIssuePresenter implements ReportIssueContract.Presenter {
             public void onFailure(Call<ReportIssueRequest> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.createReportIssueForDeliveryForFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.createReportIssueForDeliveryForFailure("Mất kết nối mạng");
                 }else{
-                    view.createReportIssueForDeliveryForFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.createReportIssueForDeliveryForFailure("Xin thử lại sau ít phút");
                 }
             }
         }

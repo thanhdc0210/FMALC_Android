@@ -41,8 +41,10 @@ public class ReportIssueResponsePresenter implements ReportIssueResponseContract
             public void onFailure(Call<ReportIssueResponse> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.getIssueInformationOfAVehicleFailure("Vui lòng kiểm tra lại kết nối mạng");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.getIssueInformationOfAVehicleFailure("Mất kết nối mạng");
                 }else{
-                    view.getIssueInformationOfAVehicleFailure("Server đang gặp sự cố. Xin thử lại sau!");
+                    view.getIssueInformationOfAVehicleFailure("Xin thử lại sau ít phút");
                 }
             }
         });

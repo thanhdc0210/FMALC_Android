@@ -52,8 +52,10 @@ public class LoginPresenter implements LoginContract.Presenter {
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.loginFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else {
-                    view.loginFailure("Server đang gặp sự cố. Xin thử lại sau! ");
+                }else if (t.getMessage().contains("Unable to resolve host")) {
+                    view.loginFailure("Mất kết nối mạng");
+                }else{
+                    view.loginFailure("Xin thử lại sau ít phút");
                 }
             }
         });
