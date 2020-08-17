@@ -106,7 +106,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
             scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
             consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
             consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (showData.size() > 4) {
+            if (showData.size() > 9) {
                 initScrollListener();
 
             }
@@ -120,10 +120,10 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
 
     private void populateData() {
         i = 0;
-        if (scheduleList.size() < 5 && scheduleList.size()>0){
+        if (scheduleList.size() < 10){
             showData = scheduleList;
         }else{
-            while (i < 5){
+            while (i < 10){
                 showData.add(scheduleList.get(i));
                 i++;
             }
@@ -200,6 +200,8 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
+                scheduleList.clear();
+                showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(ConsignmentStatusEnum.DELIVERING.getValue());
                 status.add(ConsignmentStatusEnum.OBTAINING.getValue());

@@ -122,40 +122,9 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
             scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
             consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
             consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (showData.size() > 4) {
+            if (showData.size() > 9) {
                 initScrollListener();
-
-//=======
-                getConsignmentList(scheduleList);
-                populateData();
-
-                scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
-                consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
-                consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                if (showData.size() > 4) {
-                    initScrollListener();
-                }
-            }
-
-            swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    refreshList();
-//>>>>>>> 1ed21d390012b1a669b24df851c2707189ebcc30
-//            }
-
-                    swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-                    swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                        @Override
-                        public void onRefresh() {
-                            refreshList();
-                        }
-                    });
-//        }
-                }
-            });
-
+             }
         }
     }
 //        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
@@ -173,12 +142,11 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     }
 
     private void populateData() {
-        showData.clear();
         i = 0;
-        if (scheduleList.size() < 5 && scheduleList.size() > 0) {
+        if (scheduleList.size() < 10) {
             showData = scheduleList;
         } else {
-            while (i < 5) {
+            while (i < 10) {
                 showData.add(scheduleList.get(i));
                 i++;
             }

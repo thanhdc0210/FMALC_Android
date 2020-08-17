@@ -105,7 +105,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
             notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken(), globalVariable.getId());
             notificationRecyclerView.setAdapter(notificationViewCardAdapter);
             notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (showData.size() > 4) {
+            if (showData.size() > 9) {
                 initScrollListener();
             }
         }
@@ -130,11 +130,10 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     private void populateData() {
         i = 0;
-        showData.clear();
-        if (notificationMobileResponses.size() < 5){
+        if (notificationMobileResponses.size() < 10){
             showData = notificationMobileResponses;
         }else{
-            while (i < 5){
+            while (i < 10){
                 showData.add(notificationMobileResponses.get(i));
                 i++;
             }
@@ -211,6 +210,8 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
+                notificationMobileResponses.clear();
+                showData.clear();
                 List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
                 List<NotificationMobileResponse> showData = new ArrayList<>();
                 notificationMobilePresenter.findNotificationByUsername(globalVariable.getUsername(), globalVariable.getToken());

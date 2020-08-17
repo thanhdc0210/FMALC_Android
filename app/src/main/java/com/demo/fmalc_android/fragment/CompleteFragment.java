@@ -104,17 +104,10 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
             scheduleViewCardAdapter = new ScheduleViewCardAdapter(showData, getActivity());
             consignmentRecyclerView.setAdapter(scheduleViewCardAdapter);
             consignmentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            if (showData.size() > 4) {
+            if (showData.size() > 9) {
                 initScrollListener();
             }
         }
-//        swipeRefreshLayout = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayout);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshList();
-//            }
-//        });
     }
 
     @Override
@@ -124,11 +117,10 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
 
     private void populateData() {
         i = 0;
-        showData.clear();
-        if (scheduleList.size() < 5){
+        if (scheduleList.size() < 10){
             showData = scheduleList;
         }else{
-            while (i < 5){
+            while (i < 10){
                 showData.add(scheduleList.get(i));
                 i++;
             }
@@ -205,6 +197,8 @@ public class CompleteFragment extends Fragment implements ScheduleContract.View 
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
+                scheduleList.clear();
+                showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(ConsignmentStatusEnum.COMPLETED.getValue());
                 status.add(ConsignmentStatusEnum.MISSING_DOCUMENT.getValue());
