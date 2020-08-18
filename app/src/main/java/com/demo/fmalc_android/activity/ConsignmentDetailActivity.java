@@ -100,7 +100,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     private DetailedSchedule consignmentDetail;
     private int numOfConsignmentInDay = -1;
     ScheduleTimeStepAdapter scheduleTimeStepAdapter;
-//    ScheduleTimeStepAdapter consignmentTimeStepAdapter;
+    //    ScheduleTimeStepAdapter consignmentTimeStepAdapter;
     @BindView(R.id.txtTitleConsignmentNo)
     TextView txtTitleConsignmentNo;
     @BindView(R.id.time_step_item)
@@ -375,7 +375,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
                 } else if ((ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()).equals(consignmentDetail.getStatus())
-                ||ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()).equals(consignmentDetail.getStatus())) && globalVariable.getIdSchedule()>0 && consignmentDetail.getScheduleId() == globalVariable.getIdSchedule()
+                        ||ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()).equals(consignmentDetail.getStatus())) && globalVariable.getIdSchedule()>0 && consignmentDetail.getScheduleId() == globalVariable.getIdSchedule()
                 ) {
                     if(consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size() ){
 
@@ -438,14 +438,14 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
                 } else {
-                   if(consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size()){
+                    if(consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size()){
 
-                   }else{
-                       btnTracking.setText(consignmentDetail.getStatus());
-                       btnTracking.setClickable(false);
-                       btnTracking.setBackgroundColor(Color.GRAY);
-                       btnTracking.setTextColor(Color.WHITE);
-                   }
+                    }else{
+                        btnTracking.setText(consignmentDetail.getStatus());
+                        btnTracking.setClickable(false);
+                        btnTracking.setBackgroundColor(Color.GRAY);
+                        btnTracking.setTextColor(Color.WHITE);
+                    }
                 }
                 btnNote.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
@@ -492,20 +492,20 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
             if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
             } else {
-               if(globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()){
+                if(globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()){
 //                 if()
-                   if(!consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))&& consignmentDetail.getScheduleId()==globalVariable.getIdSchedule()){
-                       btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                       btnTracking.setClickable(true);
-                       btnTracking.setBackgroundColor(Color.GREEN);
-                       btnTracking.setTextColor(Color.WHITE);
-                   }
-               }else{
-                   btnTracking.setText(consignmentDetail.getStatus());
-                   btnTracking.setClickable(false);
-                   btnTracking.setBackgroundColor(Color.GRAY);
-                   btnTracking.setTextColor(Color.WHITE);
-               }
+                    if(!consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))&& consignmentDetail.getScheduleId()==globalVariable.getIdSchedule()){
+                        btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                        btnTracking.setClickable(true);
+                        btnTracking.setBackgroundColor(Color.GREEN);
+                        btnTracking.setTextColor(Color.WHITE);
+                    }
+                }else{
+                    btnTracking.setText(consignmentDetail.getStatus());
+                    btnTracking.setClickable(false);
+                    btnTracking.setBackgroundColor(Color.GRAY);
+                    btnTracking.setTextColor(Color.WHITE);
+                }
             }
 
             btnNote.setOnClickListener(new View.OnClickListener() {
@@ -767,7 +767,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                     }else{
                                                         Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                                     }
-                                                    
+
                                                 }
                                             });
 
@@ -805,16 +805,16 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 }
+                            }
                         }
                     }
+
                 }
 
             }
-
         }
-    }
 
-}
+    }
 
 
     private int DISTANCE_PARKING = 0;
