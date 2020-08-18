@@ -170,6 +170,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                 .setTitleText("Lưu thành công")
                 .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")
                 .show();
+        onBackPressed();
     }
 
     @Override
