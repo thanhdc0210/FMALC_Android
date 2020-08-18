@@ -61,15 +61,24 @@ public class DayOffPresenter implements DayOffContract.Presenter {
         call.enqueue(new Callback<DayOffResponseDTO>() {
             @Override
             public void onResponse(Call<DayOffResponseDTO> call, Response<DayOffResponseDTO> response) {
-                if(response.code() == 204){
+                if(response.isSuccessful()){
+                   if(response.code()==200){
+                       view.updateDayOffForDriverSuccess(response.body());
+                   }else{
+                       view.updateDayOffForDriverFailure("Thông tin không hợp lệ");
+                   }
+                }else{
                     view.updateDayOffForDriverFailure("Thông tin không hợp lệ");
-                }else {
-                    if(response.code() == 200 ) {
-                        view.updateDayOffForDriverSuccess(response.body());
-                    } else {
-                        view.updateDayOffForDriverFailure("Thông tin không hợp lệ");
-                    }
                 }
+//                if(response.code() == 204){
+//
+//                }else {
+//                    if(response.code() == 200 ) {
+//                        view.updateDayOffForDriverSuccess(response.body());
+//                    } else {
+//
+//                    }
+//                }
             }
 
             @Override

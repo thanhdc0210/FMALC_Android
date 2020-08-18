@@ -11,5 +11,5 @@ import retrofit2.http.POST;
 public interface FuelService {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("api/v1.0/fuels/fuel-filling")
-    Call<FuelRequest> saveFuelFilling(@Body FuelRequest fuelRequest, @Header("Authorization") String auth);
+    Call<String> saveFuelFilling(@Body FuelRequest fuelRequest, @Header("Authorization") String auth);
 }

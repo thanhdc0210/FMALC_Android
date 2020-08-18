@@ -12,23 +12,30 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.contract.AlertContract;
 import com.demo.fmalc_android.contract.VehicleContract;
 import com.demo.fmalc_android.entity.AlertRequestDTO;
 import com.demo.fmalc_android.entity.GlobalVariable;
+import com.demo.fmalc_android.entity.Notification;
+import com.demo.fmalc_android.entity.VehicleDetail;
 import com.demo.fmalc_android.entity.VehicleInspection;
 import com.demo.fmalc_android.enumType.LevelInAlertEnum;
+import com.demo.fmalc_android.enumType.NotificationTypeEnum;
+import com.demo.fmalc_android.presenter.AlertPresenter;
 import com.demo.fmalc_android.presenter.VehiclePresenter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import okhttp3.ResponseBody;
 
 
-public class InProgressActivity extends AppCompatActivity implements View.OnClickListener, VehicleContract.View {
+public class InProgressActivity extends AppCompatActivity implements View.OnClickListener, VehicleContract.View, AlertContract.View {
 
     private Button btnLv1, btnLv2, btnLv3, btnLv4;
     private int vehicleId = 0;
     private GlobalVariable globalVariable;
     private VehiclePresenter vehiclePresenter;
+    private AlertPresenter alertPresenter;
     private AlertDialog.Builder alert;
     private AlertDialog alertDialog;
 
@@ -45,7 +52,7 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
         btnLv3.setOnClickListener(this);
         btnLv4 = findViewById(R.id.btnLevel4);
         btnLv4.setOnClickListener(this);
-
+        init();
         globalVariable = (GlobalVariable) getApplicationContext();
 
         vehiclePresenter = new VehiclePresenter();
@@ -56,7 +63,10 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-
+    private void init(){
+        alertPresenter = new AlertPresenter();
+        alertPresenter.setView(this);
+    }
     @Override
     public void onClick(View v) {
         final int[] level = new int[1];
@@ -74,8 +84,9 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
                         content[0] = edittext.getText().toString();
                         AlertRequestDTO requestDTO =
                                 new AlertRequestDTO(content[0].toString(), level[0], globalVariable.getId(), vehicleId);
-                                vehiclePresenter = new VehiclePresenter();
-                                vehiclePresenter.sendRequestWhileRunning(requestDTO, globalVariable.getToken());
+//                                vehiclePresenter = new VehiclePresenter();
+
+                        alertPresenter.sendRequestWhileRunning(requestDTO, globalVariable.getToken());
                         //OR
                     }
                 })
@@ -112,10 +123,16 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
                                     @Override
                                     public void onClick(DialogInterface dialog,
                                                         int which) {
+//                                        System.out.println(content[0].toString()+level[0]+ vehicleId);
+
+                                        if(content[0] == null){
+                                            content[0]="";
+                                        }
+
                                         AlertRequestDTO requestDTO =
-                                                new AlertRequestDTO(content[0].toString(), level[0], globalVariable.getId(), vehicleId);
-                                        vehiclePresenter = new VehiclePresenter();
-                                        vehiclePresenter.sendRequestWhileRunning(requestDTO, globalVariable.getToken());
+                                                new AlertRequestDTO(content[0], level[0], globalVariable.getId(), vehicleId);
+//                                        alertPresenter = new AlertPresenter();
+                                        alertPresenter.sendRequestWhileRunning(requestDTO, globalVariable.getToken());
                                     }
                                 })
                         .setNegativeButton(
@@ -160,13 +177,13 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
                 .setContentText("Tính năng chỉ hữu dụng khi bạn đang chạy xe")
                 .show();
     }
-
+    private AlertRequestDTO alertRequestDTO;
     @Override
-    public void sendRequestWhileRunningSuccess(String s) {
-        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("Gửi báo cáo")
-                .setContentText("Đã gửi thành công")
-                .show();
+    public void sendRequestWhileRunningSuccess(AlertRequestDTO alertRequestDTO) {
+//        if(alertRequestDTO!=null)
+        this.alertRequestDTO = alertRequestDTO;
+//        alertPresenter = new AlertPresenter();
+        alertPresenter.getDetailVehicle(alertRequestDTO.getVehicleId());
 
     }
 
@@ -177,4 +194,59 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
                 .setContentText(message)
                 .show();
     }
+
+    @Override
+    public void sendNotificationSuccess(String success) {
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Gửi báo cáo")
+                .setContentText("Đã gửi thành công")
+                .show();
+    }
+
+    @Override
+    public void sendNotificationFailed(String message) {
+
+    }
+
+    @Override
+    public void getDetailVehicleSuccess(VehicleDetail vehicleDetail) {
+        Notification notification = new Notification();
+        notification.setType(NotificationTypeEnum.ALERT.getValue());
+        String message=" báo trễ "+LevelInAlertEnum.getValueEnumToShow(alertRequestDTO.getLevel())+ " với lí do "+alertRequestDTO.getContent();
+        if(alertRequestDTO.getLevel()== LevelInAlertEnum.SUPER_HIGH.getValue()){
+            message = " yêu cầu đổi xe ";
+        }else{
+
+        }
+        notification.setContent(message);
+        notification.setVehicle_id(alertRequestDTO.getVehicleId());
+        notification.setDriver_id(alertRequestDTO.getDriverId());
+        notification.setStatus(false);
+//        alertPresenter = new AlertPresenter();
+        alertPresenter.sendNotification(notification);
+
+    }
+
+    @Override
+    public void getDetailVehicleFailed(String message) {
+
+    }
+
+//    @Override
+//    public void sendRequestWhileRunningSuccess(String s) {
+//        Toast.makeText(this, "AAAAA", Toast.LENGTH_SHORT).show();
+////        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+////                .setTitleText("Gửi báo cáo")
+////                .setContentText("Đã gửi thành công")
+////                .show();
+//
+//    }
+//
+//    @Override
+//    public void sendRequestWhileRunningFailure(String message) {
+//        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+//                .setTitleText("Có lỗi xảy ra")
+//                .setContentText(message)
+//                .show();
+//    }
 }

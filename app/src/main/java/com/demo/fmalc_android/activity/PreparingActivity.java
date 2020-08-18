@@ -176,15 +176,7 @@ public class PreparingActivity extends AppCompatActivity implements VehicleContr
 
     }
 
-    @Override
-    public void sendRequestWhileRunningSuccess(String s) {
 
-    }
-
-    @Override
-    public void sendRequestWhileRunningFailure(String message) {
-
-    }
 
     @Override
     public void createReportIssueForDeliveryForSuccess(ReportIssueRequest reportIssueRequest) {

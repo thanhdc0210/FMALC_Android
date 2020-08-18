@@ -14,8 +14,8 @@ public interface VehicleContract {
         void getVehicleRunningFailure(String message);
 
 
-        void sendRequestWhileRunningSuccess(String s);
-        void sendRequestWhileRunningFailure(String message);
+//        void sendRequestWhileRunningSuccess(String s);
+//        void sendRequestWhileRunningFailure(String message);
 
     }
 
@@ -23,7 +23,7 @@ public interface VehicleContract {
         void findVehicleLicensePlatesAndInspectionForReportInspectionBeforeDelivery(List<Integer> status, String username, String auth);
 
         void getVehicleRunning(String username, String auth);
-        void sendRequestWhileRunning(AlertRequestDTO requestDTO,String auth);
+//        void sendRequestWhileRunning(AlertRequestDTO requestDTO,String auth);
 
 
     }

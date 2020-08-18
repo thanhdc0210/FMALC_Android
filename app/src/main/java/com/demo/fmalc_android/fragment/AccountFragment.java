@@ -30,6 +30,7 @@ import com.demo.fmalc_android.entity.DriverInformation;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.Notification;
 import com.demo.fmalc_android.entity.NotificationMobileResponse;
+import com.demo.fmalc_android.enumType.DayOffEnum;
 import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.presenter.DayOffPresenter;
 import com.demo.fmalc_android.presenter.DriverPresenter;
@@ -453,21 +454,6 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                     .setCancelButton("Hủy", Dialog::dismiss)
                     .setConfirmText("Có, thay đổi")
                     .showCancelButton(true)
-//                    .setCancelButtonBackgroundColor(R.color.colorPrimary)
-//                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sDialog) {
-//                            // reuse previous dialog instance, keep widget user state, reset them if you need
-//                            sDialog.setTitleText("Hủy!")
-//                                    .setContentText("Bạn đã hủy yêu cầu")
-//                                    .setConfirmText("OK")
-//                                    .showCancelButton(false)
-//                                    .setCancelClickListener(null)
-//                                    .setConfirmClickListener(null)
-//                                    .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-//                        }
-//                    })
-//                    .setConfirmButtonBackgroundColor(R.color.colorGreen)
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 
                         @Override
@@ -475,7 +461,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                             sDialog.dismiss();
                             DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
                             requestDTO.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
-                            requestDTO.setType(NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue());
+                            requestDTO.setType(statusForNoti);
                             requestDTO.setDriverId(globalVariable.getId());
                             requestDTO.setStartDate(startDate.getText().toString());
                             requestDTO.setEndDate(endDate.getText().toString());
@@ -506,7 +492,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         notification.setDriver_id(globalVariable.getId());
         notification.setType(statusForNoti);
         if (statusForNoti == NotificationTypeEnum.DAY_OFF_BY_SCHEDULE.getValue()) {
-            notification.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+            notification.setContent(null);
         } else {
             notification.setContent(noteReason);
         }

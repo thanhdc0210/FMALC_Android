@@ -21,22 +21,22 @@ public class FuelPresenter implements FuelContract.Presenter {
 
     @Override
     public void saveFuelFilling(FuelRequest fuelRequest, String auth) {
-        Call<FuelRequest> call = fuelService.saveFuelFilling(fuelRequest, auth);
+        Call<String> call = fuelService.saveFuelFilling(fuelRequest, auth);
 
-        call.enqueue(new Callback<FuelRequest>() {
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<FuelRequest> call, Response<FuelRequest> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 204) {
                     view.saveFuelFillingFailure("Không thể lưu thông tin đổ nhiên liệu");
                 } else if (response.code() == 200) {
-                    view.saveFuelFillingSuccess();
+                    view.saveFuelFillingSuccess("Success");
                 }else{
                     view.saveFuelFillingFailure("Có lỗi xảy ra trong quá trình lưu thông tin");
                 }
             }
 
             @Override
-            public void onFailure(Call<FuelRequest> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 if (t.getMessage().contains("timed out")){
                     view.saveFuelFillingFailure("Vui lòng kiểm tra lại kết nối mạng");
                 }else if (t.getMessage().contains("Unable to resolve host")) {

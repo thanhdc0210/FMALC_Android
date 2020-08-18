@@ -147,7 +147,6 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                             fuelRequest.setUnitPriceAtFillingTime(unitPriceAtFillingTime);
                             fuelRequest.setVolume(volume);
                             fuelRequest.setVehicleLicensePlates(vehicleLicensePlate);
-
                             fuelPresenter.saveFuelFilling(fuelRequest, globalVariable.getToken());
                         } else {
                             Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
@@ -166,7 +165,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
     }
 
     @Override
-    public void saveFuelFillingSuccess() {
+    public void saveFuelFillingSuccess(String mes) {
         new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                 .setTitleText("Lưu thành công")
                 .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")

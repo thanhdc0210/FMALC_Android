@@ -4,7 +4,7 @@ import com.demo.fmalc_android.entity.FuelRequest;
 
 public interface FuelContract {
     interface View{
-        void saveFuelFillingSuccess();
+        void saveFuelFillingSuccess(String mes);
         void saveFuelFillingFailure(String message);
     }
 

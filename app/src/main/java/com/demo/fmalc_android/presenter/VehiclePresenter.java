@@ -8,6 +8,7 @@ import com.demo.fmalc_android.service.VehicleService;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,33 +84,33 @@ public class VehiclePresenter implements VehicleContract.Presenter {
         });
     }
 
-    @Override
-    public void sendRequestWhileRunning(AlertRequestDTO alertRequest,String auth) {
-        Call<Boolean> call = vehicleService.sendRequestWhileRunning(alertRequest,auth);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.code() == 204){
-                    view.sendRequestWhileRunningFailure("Bạn đang không chạy xe");
-                }else if (response.code() == 200){
-                    view.sendRequestWhileRunningSuccess("sd");
-                }else{
-                    view.sendRequestWhileRunningFailure("Có lỗi xảy ra trong quá trình gửi yêu cầu");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                if (t.getMessage().contains("timed out")){
-                    view.sendRequestWhileRunningFailure("Vui lòng kiểm tra lại kết nối mạng");
-                }else if (t.getMessage().contains("Unable to resolve host")) {
-                    view.sendRequestWhileRunningFailure("Mất kết nối mạng");
-                }else{
-                    view.sendRequestWhileRunningFailure("Xin thử lại sau ít phút");
-                }
-            }
-
-        });
-
-    }
+//    @Override
+//    public void sendRequestWhileRunning(AlertRequestDTO alertRequest,String auth) {
+//        Call<ResponseBody> call = vehicleService.sendRequestWhileRunning(alertRequest,auth);
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                if (response.code() == 204){
+//                    view.sendRequestWhileRunningFailure("Bạn đang không chạy xe");
+//                }else if (response.code() == 200){
+//                    view.sendRequestWhileRunningSuccess("sd");
+//                }else{
+//                    view.sendRequestWhileRunningFailure("Có lỗi xảy ra trong quá trình gửi yêu cầu");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                if (t.getMessage().contains("timed out")){
+//                    view.sendRequestWhileRunningFailure("Vui lòng kiểm tra lại kết nối mạng");
+//                }else if (t.getMessage().contains("Unable to resolve host")) {
+//                    view.sendRequestWhileRunningFailure("Mất kết nối mạng");
+//                }else{
+//                    view.sendRequestWhileRunningFailure("Xin thử lại sau ít phút");
+//                }
+//            }
+//
+//        });
+//
+//    }
 }
