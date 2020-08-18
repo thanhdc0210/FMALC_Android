@@ -175,6 +175,12 @@ public class InProgressActivity extends AppCompatActivity implements View.OnClic
         new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("Opps")
                 .setContentText("Tính năng chỉ hữu dụng khi bạn đang chạy xe")
+                .setConfirmButton("Trở về", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        onBackPressed();
+                    }
+                })
                 .show();
     }
     private AlertRequestDTO alertRequestDTO;
