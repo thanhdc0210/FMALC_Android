@@ -16,7 +16,7 @@ import lombok.Setter;
 public class FuelTypeResponse {
     @SerializedName("vehicleLicensePlate")
     private String vehicleLicensePlate;
-
+    private double capacity;
     @SerializedName("fuelTypeList")
     private List<FuelType> fuelTypeList;
 }
