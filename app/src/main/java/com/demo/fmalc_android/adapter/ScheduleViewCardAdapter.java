@@ -127,11 +127,10 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
             holder.txtTimeCountDown.setText("Hoàn thành lúc: " + format.format(finishPlace.getActualTime().getTime()));
             holder.txtStartTime.setText(format.format(schedule.getPlaces().get(0).getActualTime()));
             holder.txtFinishTime.setText(format.format(finishPlace.getActualTime()));
-        } else if(schedule.getStatus().equals(ConsignmentStatusEnum.DELIVERING) || schedule.getStatus().equals(ConsignmentStatusEnum.OBTAINING)){
+        } else if(schedule.getStatus().equals(ConsignmentStatusEnum.DELIVERING.getConsignmentStatusEnum())
+                || schedule.getStatus().equals(ConsignmentStatusEnum.OBTAINING.getConsignmentStatusEnum())){
             holder.txtTimeCountDown.setVisibility(View.GONE);
-        }
-
-        else {
+        } else {
 
 
             // Kiểm tra còn bao nhiêu thời gian

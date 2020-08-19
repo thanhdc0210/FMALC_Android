@@ -303,7 +303,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     @SneakyThrows
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth, int yearEnd, int monthOfYearEnd, int dayOfMonthEnd) {
-        monthOfYear = monthOfYearEnd + 1;
+        monthOfYear = monthOfYear + 1;
         monthOfYearEnd = monthOfYearEnd + 1;
         String month = monthOfYear + "";
         String monthEnd = monthOfYearEnd + "";
@@ -446,29 +446,37 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
             }
             notificationPresenter.takeDayOff(notification);
         } else if (responseDTO.getDayOffId() > 0) {
-            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Xác nhận thay đổi?")
-                    .setContentText("Bạn có muốn thay đổi ngày nghỉ "
-                            + responseDTO.getStartDate() + " đến " + responseDTO.getEndDate() + " thành " +
-                            startDate.getText().toString() + " đến " + endDate.getText().toString() + "?")
-                    .setCancelButton("Hủy", Dialog::dismiss)
-                    .setConfirmText("Có, thay đổi")
-                    .showCancelButton(true)
-                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            if (statusForNoti == NotificationTypeEnum.DAY_OFF_UNEXPECTED.getValue()) {
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Ngày nghỉ đã tồn tại")
+                        .setContentText("Yêu cầu ngày nghỉ của bạn đang chờ phản hồi từ quản lí!")
+                        .show();
 
-                        @Override
-                        public void onClick(SweetAlertDialog sDialog) {
-                            sDialog.dismiss();
-                            DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
-                            requestDTO.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
-                            requestDTO.setType(statusForNoti);
-                            requestDTO.setDriverId(globalVariable.getId());
-                            requestDTO.setStartDate(startDate.getText().toString());
-                            requestDTO.setEndDate(endDate.getText().toString());
-                            dayOffPresenter.updateDayOff(responseDTO.getDayOffId(), requestDTO, globalVariable.getToken());
-                        }
-                    })
-                    .show();
+            } else {
+                new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("Xác nhận thay đổi?")
+                        .setContentText("Bạn có muốn thay đổi ngày nghỉ "
+                                + responseDTO.getStartDate() + " đến " + responseDTO.getEndDate() + " thành " +
+                                startDate.getText().toString() + " đến " + endDate.getText().toString() + "?")
+                        .setCancelButton("Hủy", Dialog::dismiss)
+                        .setConfirmText("Có, thay đổi")
+                        .showCancelButton(true)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismiss();
+                                DayOffDriverRequestDTO requestDTO = new DayOffDriverRequestDTO();
+                                requestDTO.setContent(startDate.getText().toString() + "|" + endDate.getText().toString());
+                                requestDTO.setType(statusForNoti);
+                                requestDTO.setDriverId(globalVariable.getId());
+                                requestDTO.setStartDate(startDate.getText().toString());
+                                requestDTO.setEndDate(endDate.getText().toString());
+                                dayOffPresenter.updateDayOff(responseDTO.getDayOffId(), requestDTO, globalVariable.getToken());
+                            }
+                        })
+                        .show();
+            }
         }
     }
 

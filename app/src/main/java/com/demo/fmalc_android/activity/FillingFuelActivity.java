@@ -45,6 +45,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
     private Button btnSaveFillingFuel;
 
     private Double totalPrice;
+    private Double capacity;
 
     private GlobalVariable globalVariable;
 
@@ -83,7 +84,10 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
         fuelTypeRecyclerView.setAdapter(fuelTypeAdapter);
         fuelTypeRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         txtCurrentLicensePlate.setText(fuelTypeResponse.getVehicleLicensePlate());
-
+        capacity = fuelTypeResponse.getCapacity();
+        if (fuelTypeResponse.getVehicleLicensePlate() == ""){
+            btnSaveFillingFuel.setEnabled(false);
+        }
         edtVolume.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,6 +125,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
             @Override
             public void onClick(View v) {
                 String vehicleLicensePlate = txtCurrentLicensePlate.getText().toString();
+
                 if (vehicleLicensePlate.equals("")){
                     new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Không có xe")
@@ -134,8 +139,16 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                     }else if (vol.equals("")){
                         Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa nhập thông tin số lít nhiên liệu", Toast.LENGTH_SHORT).show();
                     }else {
+
                         Integer kmOld = Integer.valueOf(km);
                         Double volume = Double.valueOf(vol);
+                        if (volume> capacity){
+                            new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Thông tin không hợp lệ")
+                                    .setContentText("Số lít bạn nhập lớn hơn dung tích bình xăng")
+                                    .show();
+                            btnSaveFillingFuel.setEnabled(false);
+                        }
                         FuelType fuelType = fuelTypeAdapter.getFuelType();
 
                         if (fuelType != null){
@@ -170,6 +183,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                 .setTitleText("Lưu thành công")
                 .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")
                 .show();
+        onBackPressed();
     }
 
     @Override

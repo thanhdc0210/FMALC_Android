@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             globalVariable.setId(loginResponse.getId());
             loginProgressBar.setVisibility(-1);
             startActivity(intent);
+            finish();
         }else{
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Xin lỗi...!")
