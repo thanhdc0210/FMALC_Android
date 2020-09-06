@@ -630,7 +630,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
         // Destination of route
         String str_dest = "destinations=" + dest.latitude + "," + dest.longitude;
         // Mode
-        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
+//        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
+        String key="AIzaSyBN-EnJaJx_lU8aw-PnGBdumqGRTG8u2dQ";
         String mode = "mode=" + directionMode;
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + mode;
