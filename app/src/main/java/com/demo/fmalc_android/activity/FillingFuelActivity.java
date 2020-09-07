@@ -160,6 +160,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                             fuelRequest.setUnitPriceAtFillingTime(unitPriceAtFillingTime);
                             fuelRequest.setVolume(volume);
                             fuelRequest.setVehicleLicensePlates(vehicleLicensePlate);
+                            fuelRequest.setDriverId(globalVariable.getId());
                             fuelPresenter.saveFuelFilling(fuelRequest, globalVariable.getToken());
                         } else {
                             Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();

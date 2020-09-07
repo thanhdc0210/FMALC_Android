@@ -22,6 +22,8 @@ public class FuelRequest {
     private Double volume;
     @SerializedName("vehicleLicensePlates")
     private String vehicleLicensePlates;
+    @SerializedName("driverId")
+    private Integer driverId;
 
     @Override
     public String toString() {
