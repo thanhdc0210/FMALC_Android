@@ -205,7 +205,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }
             }
         });
-
+        consignmentDetailPresenter.getFirstConsignment(globalVariable.getId());
     }//end oncreate
 
     private void init() {
@@ -279,6 +279,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail) {
+//        consignmentDetail.get
+//        globalVariable.get
         this.consignmentDetail = consignmentDetail;
         scheduleTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
         if (consignmentDetail.getScheduleId()!= null && (consignmentDetail.getScheduleId() == globalVariable.getIdScheduleNow())) {
@@ -619,6 +621,20 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     }
 
+    @Override
+    public void getFirstConsignmentSuccess(int idConsignment) {
+        if(idConsignment != consignment_id){
+            btnTracking.setClickable(false);
+            btnTracking.setBackgroundColor(Color.GRAY);
+            btnTracking.setTextColor(Color.WHITE);
+        }
+    }
+
+    @Override
+    public void getFirstConsignmentFailed(String message) {
+        Toast.makeText(ConsignmentDetailActivity.this, "cccccccccccccccccccc", Toast.LENGTH_SHORT).show();
+    }
+
 
     private void checkingPosition() {
 
@@ -630,8 +646,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
         // Destination of route
         String str_dest = "destinations=" + dest.latitude + "," + dest.longitude;
         // Mode
-//        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
-        String key="AIzaSyBN-EnJaJx_lU8aw-PnGBdumqGRTG8u2dQ";
+        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
+//        String key="AIzaSyDcw-KnCAPzni3QYvgk3RDoTZL65xh8a4o";
         String mode = "mode=" + directionMode;
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + mode;
@@ -677,7 +693,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                             me = new DistanceParse(ConsignmentDetailActivity.this, MODE_DRIVING).execute(s).get();
                         }
                     }catch (Exception e){
-
+                            me=-1;
                     }
 
                     System.out.println("VALUEEEE" + me);

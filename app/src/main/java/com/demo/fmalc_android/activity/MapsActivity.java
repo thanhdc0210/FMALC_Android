@@ -137,9 +137,9 @@ private Polyline currentPolyline;
         // Destination of route
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
         // Mode
-//        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
+        String key = "AIzaSyBMUeWW7cGPbl14igFrHElHdc27gNJE-n4";
         String mode = "mode=" + directionMode;
-        String key="AIzaSyBN-EnJaJx_lU8aw-PnGBdumqGRTG8u2dQ";
+//        String key="AIzaSyBN-EnJaJx_lU8aw-PnGBdumqGRTG8u2dQ";
         // Building the parameters to the web service
         String parameters = str_origin + "&" + str_dest + "&" + mode;
         // Output format
