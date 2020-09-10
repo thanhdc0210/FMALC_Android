@@ -38,6 +38,9 @@ public interface ConsignmentDetailContract {
 
         void notifyForManagerSuccess(String success);
         void notifyForManagerFailed(String message);
+
+        void getFirstConsignmentSuccess(int idConsignment);
+        void getFirstConsignmentFailed(String message);
     }
 
     interface Presenter{
@@ -49,5 +52,6 @@ public interface ConsignmentDetailContract {
         void updatePlannedTime(Integer id, Integer km);
         void stopTracking(Integer id);
         void notifyForManager(Notification notification);
+        void getFirstConsignment(int idDriver);
     }
 }

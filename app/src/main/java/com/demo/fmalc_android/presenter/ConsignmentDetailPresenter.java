@@ -212,4 +212,24 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
             }
         });
     }
+
+    @Override
+    public void getFirstConsignment(int idDriver) {
+        Call<Integer> call =consignmentService.getFirstConsignment(idDriver);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if(response.isSuccessful()){
+                    view.getFirstConsignmentSuccess(response.body());
+                }else{
+                    view.getFirstConsignmentFailed("");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                view.getFirstConsignmentFailed("Có lỗi xảy ra!");
+            }
+        });
+    }
 }

@@ -52,4 +52,7 @@ public interface ScheduleService {
     @GET("api/v1.0/schedules/driver/running/{id}")
     Call<DetailedSchedule> getScheduleRunningForDriver(@Path("id") Integer id);
 
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("api/v1.0/schedules/first-consignment/{idDriver}")
+    Call<Integer> getFirstConsignment(@Path("idDriver") Integer id);
 }
