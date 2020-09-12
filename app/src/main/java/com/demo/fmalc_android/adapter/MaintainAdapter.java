@@ -184,21 +184,28 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 try {
-
-                if (pathImg[0] != null) {
-                    Uri uri = Uri.fromFile(new File(pathImg[0]));
-                    if (uri != null) {
-                        String path = uri.getPath();
-                        File file = new File(path);
-                        String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
-                                .toString());
-                        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                                fileExtension.toLowerCase());
-                        RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
-                        //
-                        MultipartBody.Part image = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-                        maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image, auth);
+                if (edtCurrentKm.getText().toString().trim().length() != 0){
+                    if (pathImg[0] != null) {
+                        Uri uri = Uri.fromFile(new File(pathImg[0]));
+                        if (uri != null) {
+                            String path = uri.getPath();
+                            File file = new File(path);
+                            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
+                                    .toString());
+                            String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                                    fileExtension.toLowerCase());
+                            RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), file);
+                            //
+                            MultipartBody.Part image = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                            maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image, auth);
+                        }
                     }
+                }
+                else{
+                    new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Oop!")
+                            .setContentText("Bạn chưa nhập số km hiện tại")
+                            .show();
                 }
                 } catch (Exception e){
                     new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
