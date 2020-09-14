@@ -113,7 +113,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     @Override
     public void findNotificationByUsernameFailure(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
