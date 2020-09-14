@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.contract.TokenDeviceContract;
@@ -73,6 +75,23 @@ public class DriverHomeActivity extends AppCompatActivity implements BottomNavig
                 });
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
 
+        String fragment = getIntent().getStringExtra("fragment");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (fragment != null){
+            if(fragment.equals("HomeFragment")){
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction.replace(R.id.container, homeFragment).commit();
+                bottomNavigationView.getMenu().getItem(0).setChecked(true);
+            }else if (fragment.equals("NotificationFragment")){
+                NotificationFragment notificationFragment = new NotificationFragment();
+                fragmentTransaction.replace(R.id.container, notificationFragment).commit();
+                bottomNavigationView.getMenu().getItem(3).setChecked(true);
+            }else{
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction.replace(R.id.container, homeFragment).commit();
+            }
+        }
     }
 
 
