@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private ProgressBar loginProgressBar;
     private int progressStatus = 0;
     private Handler handler = new Handler();
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
         loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
 
+        sp = getSharedPreferences("logged", MODE_PRIVATE);
 
-
-
+        if (sp.getBoolean("logged", false)){
+            final GlobalVariable globalVariable = (GlobalVariable) getApplicationContext();
+            globalVariable.setUsername(sp.getString("username",""));
+            globalVariable.setRole(sp.getString("role",""));
+            globalVariable.setToken(sp.getString("token",""));
+            globalVariable.setId(sp.getInt("id",0));
+            Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void init(){
@@ -101,6 +111,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             globalVariable.setRole(loginResponse.getRole());
             globalVariable.setToken(loginResponse.getToken());
             globalVariable.setId(loginResponse.getId());
+            sp.edit().putBoolean("logged", true).apply();
+            sp.edit().putString("username", loginResponse.getUsername()).apply();
+            sp.edit().putString("role", loginResponse.getRole()).apply();
+            sp.edit().putString("token", loginResponse.getToken()).apply();
+            sp.edit().putInt("id", loginResponse.getId()).apply();
             loginProgressBar.setVisibility(-1);
             startActivity(intent);
             finish();

@@ -19,10 +19,7 @@ import com.demo.fmalc_android.entity.Place;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-
-import lombok.SneakyThrows;
 
 public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeStepAdapter.ViewHolder> {
     private List<Place> placeList;
@@ -41,21 +38,16 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
         return new ViewHolder(view);
     }
 
-    @SneakyThrows
     @Override
     public void onBindViewHolder(@NonNull ScheduleTimeStepAdapter.ViewHolder holder, int position) {
         placeList.sort(Comparator.comparing(Place::getPlannedTime));
         Place place = placeList.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
-        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
-        SimpleDateFormat hour = new SimpleDateFormat("HH:mm");
-
         //set màu nếu đến điểm đó rồi
         if(place.getActualTime() != null) {
-            Date dateFormatted = format.parse(format.format(place.getActualTime()));
-            holder.txtPlannedTime.setText(date.format(dateFormatted)+"  ");
-            holder.txtHour.setText(hour.format(dateFormatted)+"  ");
+
+            holder.txtPlannedTime.setText(format.format(place.getActualTime())+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
             holder.txtTypePlace.setText(place.getTypeStr());
             //set màu
@@ -71,9 +63,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
                 holder.iconFinish.setColorFilter(context.getResources().getColor(R.color.colorGreen));
             }
         } else {
-            Date dateFormatted = format.parse(format.format(place.getPlannedTime()));
-            holder.txtPlannedTime.setText(date.format(dateFormatted)+"  ");
-            holder.txtHour.setText(hour.format(dateFormatted)+"  ");
+            holder.txtPlannedTime.setText(format.format(place.getPlannedTime())+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
             holder.txtTypePlace.setText(place.getTypeStr());
             if (placeList.get(placeList.size()-1) == place){
@@ -92,14 +82,13 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtPlannedTime, txtTypePlace, txtAddressDetails, txtHour;
+        public TextView txtPlannedTime, txtTypePlace, txtAddressDetails;
         public LinearLayout itemLayout, layoutIconFinish,layout;
         public ImageView iconCircle,iconFinish;
         public View view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtPlannedTime = (TextView) itemView.findViewById(R.id.txtPlannedTime);
-            txtHour = (TextView) itemView.findViewById(R.id.txtPlannedHour);
             txtTypePlace = (TextView) itemView.findViewById(R.id.txtTypePlace);
             txtAddressDetails = (TextView) itemView.findViewById(R.id.txtAddressDetails);
             itemLayout = (LinearLayout) itemView.findViewById(R.id.card_view_item);
