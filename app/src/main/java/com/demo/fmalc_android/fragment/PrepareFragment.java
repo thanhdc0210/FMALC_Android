@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
@@ -34,6 +35,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     RecyclerView consignmentRecyclerView;
     ScheduleViewCardAdapter scheduleViewCardAdapter;
     LinearLayout consignmentRecyclerViewLayout;
+    TextView emptyTxt;
     private SchedulePresenter schedulePresenter;
     private GlobalVariable globalVariable;
     List<Schedule> scheduleList = new ArrayList<>();
@@ -60,7 +62,7 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         consignmentRecyclerViewLayout = view.findViewById(R.id.card_view_item);
 
         consignmentRecyclerView = (RecyclerView) view.findViewById(R.id.rvConsignment);
-
+        emptyTxt = view.findViewById(R.id.txtEmptyView);
 
         List<Integer> status = new ArrayList<>();
         status.add(ConsignmentStatusEnum.WAITING.getValue());
@@ -101,6 +103,10 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
 
         List<ObjectToSort> objectToSortList = new ArrayList<>();
 
+        if (scheduleList.size() == 0){
+            emptyTxt.setVisibility(View.VISIBLE);
+            consignmentRecyclerView.setVisibility(View.INVISIBLE);
+        } else
         if ((scheduleList.size() > 0)) {
             scheduleList.forEach(e -> {
                 objectToSortList.add(new ObjectToSort(e, e.getPlaces().get(0).getPlannedTime()));

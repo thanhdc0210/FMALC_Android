@@ -632,7 +632,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void getFirstConsignmentFailed(String message) {
-        Toast.makeText(ConsignmentDetailActivity.this, "cccccccccccccccccccc", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(ConsignmentDetailActivity.this, "cccccccccccccccccccc", Toast.LENGTH_SHORT).show();
     }
 
 
