@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
@@ -37,7 +36,6 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     RecyclerView consignmentRecyclerView;
     LinearLayout consignmentRecyclerViewLayout;
     ScheduleViewCardAdapter scheduleViewCardAdapter;
-    TextView emptyTxt;
     private SchedulePresenter schedulePresenter;
     private GlobalVariable globalVariable;
     List<Schedule> scheduleList = new ArrayList<>();
@@ -68,7 +66,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
         status.add(ConsignmentStatusEnum.OBTAINING.getValue());
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
-        emptyTxt = view.findViewById(R.id.txtEmptyView);
+
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -100,10 +98,7 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
-        if (scheduleList.size() == 0){
-            emptyTxt.setVisibility(View.VISIBLE);
-            consignmentRecyclerView.setVisibility(View.INVISIBLE);
-        } else
+
         if ((scheduleList.size()>0)) {
             getConsignmentList(scheduleList);
             populateData();
