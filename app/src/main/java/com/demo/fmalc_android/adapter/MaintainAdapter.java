@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.Response;
 import com.demo.fmalc_android.R;
+import com.demo.fmalc_android.activity.MaintainAndIssueActivity;
 import com.demo.fmalc_android.contract.MaintenanceContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.MaintainResponse;
@@ -251,6 +253,9 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
                     .setTitleText("Cập nhật thành công")
                     .setContentText("Bạn đã hoàn tất bảo trì")
                     .show();
+
+        Intent intent = new Intent(context, MaintainAndIssueActivity.class);
+        context.startActivity(intent);
     }
 
     @Override
