@@ -15,7 +15,7 @@ import okhttp3.ResponseBody;
 
 public interface ConsignmentDetailContract {
     interface View{
-        void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail);
+        void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail); // Dùng id của schedule
         void findByConsignmentIdFailure(String message);
 
         void trackingLocationSuccess(ResponseBody responseBody);
@@ -44,7 +44,7 @@ public interface ConsignmentDetailContract {
     }
 
     interface Presenter{
-        void findByConsignmentId(Integer scheduleId);
+        void findByConsignmentId(Integer scheduleId); // Dùng id của schedule
         void trackingLocation(Location location);
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);

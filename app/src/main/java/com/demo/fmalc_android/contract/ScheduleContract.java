@@ -9,12 +9,9 @@ public interface ScheduleContract {
     interface View{
         void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList);
         void findByConsignmentStatusAndUsernameForFailure(String message);
-
-
     }
 
     interface Presenter{
         void findByConsignmentStatusAndUsername(List<Integer> status, String username, String auth);
-
     }
 }

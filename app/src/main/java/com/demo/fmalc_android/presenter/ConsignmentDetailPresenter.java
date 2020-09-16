@@ -53,7 +53,7 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
                }else if (t.getMessage().contains("Unable to resolve host")) {
                    view.findByConsignmentIdFailure("Mất kết nối mạng");
                }else{
-                   System.out.println("Xin thử lại sau ít phút");
+                   view.findByConsignmentIdFailure("Xin thử lại sau ít phút");
                }
            }
        });

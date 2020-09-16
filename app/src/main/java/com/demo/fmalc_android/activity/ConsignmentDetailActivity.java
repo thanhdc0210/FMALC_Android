@@ -136,9 +136,20 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consignment_detail);
-        Bundle bundle = getIntent().getExtras();
-        consignment_id = bundle.getInt("consignment_id");
-        schedule_id = bundle.getInt("schedule_id");
+        if(getIntent().getExtras() != null){
+            Bundle bundle = getIntent().getExtras();
+            consignment_id = bundle.getInt("consignment_id");
+            schedule_id = bundle.getInt("schedule_id");
+        }else{
+            Intent intent = new Intent(this, DriverHomeActivity.class);
+            startActivity(intent);
+        }
+//        if (getIntent().getExtras() != null){
+//            consignment_id = Integer.valueOf(getIntent().getStringExtra("consignment_id"));
+//            schedule_id = Integer.valueOf(getIntent().getStringExtra("schedule_id"));
+//        }else{
+//
+//        }
         consignmentDetailRecycleView = findViewById(R.id.rvTimeStep);
         txtLicensePlates = findViewById(R.id.txtLicensePlates);
         txtTitleConsignmentNo = findViewById(R.id.txtTitleConsignmentNo);
