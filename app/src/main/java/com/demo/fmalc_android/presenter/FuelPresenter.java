@@ -31,7 +31,7 @@ public class FuelPresenter implements FuelContract.Presenter {
                 } else if (response.code() == 200) {
                     view.saveFuelFillingSuccess("Success");
                 }else{
-                    view.saveFuelFillingFailure("Có lỗi xảy ra trong quá trình lưu thông tin");
+//                    view.saveFuelFillingFailure("Có lỗi xảy ra trong quá trình lưu thông tin " + response.code());
                 }
             }
 
