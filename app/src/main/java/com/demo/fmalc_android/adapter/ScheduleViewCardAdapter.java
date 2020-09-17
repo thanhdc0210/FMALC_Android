@@ -141,13 +141,23 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
             int diffHours = (int) diff / (60 * 60 * 1000) % 24;
             int diffMinutes = (int) diff / (60 * 1000) % 60 % 24;
 
+            System.out.println("test: " + -4/2);
+            System.out.println("diff: " + diff);
+            System.out.println("diffDay: " + diffDays);
+            System.out.println("diffHours: " + diffHours);
+            System.out.println("diffMinutes: " + diffMinutes);
             String s = "";
 
-            if (diffDays >= 0 && diffHours >= 0 && diffMinutes >= 0) {
+            if (diff >= 0) {
                 s = "Còn ";
             } else {
                 s = "Trễ ";
                 holder.txtTimeCountDown.setTextColor(Color.RED);
+            }
+
+            if (diff == 0){
+                s = s + " 1 phút";
+                holder.txtTimeCountDown.setText(s);
             }
 
             if (diffDays < 0) {
@@ -160,7 +170,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
                 holder.txtTimeCountDown.setText(s);
             }
 
-            if (diffMinutes <= 0) {
+            if (diffMinutes < 0) {
                 s = s + Math.abs(diffMinutes) + " phút";
                 holder.txtTimeCountDown.setText(s);
             }
@@ -175,7 +185,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
                 holder.txtTimeCountDown.setText(s);
             }
 
-            if (diffMinutes >= 0) {
+            if (diffMinutes > 0) {
                 s = s + Math.abs(diffMinutes) + " phút";
                 holder.txtTimeCountDown.setText(s);
             }

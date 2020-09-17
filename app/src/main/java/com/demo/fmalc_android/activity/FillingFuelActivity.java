@@ -142,7 +142,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
                         Integer kmOld = Integer.valueOf(km);
                         Double volume = Double.valueOf(vol);
-                        if (volume> capacity){
+                        if (volume > capacity){
                             new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
                                     .setTitleText("Thông tin không hợp lệ")
                                     .setContentText("Số lít bạn nhập lớn hơn dung tích bình xăng")

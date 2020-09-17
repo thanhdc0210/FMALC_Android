@@ -52,6 +52,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -95,14 +96,33 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         holder.txtMaintainDate.setText(formatter.format(maintainResponse.getMaintainDate()));
         holder.txtMaintainTypeName.setText(maintainResponse.getMaintainTypeName());
-        holder.maintainItem.setOnClickListener(new View.OnClickListener() {
-            @SneakyThrows
-            @Override
-            public void onClick(View v) {
-                showDetailIssueDialog(maintainResponse, v);
-            }
-        });
+//        holder.maintainItem.setOnClickListener(new View.OnClickListener() {
+//                    @SneakyThrows
+//                    @Override
+//                    public void onClick(View v) {
+//                        showDetailIssueDialog(maintainResponse, v);
+//                    }
+//                });
+//
+                holder.maintainItem.setOnClickListener(new View.OnClickListener() {
+                    @SneakyThrows
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            if (formatter.parse(formatter.format(maintainResponse.getMaintainDate())).compareTo(formatter.parse(formatter.format(new Date()))) <= 0){
+                        showDetailIssueDialog(maintainResponse, v);
+                            }else{
+                                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                        .setTitleText("Opps")
+                                        .setContentText("Chưa tới thời gian bảo trì")
+                                        .show();
+                            }
 
+                        }catch (Exception e){
+
+                        }
+                    }
+                });
     }
 
     private void showDetailIssueDialog(MaintainResponse maintainResponse, View v) throws IOException, URISyntaxException {
