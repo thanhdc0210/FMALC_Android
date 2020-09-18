@@ -1,9 +1,11 @@
 package com.demo.fmalc_android.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,8 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
             holder.txtHour.setText(hour.format(dateFormatted)+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
             holder.txtTypePlace.setText(place.getTypeStr());
+            holder.txtContactName.setText(place.getContactName()+" - ");
+            holder.txtPhoneNumber.setText(place.getContactPhone());
             //set màu
             holder.txtTypePlace.setTextColor(context.getResources().getColor(R.color.colorBlue));
             holder.txtAddressDetails.setTextColor(R.color.colorBlack);
@@ -72,6 +76,8 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
             }
         } else {
             Date dateFormatted = format.parse(format.format(place.getPlannedTime()));
+            holder.txtContactName.setText(place.getContactName()+" - ");
+            holder.txtPhoneNumber.setText(place.getContactPhone());
             holder.txtPlannedTime.setText(date.format(dateFormatted)+"  ");
             holder.txtHour.setText(hour.format(dateFormatted)+"  ");
             holder.txtAddressDetails.setText(place.getAddress());
@@ -81,6 +87,15 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
                 holder.layoutIconFinish.setVisibility(View.VISIBLE);
             }
         }
+        holder.txtPhoneNumber.setClickable(true);
+        holder.txtPhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + holder.txtPhoneNumber.getText()));
+                context.startActivity(callIntent);
+            }
+        });
 
 
     }
@@ -92,7 +107,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtPlannedTime, txtTypePlace, txtAddressDetails, txtHour;
+        public TextView txtPlannedTime, txtTypePlace, txtAddressDetails, txtHour, txtContactName, txtPhoneNumber;
         public LinearLayout itemLayout, layoutIconFinish,layout;
         public ImageView iconCircle,iconFinish;
         public View view;
@@ -108,6 +123,8 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
             iconCircle = itemView.findViewById(R.id.iconCircle);
             iconFinish = itemView.findViewById(R.id.iconFinish);
             view = itemView.findViewById(R.id.view);
+            txtPhoneNumber = itemView.findViewById(R.id.txtPhoneNumber);
+            txtContactName = itemView.findViewById(R.id.txtContactName);
         }
     }
 }
