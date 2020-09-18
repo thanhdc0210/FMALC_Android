@@ -109,6 +109,22 @@
 					android:layout_height="wrap_content"
 					android:textColor="#979797"
 					android:text="Công ty THHH ABC XYZ 69 Lê Văn Việt, Phường Hiệp Phú, Quận 9, Hồ Chí Minh" />
+			<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+				<TextView
+						android:id="@+id/txtContactName"
+						android:text="A Thành - "
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"/>
+				<TextView
+						android:id="@+id/txtPhoneNumber"
+						android:text="0969691293"
+						android:clickable="true"
+						android:layout_width="wrap_content"
+						android:layout_height="match_parent"/>
+			</LinearLayout>
 		</LinearLayout>
 
 

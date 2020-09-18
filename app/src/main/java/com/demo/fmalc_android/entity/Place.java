@@ -34,6 +34,11 @@ public class Place implements Serializable {
     private Timestamp actualTime;
     @SerializedName("type")
     private Integer type; // Giao hàng hay nhận hàng
+    @SerializedName("contactName")
+    private String contactName;
+    @SerializedName("contactPhone")
+    private String contactPhone;
+
 
         public Place(String address, String name, Timestamp plannedTime) {
             this.address = address;
