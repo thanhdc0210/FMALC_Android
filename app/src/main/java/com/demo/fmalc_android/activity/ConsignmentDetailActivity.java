@@ -2,7 +2,9 @@ package com.demo.fmalc_android.activity;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -120,6 +122,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     private int schedule_id = 0;
     private List<Integer> placeId = new ArrayList<>();
 
+    private SharedPreferences sp;
+
 //    public void getPlaceList(List<Place> placeList) {
 //        this.placeList = placeList;
 //    }
@@ -136,6 +140,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consignment_detail);
+
+        sp = this.getSharedPreferences("logged", Context.MODE_PRIVATE);
+
         if(getIntent().getExtras() != null){
             Bundle bundle = getIntent().getExtras();
             consignment_id = bundle.getInt("consignment_id");
@@ -337,25 +344,39 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     content[0] = editText.getText().toString();
-                                    int km = Integer.parseInt(content[0]);
-                                    if(km>0){
-                                        ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                        listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
-                                        listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
-                                        listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-                                        detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
-                                        consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-                                        consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-                                        btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                                        btnTracking.setClickable(false);
-                                        btnTracking.setBackgroundColor(Color.GRAY);
-                                        btnTracking.setTextColor(Color.WHITE);
-                                        sweetAlertDialog.hide();
-                                        Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
-                                    }
+                                    if (!content[0].toString().trim().equals("")){
+                                        int km = Integer.parseInt(content[0]);
+                                        if(km>0){
+                                            if (km > consignmentDetail.getKilometer_running()){
 
+                                                ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                                listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
+                                                consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+                                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                                btnTracking.setClickable(false);
+                                                btnTracking.setBackgroundColor(Color.GRAY);
+                                                btnTracking.setTextColor(Color.WHITE);
+                                                sweetAlertDialog.hide();
+                                                Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                                        .setTitleText("WARNING")
+                                                        .setContentText("Số km cũ của xe lớn hơn số km bạn nhập")
+                                                        .show();
+                                            }
+                                        }else{
+                                            Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }else {
+                                        new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                                .setTitleText("Cảnh báo")
+                                                .setContentText("Bạn chưa nhập số km hiện tại của xe")
+                                                .show();
+                                    }
                                 }
                             });
 
