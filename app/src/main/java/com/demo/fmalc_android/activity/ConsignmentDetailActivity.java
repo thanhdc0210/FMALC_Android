@@ -364,8 +364,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                 Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
                                             }else{
                                                 new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                                        .setTitleText("WARNING")
-                                                        .setContentText("Số km cũ của xe lớn hơn số km bạn nhập")
+                                                        .setTitleText("Số km bạn nhập nhỏ hơn số km cũ")
                                                         .show();
                                             }
                                         }else{
@@ -373,8 +372,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                         }
                                     }else {
                                         new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText("Cảnh báo")
-                                                .setContentText("Bạn chưa nhập số km hiện tại của xe")
+                                                .setTitleText("Bạn chưa nhập số km hiện tại của xe")
                                                 .show();
                                     }
                                 }

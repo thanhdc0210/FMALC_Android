@@ -149,8 +149,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                         Double volume = Double.valueOf(vol);
                         if (volume > capacity){
                             new SweetAlertDialog(FillingFuelActivity.this, SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Thông tin số lít nhiên liệu không hợp lệ")
-                                    .setContentText("Dung tích tối đa bình xăng của xe là: " + capacity)
+                                    .setTitleText("Vượt mức dung tích bình xăng cho phép")
                                     .show();
                             btnSaveFillingFuel.setEnabled(false);
                         }else{

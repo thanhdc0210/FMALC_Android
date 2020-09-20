@@ -113,8 +113,7 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
                         showDetailIssueDialog(maintainResponse, v);
                             }else{
                                 new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                                        .setTitleText("Opps")
-                                        .setContentText("Chưa tới thời gian bảo trì")
+                                        .setTitleText("Chưa tới thời gian bảo trì")
                                         .show();
                             }
 
@@ -221,12 +220,15 @@ public class MaintainAdapter extends RecyclerView.Adapter<MaintainAdapter.ViewHo
                             MultipartBody.Part image = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                             maintenancePresenter.updateMaintenance(id, Integer.valueOf(edtCurrentKm.getText().toString()), image, auth);
                         }
+                    }else{
+                        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
+                                .setTitleText("Bạn chưa chụp chứng từ xác nhận bảo trì")
+                                .show();
                     }
                 }
                 else{
                     new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Oop!")
-                            .setContentText("Bạn chưa nhập số km hiện tại")
+                            .setTitleText("Bạn chưa nhập số km hiện tại")
                             .show();
                 }
                 } catch (Exception e){
