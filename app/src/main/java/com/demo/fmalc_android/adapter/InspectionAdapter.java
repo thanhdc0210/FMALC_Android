@@ -194,7 +194,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.Vi
                     public void onPickResult(PickResult r) {
                         if (r.getError() == null) {
                             r.getPath();
-                            Toast.makeText(context, r.getPath(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, r.getPath(), Toast.LENGTH_SHORT).show();
                             Uri uri = Uri.fromFile(new File(r.getPath()));
                             if (uri != null) {
                                 String path = uri.getPath();
