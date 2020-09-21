@@ -1,8 +1,11 @@
 package com.demo.fmalc_android.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import  android.Manifest.permission;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demo.fmalc_android.R;
@@ -87,18 +93,29 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
                 holder.layoutIconFinish.setVisibility(View.VISIBLE);
             }
         }
+        holder.txtPhoneNumber.setPaintFlags(holder.txtPhoneNumber.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         holder.txtPhoneNumber.setClickable(true);
         holder.txtPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + holder.txtPhoneNumber.getText()));
-                context.startActivity(callIntent);
+                if (ActivityCompat.checkSelfPermission(context,permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + holder.txtPhoneNumber.getText()));
+                    context.startActivity(callIntent);
+                } else {
+                    ActivityCompat.requestPermissions(
+                            (Activity) context,
+                            new String[]{permission.CALL_PHONE},
+                            1
+                    );
+                }
+
             }
         });
 
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -125,6 +142,7 @@ public class ScheduleTimeStepAdapter extends RecyclerView.Adapter<ScheduleTimeSt
             view = itemView.findViewById(R.id.view);
             txtPhoneNumber = itemView.findViewById(R.id.txtPhoneNumber);
             txtContactName = itemView.findViewById(R.id.txtContactName);
+
         }
     }
 }

@@ -11,7 +11,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:gravity="center"
-			android:text="Không lịch chạy"
+			android:text="Không có lịch chạy"
 			android:textSize="25dp"
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="parent"
