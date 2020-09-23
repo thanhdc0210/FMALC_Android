@@ -2,6 +2,8 @@ package com.demo.fmalc_android.contract;
 
 
 //import com.demo.fmalc_android.entity.ConsignmentDetail;
+import android.app.Activity;
+
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Maintenance;

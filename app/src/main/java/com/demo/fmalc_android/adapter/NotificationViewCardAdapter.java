@@ -226,8 +226,12 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
                 notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
                 switch (type){
                     case 3:
+                            String subString[] = notificationMobileResponse.getContent().split("#");
+                            String subStringId[] = subString[subString.length - 1].split("\\s");
+                            Integer consignmentId =  Integer.valueOf(subStringId[0]);
                             intent = new Intent(context, ConsignmentDetailActivity.class);
                             bundle.putInt("schedule_id", notificationMobileResponse.getScheduleId());
+                            bundle.putInt("consignment_id", consignmentId);
                             intent.putExtras(bundle);
                             context.startActivity(intent);
                         break;

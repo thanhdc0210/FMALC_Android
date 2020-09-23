@@ -562,7 +562,15 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void findByConsignmentIdFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        txtLicensePlates.setText("");
+        txtTitleConsignmentNo.setText("CHI TIẾT DỊCH VỤ: " + String.valueOf(consignment_id));
+        btnNote.setEnabled(false);
+        btnLocationConsignment.setEnabled(false);
+        btnTracking.setEnabled(false);
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(message)
+                .show();
     }
 
 

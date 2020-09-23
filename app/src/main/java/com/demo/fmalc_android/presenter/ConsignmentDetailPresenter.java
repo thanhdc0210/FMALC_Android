@@ -1,5 +1,7 @@
 package com.demo.fmalc_android.presenter;
 
+import android.app.Activity;
+
 import com.demo.fmalc_android.contract.ConsignmentDetailContract;
 //import com.demo.fmalc_android.entity.ConsignmentDetail;
 import com.demo.fmalc_android.entity.DetailedSchedule;
@@ -38,11 +40,12 @@ public class ConsignmentDetailPresenter implements ConsignmentDetailContract.Pre
        call.enqueue(new Callback<DetailedSchedule>() {
            @Override
            public void onResponse(Call<DetailedSchedule> call, Response<DetailedSchedule> response) {
-               if (!response.isSuccessful()) {
-                   view.findByConsignmentIdFailure("Không tìm thấy lô hàng");
-               } else {
-                   DetailedSchedule consignmentDetail = response.body();
-                   view.findByConsignmentIdSuccess(consignmentDetail);
+               if (response.code() == 204){
+                   view.findByConsignmentIdFailure("Bạn không đủ quyền để xem thông tin chi tiết");
+               }else if (response.code() == 200){
+                   view.findByConsignmentIdSuccess(response.body());
+               }else{
+                   view.findByConsignmentIdFailure("Có lỗi xảy ra trong quá trình lấy dữ liệu");
                }
            }
 
