@@ -153,8 +153,8 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
         long diff = notificationTime - nowTime;
         int diffWeeks = (int) diff / (24 * 60 * 60 * 1000 * 7);
         int diffDays = (int) diff / (24 * 60 * 60 * 1000) % 7;
-        int diffHours = (int) diff / (60 * 60 *1000) % 24;
-        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
+        int diffHours = (int) diff / (60 * 60 *1000) % 7 % 24;
+        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24 % 7;
 
         String s = "";
 
