@@ -50,8 +50,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         if (remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getNotification().getTitle();
             String content = remoteMessage.getNotification().getBody();
-            System.out.println(title);
-            System.out.println(content);
             Notification notification = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setContentTitle(title)
@@ -132,17 +130,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use WorkManager.
-                scheduleJob();
-            } else {
-                // Handle message within 10 seconds
-                handleNow();
-            }
-
-        }
+//        // Check if message contains a data payload.
+//        if (remoteMessage.getData().size() > 0) {
+//            if (/* Check if data needs to be processed by long running job */ true) {
+//                // For long-running tasks (10 seconds or more) use WorkManager.
+//                scheduleJob();
+//            } else {
+//                // Handle message within 10 seconds
+//                handleNow();
+//            }
+//
+//        }
     }
 
     /**
