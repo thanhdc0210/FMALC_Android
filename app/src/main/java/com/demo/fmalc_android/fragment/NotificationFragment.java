@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.activity.DriverHomeActivity;
-import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
 import com.demo.fmalc_android.adapter.NotificationViewCardAdapter;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
@@ -25,7 +23,6 @@ import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

@@ -121,7 +121,7 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
         holder.txtFinishTime.setText(format.format(finishPlace.getPlannedTime()));
         holder.txtReceivedPlace.setText(finishPlace.getName());
         holder.txtDeliveryPlace.setText(places.get(0).getName());
-        holder.txtWeight.setText(schedule.getWeight().toString() + " kg ");
+        holder.txtWeight.setText(schedule.getWeight().toString() + " tấn ");
         holder.txtVehicleInfo.setText(schedule.getLicensePlates()+" | "+ schedule.getDriverName());
         if(schedule.getStatus().equals(ConsignmentStatusEnum.COMPLETED.getConsignmentStatusEnum())){
             holder.txtTimeCountDown.setText("Hoàn thành lúc: " + format.format(finishPlace.getActualTime().getTime()));
