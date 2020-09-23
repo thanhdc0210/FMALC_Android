@@ -141,11 +141,6 @@ public class ScheduleViewCardAdapter extends  RecyclerView.Adapter<RecyclerView.
             int diffHours = (int) diff / (60 * 60 * 1000) % 24;
             int diffMinutes = (int) diff / (60 * 1000) % 60 % 24;
 
-            System.out.println("test: " + -4/2);
-            System.out.println("diff: " + diff);
-            System.out.println("diffDay: " + diffDays);
-            System.out.println("diffHours: " + diffHours);
-            System.out.println("diffMinutes: " + diffMinutes);
             String s = "";
 
             if (diff >= 0) {

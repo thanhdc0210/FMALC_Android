@@ -47,9 +47,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
     public void checkPayLoad(RemoteMessage remoteMessage, PendingIntent pendingIntent) {
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
+        if (remoteMessage.getData().size() > 0) {
             String title = remoteMessage.getNotification().getTitle();
             String content = remoteMessage.getNotification().getBody();
+            System.out.println(title);
+            System.out.println(content);
             Notification notification = new NotificationCompat.Builder(this, FCM_CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setContentTitle(title)
