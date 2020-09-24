@@ -33,4 +33,7 @@ public class DetailedSchedule implements Serializable {
 
     @SerializedName("consignmentId")
     private Integer consignmentId;
+
+    @SerializedName("kilometer_running")
+    private Integer kilometer_running;
 }

@@ -12,12 +12,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.fragment.HomeFragment;
 import com.demo.fmalc_android.fragment.IssueFragment;
 import com.demo.fmalc_android.fragment.MaintainFragment;
+import com.demo.fmalc_android.fragment.NotificationFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -52,9 +54,18 @@ public class MaintainAndIssueActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(maintainFragment, "Bảo trì");
         viewPager.setAdapter(viewPagerAdapter);
 
-
-
-
+//        String fragment = getIntent().getStringExtra("fragment");
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        if (fragment != null){
+//            if(fragment.equals("MaintainFragment")){
+//                MaintainFragment homeFragment = new MaintainFragment();
+//                fragmentTransaction.replace(R.id.container, homeFragment).commit();
+//            }else{
+//                IssueFragment issueFragment = new IssueFragment();
+//                fragmentTransaction.replace(R.id.container, issueFragment).commit();
+//            }
+//        }
     }
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 

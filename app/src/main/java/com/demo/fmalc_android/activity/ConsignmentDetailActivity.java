@@ -2,7 +2,9 @@ package com.demo.fmalc_android.activity;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -120,6 +122,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     private int schedule_id = 0;
     private List<Integer> placeId = new ArrayList<>();
 
+    private SharedPreferences sp;
+
 //    public void getPlaceList(List<Place> placeList) {
 //        this.placeList = placeList;
 //    }
@@ -136,9 +140,23 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consignment_detail);
-        Bundle bundle = getIntent().getExtras();
-        consignment_id = bundle.getInt("consignment_id");
-        schedule_id = bundle.getInt("schedule_id");
+
+        sp = this.getSharedPreferences("logged", Context.MODE_PRIVATE);
+
+        if(getIntent().getExtras() != null){
+            Bundle bundle = getIntent().getExtras();
+            consignment_id = bundle.getInt("consignment_id");
+            schedule_id = bundle.getInt("schedule_id");
+        }else{
+            Intent intent = new Intent(this, DriverHomeActivity.class);
+            startActivity(intent);
+        }
+//        if (getIntent().getExtras() != null){
+//            consignment_id = Integer.valueOf(getIntent().getStringExtra("consignment_id"));
+//            schedule_id = Integer.valueOf(getIntent().getStringExtra("schedule_id"));
+//        }else{
+//
+//        }
         consignmentDetailRecycleView = findViewById(R.id.rvTimeStep);
         txtLicensePlates = findViewById(R.id.txtLicensePlates);
         txtTitleConsignmentNo = findViewById(R.id.txtTitleConsignmentNo);
@@ -326,29 +344,61 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     content[0] = editText.getText().toString();
-                                    try{
+//<<<<<<< HEAD
+//                                    try{
+//                                        int km = Integer.parseInt(content[0]);
+//                                        if(km>0){
+//                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+//                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+//                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+//                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+//                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
+//                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+//                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+//                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+//                                            btnTracking.setClickable(false);
+//                                            btnTracking.setBackgroundColor(Color.GRAY);
+//                                            btnTracking.setTextColor(Color.WHITE);
+//                                            sweetAlertDialog.hide();
+//                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+//                                        }else{
+//                                            Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }catch (Exception e){
+//                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+//=======
+                                    if (!content[0].toString().trim().equals("")){
                                         int km = Integer.parseInt(content[0]);
                                         if(km>0){
-                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
-                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
-                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
-                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                                            btnTracking.setClickable(false);
-                                            btnTracking.setBackgroundColor(Color.GRAY);
-                                            btnTracking.setTextColor(Color.WHITE);
-                                            sweetAlertDialog.hide();
-                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                            if (km > consignmentDetail.getKilometer_running()){
+
+                                                ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                                listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
+                                                consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+                                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                                btnTracking.setClickable(false);
+                                                btnTracking.setBackgroundColor(Color.GRAY);
+                                                btnTracking.setTextColor(Color.WHITE);
+                                                sweetAlertDialog.hide();
+                                                Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                            }else{
+                                                new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                                        .setTitleText("Số km bạn nhập nhỏ hơn số km cũ")
+                                                        .show();
+                                            }
                                         }else{
                                             Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                         }
-                                    }catch (Exception e){
-                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
+                                                .setTitleText("Bạn chưa nhập số km hiện tại của xe")
+                                                .show();
+//>>>>>>> 7ddec5e6db89ef591e185941e65f62028f6edf5d
                                     }
-
                                 }
                             });
 
@@ -536,7 +586,15 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void findByConsignmentIdFailure(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        txtLicensePlates.setText("");
+        txtTitleConsignmentNo.setText("CHI TIẾT DỊCH VỤ: " + String.valueOf(consignment_id));
+        btnNote.setEnabled(false);
+        btnLocationConsignment.setEnabled(false);
+        btnTracking.setEnabled(false);
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText(message)
+                .show();
     }
 
 
@@ -636,7 +694,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void getFirstConsignmentFailed(String message) {
-        Toast.makeText(ConsignmentDetailActivity.this, "cccccccccccccccccccc", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(ConsignmentDetailActivity.this, "cccccccccccccccccccc", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -664,6 +722,11 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     }
 
     private void duration(Location location) throws IOException, ExecutionException, InterruptedException {
+        ListStatusUpdate checkStatus = new ListStatusUpdate();
+        checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+//        listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
+        checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+        detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
         System.out.println("Cũng vô");
         Place place = new Place();
         if (globalVariable.getIdSchedule() <= DEFAULT_SCHEDULE_ID && globalVariable.getConsignmentDetail() == null) {
@@ -800,7 +863,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
 //                                    btnTracking.setOnClickListener(new View.OnClickListener() {
-
+                                    consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 }
 
                             }
@@ -810,7 +873,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                         if (place.getActualTime() != null) {
                             globalVariable.getPlaces().add(place);
                         }
-                        if ( !globalVariable.getPlaces().contains(places.get(0))) {
+                        if ( !globalVariable.getPlaces().contains(places.get(i))) {
                             if (places.size() - 1 > i && places.get(1).getType() == 1) {
                                 System.out.println(places.get(0).getAddress() + "------------");
 
@@ -825,6 +888,23 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
+                                    listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                                    detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
+                                    consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
+                                    consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                }
+                            }else if(places.size() - 1 > i && places.get(i+1).getType() == 0){
+                                if (globalVariable.getIdScheduleNow() == globalVariable.getConsignmentDetail().getScheduleId()) {
+                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
+                                    btnTracking.setClickable(false);
+                                    btnTracking.setBackgroundColor(Color.GRAY);
+                                    btnTracking.setTextColor(Color.WHITE);
+                                }
+                                if (!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() == null) {
+                                    globalVariable.getPlaces().add(places.get(i));
+                                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                    listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                                    listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
                                     listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
                                     detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());

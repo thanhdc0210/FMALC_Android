@@ -1,7 +1,9 @@
 package com.demo.fmalc_android.fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -87,6 +89,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     private int statusForNoti;
     private String noteReason;
     private SweetAlertDialog sweetAlertDialogCheckDayOff;
+    private SharedPreferences sp;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -151,6 +154,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         //TODO thay id user hiện tại vào
         globalVariable = (GlobalVariable) getActivity().getApplicationContext();
         driverPresenter.getDriverInformation(globalVariable.getId());
+        sp = this.getActivity().getSharedPreferences("logged", Context.MODE_PRIVATE);
 
         linearLayout5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,11 +254,15 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sDialog) {
+                                sp.edit().putBoolean("logged", false).apply();
+                                sp.edit().putString("username", "").apply();
+                                sp.edit().putString("role", "").apply();
+                                sp.edit().putString("token", "").apply();
+                                sp.edit().putInt("id", 0).apply();
                                 sDialog.dismissWithAnimation();
                                 Intent i = new Intent(getContext(), LoginActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
-//
                             }
                         })
                         .setCancelButton("Không", Dialog::dismiss)

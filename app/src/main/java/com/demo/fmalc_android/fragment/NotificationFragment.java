@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
-import com.demo.fmalc_android.adapter.CompletedScheduleViewCardAdapter;
 import com.demo.fmalc_android.adapter.NotificationViewCardAdapter;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
@@ -24,7 +23,6 @@ import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -113,7 +111,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     @Override
     public void findNotificationByUsernameFailure(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

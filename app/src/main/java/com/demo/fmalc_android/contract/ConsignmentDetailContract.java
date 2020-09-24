@@ -2,6 +2,8 @@ package com.demo.fmalc_android.contract;
 
 
 //import com.demo.fmalc_android.entity.ConsignmentDetail;
+import android.app.Activity;
+
 import com.demo.fmalc_android.entity.DetailedSchedule;
 import com.demo.fmalc_android.entity.Location;
 import com.demo.fmalc_android.entity.Maintenance;
@@ -15,7 +17,7 @@ import okhttp3.ResponseBody;
 
 public interface ConsignmentDetailContract {
     interface View{
-        void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail);
+        void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail); // Dùng id của schedule
         void findByConsignmentIdFailure(String message);
 
         void trackingLocationSuccess(ResponseBody responseBody);
@@ -44,7 +46,7 @@ public interface ConsignmentDetailContract {
     }
 
     interface Presenter{
-        void findByConsignmentId(Integer scheduleId);
+        void findByConsignmentId(Integer scheduleId); // Dùng id của schedule
         void trackingLocation(Location location);
         void getVehicleDetailByLicense(String license);
         void sendNotification(Notification notification);

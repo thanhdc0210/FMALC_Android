@@ -105,6 +105,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
             @Override
             public void afterTextChanged(Editable s) {
+                btnSaveFillingFuel.setEnabled(true);
                 int id = fuelTypeAdapter.getId();
                 if (id != -1) {
                     FuelType fuelTypeCurrent = fuelTypeList.stream().filter(e -> e.getId().equals(id)).findAny().orElse(null);
@@ -132,26 +133,26 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                             .setContentText("Không tìm thấy xe của bạn cho ngày hôm nay")
                             .show();
                 }else{
+                    FuelType fuelType = fuelTypeAdapter.getFuelType();
                     String km = edtCurrentKm.getText().toString();
                     String vol = edtVolume.getText().toString();
-                    if (km.equals("")){
+                    if (fuelType.getPrice() == null){
+                        Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
+                    }else if (km.equals("")){
                         Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa nhập thông tin số km đổ nhiên liệu", Toast.LENGTH_SHORT).show();
-                    }else if (vol.equals("")){
+                    }
+                    else if (vol.equals("")){
                         Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa nhập thông tin số lít nhiên liệu", Toast.LENGTH_SHORT).show();
                     }else {
 
                         Integer kmOld = Integer.valueOf(km);
                         Double volume = Double.valueOf(vol);
-                        if (volume> capacity){
-                            new SweetAlertDialog(getApplicationContext(), SweetAlertDialog.ERROR_TYPE)
-                                    .setTitleText("Thông tin không hợp lệ")
-                                    .setContentText("Số lít bạn nhập lớn hơn dung tích bình xăng")
+                        if (volume > capacity){
+                            new SweetAlertDialog(FillingFuelActivity.this, SweetAlertDialog.ERROR_TYPE)
+                                    .setTitleText("Vượt mức dung tích bình xăng cho phép")
                                     .show();
                             btnSaveFillingFuel.setEnabled(false);
-                        }
-                        FuelType fuelType = fuelTypeAdapter.getFuelType();
-
-                        if (fuelType != null){
+                        }else{
                             Integer fuelTypeId = fuelType.getId();
                             Double unitPriceAtFillingTime = fuelType.getPrice();
                             FuelRequest fuelRequest = new FuelRequest();
@@ -160,9 +161,8 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                             fuelRequest.setUnitPriceAtFillingTime(unitPriceAtFillingTime);
                             fuelRequest.setVolume(volume);
                             fuelRequest.setVehicleLicensePlates(vehicleLicensePlate);
+                            fuelRequest.setDriverId(globalVariable.getId());
                             fuelPresenter.saveFuelFilling(fuelRequest, globalVariable.getToken());
-                        } else {
-                            Toast.makeText(FillingFuelActivity.this.getApplication(), "Bạn chưa chọn thông tin nhiên liệu", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -179,7 +179,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
     @Override
     public void saveFuelFillingSuccess(String mes) {
-        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+        new SweetAlertDialog(FillingFuelActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                 .setTitleText("Lưu thành công")
                 .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")
                 .show();

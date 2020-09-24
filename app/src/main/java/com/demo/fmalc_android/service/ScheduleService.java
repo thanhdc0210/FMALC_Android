@@ -55,4 +55,9 @@ public interface ScheduleService {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET("api/v1.0/schedules/first-consignment/{idDriver}")
     Call<Integer> getFirstConsignment(@Path("idDriver") Integer id);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("api/v1.0/schedules/schedule-detail")
+    Call<Integer> findScheduleIdByContentOfNotificationAndDriverId(@Query("content") String content, @Query("driverId") Integer driverId
+            , @Header("Authorization") String auth);
 }
