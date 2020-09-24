@@ -722,11 +722,13 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     }
 
     private void duration(Location location) throws IOException, ExecutionException, InterruptedException {
-        ListStatusUpdate checkStatus = new ListStatusUpdate();
-        checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+        if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()){
+            ListStatusUpdate checkStatus = new ListStatusUpdate();
+            checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
 //        listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
-        checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-        detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+            checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+            detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+        }
         System.out.println("Cũng vô");
         Place place = new Place();
         if (globalVariable.getIdSchedule() <= DEFAULT_SCHEDULE_ID && globalVariable.getConsignmentDetail() == null) {
