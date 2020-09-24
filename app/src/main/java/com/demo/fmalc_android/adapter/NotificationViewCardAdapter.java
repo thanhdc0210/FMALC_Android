@@ -147,21 +147,25 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#D8D8D8"));
         }
 
-        // Kiểm tra còn bao nhiêu thời gian
+        // Kiểm tra thông báo được gửi bao phút trước
         Long notificationTime = notificationMobileResponse.getTime().getTime();
         Long nowTime = new Date().getTime();
         long diff = notificationTime - nowTime;
-        int diffWeeks = (int) diff / (24 * 60 * 60 * 1000 * 7);
-        int diffDays = (int) diff / (24 * 60 * 60 * 1000) % 7;
-        int diffHours = (int) diff / (60 * 60 *1000) % 7 % 24;
-        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24 % 7;
+        int diffDays = (int) diff / (24 * 60 * 60 * 1000);
+        int diffHours = (int) diff / (60 * 60 *1000) % 24;
+        int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
 
         String s = "";
 
-        if (diffWeeks < 0){
-            s = Math.abs(diffWeeks) + " tuần trước";
+        if (diff == 0){
+            s += " 1 phút trước";
             holder.txtTime.setText(s);
         }
+
+//        if (diffWeeks < 0){
+//            s = Math.abs(diffWeeks) + " tuần trước";
+//            holder.txtTime.setText(s);
+//        }
 
         else if (diffDays < 0){
             s = Math.abs(diffDays) + " ngày trước ";
@@ -173,7 +177,7 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             holder.txtTime.setText(s);
         }
 
-        else{
+        else if (diffMinutes < 0){
             s = Math.abs(diffMinutes) + " phút trước ";
             holder.txtTime.setText(s);
         }

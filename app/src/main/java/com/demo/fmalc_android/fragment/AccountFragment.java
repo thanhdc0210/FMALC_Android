@@ -26,6 +26,7 @@ import com.demo.fmalc_android.activity.LoginActivity;
 import com.demo.fmalc_android.contract.DayOffContract;
 import com.demo.fmalc_android.contract.DriverContract;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
+import com.demo.fmalc_android.contract.TokenDeviceContract;
 import com.demo.fmalc_android.entity.DayOffDriverRequestDTO;
 import com.demo.fmalc_android.entity.DayOffResponseDTO;
 import com.demo.fmalc_android.entity.DriverInformation;
@@ -37,6 +38,7 @@ import com.demo.fmalc_android.enumType.NotificationTypeEnum;
 import com.demo.fmalc_android.presenter.DayOffPresenter;
 import com.demo.fmalc_android.presenter.DriverPresenter;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
+import com.demo.fmalc_android.presenter.TokenDevicePresenter;
 
 
 import java.io.IOException;
@@ -58,7 +60,7 @@ import lombok.SneakyThrows;
  * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AccountFragment extends Fragment implements DriverContract.View, DatePickerDialog.OnDateSetListener, NotificationMobileContract.View, DayOffContract.View {
+public class AccountFragment extends Fragment implements DriverContract.View, DatePickerDialog.OnDateSetListener, NotificationMobileContract.View, DayOffContract.View, TokenDeviceContract.View {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,6 +93,8 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
     private SweetAlertDialog sweetAlertDialogCheckDayOff;
     private SharedPreferences sp;
 
+    private TokenDevicePresenter tokenDevicePresenter;
+
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -102,6 +106,8 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
         notificationPresenter.setView(this);
         dayOffPresenter = new DayOffPresenter();
         dayOffPresenter.setView(this);
+        tokenDevicePresenter = new TokenDevicePresenter();
+        tokenDevicePresenter.setView(this);
     }
 
     /**
@@ -260,6 +266,7 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
                                 sp.edit().putString("token", "").apply();
                                 sp.edit().putInt("id", 0).apply();
                                 sDialog.dismissWithAnimation();
+                                tokenDevicePresenter.updateTokenDevice(globalVariable.getId(), "", globalVariable.getToken());
                                 Intent i = new Intent(getContext(), LoginActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(i);
@@ -531,5 +538,15 @@ public class AccountFragment extends Fragment implements DriverContract.View, Da
             ans += s[i] + "-";
         }
         return (ans.substring(0, ans.length() - 1));
+    }
+
+    @Override
+    public void updateTokenDeviceSuccess() {
+
+    }
+
+    @Override
+    public void updateTokenDeviceFailure(String message) {
+
     }
 }

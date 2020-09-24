@@ -17,11 +17,13 @@ import android.widget.Toast;
 
 import com.demo.fmalc_android.R;
 import com.demo.fmalc_android.adapter.NotificationViewCardAdapter;
+import com.demo.fmalc_android.adapter.ScheduleViewCardAdapter;
 import com.demo.fmalc_android.contract.NotificationMobileContract;
 import com.demo.fmalc_android.entity.GlobalVariable;
 import com.demo.fmalc_android.entity.NotificationMobileResponse;
 import com.demo.fmalc_android.presenter.NotificationMobilePresenter;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +40,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     NotificationViewCardAdapter notificationViewCardAdapter;
     LinearLayout notificationLinearLayout;
     private GlobalVariable globalVariable;
-    List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
+    List<NotificationMobileResponse> notificationMobileResponseList = new ArrayList<>();
     List<NotificationMobileResponse> showData = new ArrayList<>();
     private boolean isLoading = false;
     int i = 0, nextLimit = 0;
@@ -84,8 +86,7 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     }
 
     private void getNotificationMobileResponseList(List<NotificationMobileResponse> notificationMobileResponses){
-        this.notificationMobileResponses = notificationMobileResponses;
-        this.notificationMobileResponses.sort(Comparator.comparing(a-> a.getTime(),Comparator.nullsLast(Comparator.naturalOrder())));
+        this.notificationMobileResponseList = notificationMobileResponses;
         Collections.reverse(notificationMobileResponses);
     }
 
@@ -95,9 +96,25 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     };
 
     @Override
-    public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponses) {
-        if ((notificationMobileResponses.size()>0)) {
-            getNotificationMobileResponseList(notificationMobileResponses);
+    public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponseList) {
+        List<ObjectToSort> objectToSortList = new ArrayList<>();
+
+        if ((notificationMobileResponseList.size() > 0)) {
+            notificationMobileResponseList.forEach(e -> {
+                objectToSortList.add(new ObjectToSort(e, e.getTime()));
+            });
+            objectToSortList.sort(Comparator.comparing(ObjectToSort::getTime));
+//            List<Schedule> finalScheduleList = scheduleList;
+//            objectToSortList.forEach(objectToSort -> {
+//               finalScheduleList.add(objectToSort.schedule);
+//            });
+            notificationMobileResponseList.removeAll(notificationMobileResponseList);
+            objectToSortList.forEach(objectToSort -> {
+                notificationMobileResponseList.add(objectToSort.getNotificationMobileResponse());
+            });
+//            getConsignmentList(finalScheduleList);
+            getNotificationMobileResponseList(notificationMobileResponseList);
+
             populateData();
 
             notificationViewCardAdapter = new NotificationViewCardAdapter(showData, getActivity(), globalVariable.getToken(), globalVariable.getId());
@@ -128,11 +145,11 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     private void populateData() {
         i = 0;
-        if (notificationMobileResponses.size() < 10){
-            showData = notificationMobileResponses;
+        if (notificationMobileResponseList.size() < 10){
+            showData = notificationMobileResponseList;
         }else{
             while (i < 10){
-                showData.add(notificationMobileResponses.get(i));
+                showData.add(notificationMobileResponseList.get(i));
                 i++;
             }
         }
@@ -179,14 +196,14 @@ public class NotificationFragment extends Fragment implements NotificationMobile
                 int scrollPosition = showData.size();
                 notificationViewCardAdapter.notifyItemRemoved(scrollPosition);
                 int currentSize = scrollPosition+1;
-                if (currentSize < notificationMobileResponses.size() - 4){
+                if (currentSize < notificationMobileResponseList.size() - 4){
                     nextLimit = currentSize + 4;
                 }else{
-                    nextLimit = notificationMobileResponses.size();
+                    nextLimit = notificationMobileResponseList.size();
                 }
 
                 while (currentSize - 1 < nextLimit) {
-                    showData.add(notificationMobileResponses.get(currentSize-1));
+                    showData.add(notificationMobileResponseList.get(currentSize-1));
                     currentSize++;
                 }
 
@@ -203,12 +220,10 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     }
 
-
-
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                notificationMobileResponses.clear();
+                notificationMobileResponseList.clear();
                 showData.clear();
                 List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
                 List<NotificationMobileResponse> showData = new ArrayList<>();
@@ -216,5 +231,31 @@ public class NotificationFragment extends Fragment implements NotificationMobile
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 800);
+    }
+
+    public class ObjectToSort {
+        NotificationMobileResponse notificationMobileResponse;
+        Timestamp time;
+
+        public ObjectToSort(NotificationMobileResponse notificationMobileResponse, Timestamp time) {
+            this.notificationMobileResponse = notificationMobileResponse;
+            this.time = time;
+        }
+
+        public NotificationMobileResponse getNotificationMobileResponse() {
+            return notificationMobileResponse;
+        }
+
+        public void setNotificationMobileResponse(NotificationMobileResponse notificationMobileResponse) {
+            this.notificationMobileResponse = notificationMobileResponse;
+        }
+
+        public Timestamp getTime() {
+            return time;
+        }
+
+        public void setTime(Timestamp time) {
+            this.time = time;
+        }
     }
 }
