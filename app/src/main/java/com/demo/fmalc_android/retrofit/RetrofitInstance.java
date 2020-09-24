@@ -14,14 +14,12 @@ public class RetrofitInstance {
 
     private static Retrofit retrofit;
     private static Gson gson;
-
-//<<<<<<< HEAD
+    
 //    private static final String BASE_URL = "http://192.168.1.158:8080/fmalc/";
-//=======
-    private static final String BASE_URL = "http://10.1.140.232:8080/fmalc/";
-//>>>>>>> 98cb23380787f585b4329362934b85d36df2016b
+
+//    private static final String BASE_URL = "http://10.1.149.213:8080/fmalc/";
 //    private static final String BASE_URL = "http://fmalc-env.eba-epptzq6v.ap-southeast-1.elasticbeanstalk.com/";
-//    private static final String BASE_URL = "http://api.fmalc.online/";
+    private static final String BASE_URL = "http://api.fmalc.online/";
 
     public static synchronized Retrofit getInstance() {
 
