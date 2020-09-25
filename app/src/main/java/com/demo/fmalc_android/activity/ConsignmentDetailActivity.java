@@ -143,11 +143,11 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
         sp = this.getSharedPreferences("logged", Context.MODE_PRIVATE);
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras();
             consignment_id = bundle.getInt("consignment_id");
             schedule_id = bundle.getInt("schedule_id");
-        }else{
+        } else {
             Intent intent = new Intent(this, DriverHomeActivity.class);
             startActivity(intent);
         }
@@ -294,15 +294,14 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     }
 
 
-
     @Override
     public void findByConsignmentIdSuccess(DetailedSchedule consignmentDetail) {
 //        consignmentDetail.get
 //        globalVariable.get
         this.consignmentDetail = consignmentDetail;
         scheduleTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
-        if (consignmentDetail.getScheduleId()!= null && (consignmentDetail.getScheduleId() == globalVariable.getIdScheduleNow())) {
-            if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))||
+        if (consignmentDetail.getScheduleId() != null && (consignmentDetail.getScheduleId() == globalVariable.getIdScheduleNow())) {
+            if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue())) ||
                     consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))
             ) {
 
@@ -321,15 +320,16 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                     }
 
                 }
-                if (globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size() && consignmentDetail.getStatus()!= ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())) {
-                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                if (globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size() && consignmentDetail.getStatus() != ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())) {
+                    btnTracking.setText("Ttt");
+//                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                     btnTracking.setClickable(true);
                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
                     btnTracking.setTextColor(Color.WHITE);
                     btnTracking.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+//                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                             final String[] content = new String[1];
                             editText = new EditText(ConsignmentDetailActivity.this);
                             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -344,60 +344,39 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     content[0] = editText.getText().toString();
-//<<<<<<< HEAD
-//                                    try{
-//                                        int km = Integer.parseInt(content[0]);
-//                                        if(km>0){
-//                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-//                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
-//                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
-//                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-//                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
-//                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-//                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-//                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-//                                            btnTracking.setClickable(false);
-//                                            btnTracking.setBackgroundColor(Color.GRAY);
-//                                            btnTracking.setTextColor(Color.WHITE);
-//                                            sweetAlertDialog.hide();
-//                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
-//                                        }else{
-//                                            Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }catch (Exception e){
-//                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
-//=======
-                                    if (!content[0].toString().trim().equals("")){
+
+                                    if (!content[0].toString().trim().equals("")) {
                                         int km = Integer.parseInt(content[0]);
-                                        if(km>0){
-                                            if (km > consignmentDetail.getKilometer_running()){
+                                        if (km > 0) {
+                                            if (km > consignmentDetail.getKilometer_running()) {
 
                                                 ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                                 listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
                                                 listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                 listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-                                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
+                                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
                                                 consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-                                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+
                                                 btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                                 btnTracking.setClickable(false);
                                                 btnTracking.setBackgroundColor(Color.GRAY);
                                                 btnTracking.setTextColor(Color.WHITE);
                                                 sweetAlertDialog.hide();
                                                 Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
-                                            }else{
+                                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                            } else {
                                                 new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
                                                         .setTitleText("Số km bạn nhập nhỏ hơn số km cũ")
                                                         .show();
                                             }
-                                        }else{
+                                        } else {
                                             Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                         }
-                                    }else {
+                                    } else {
                                         new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.WARNING_TYPE)
                                                 .setTitleText("Bạn chưa nhập số km hiện tại của xe")
                                                 .show();
-//>>>>>>> 7ddec5e6db89ef591e185941e65f62028f6edf5d
+
                                     }
                                 }
                             });
@@ -419,15 +398,15 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
                 } else if ((ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()).equals(consignmentDetail.getStatus())
-                        ||ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()).equals(consignmentDetail.getStatus())) && globalVariable.getIdSchedule()>0 && consignmentDetail.getScheduleId() == globalVariable.getIdSchedule()
+                        || ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()).equals(consignmentDetail.getStatus())) && globalVariable.getIdSchedule() > 0 && consignmentDetail.getScheduleId() == globalVariable.getIdSchedule()
                 ) {
-                    if(globalVariable.getPlaces() != null && consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size() ){
+                    if (globalVariable.getPlaces() != null && consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size()) {
 
-                    }else{
-                        btnTracking.setText(consignmentDetail.getStatus());
-                        btnTracking.setClickable(false);
-                        btnTracking.setBackgroundColor(Color.GRAY);
-                        btnTracking.setTextColor(Color.WHITE);
+                    } else {
+//                        btnTracking.setText(consignmentDetail.getStatus());
+//                        btnTracking.setClickable(false);
+//                        btnTracking.setBackgroundColor(Color.GRAY);
+//                        btnTracking.setTextColor(Color.WHITE);
                     }
 
                 }
@@ -469,7 +448,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                     btnTracking.setBackgroundColor(Color.GRAY);
                     btnTracking.setTextColor(Color.WHITE);
                 }
-            }else {
+            } else {
 
                 detailedSchedulePresenter.getScheduleRunningForDriver(globalVariable.getId());
                 scheduleTimeStepAdapter = new ScheduleTimeStepAdapter(consignmentDetail.getPlaces(), this);
@@ -482,14 +461,14 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
                 } else {
-                   if( globalVariable.getPlaces() != null && consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size()){
+                    if (globalVariable.getPlaces() != null && consignmentDetail.getPlaces().size() == globalVariable.getPlaces().size()) {
 
-                   }else{
-                       btnTracking.setText(consignmentDetail.getStatus());
-                       btnTracking.setClickable(false);
-                       btnTracking.setBackgroundColor(Color.GRAY);
-                       btnTracking.setTextColor(Color.WHITE);
-                   }
+                    } else {
+                        btnTracking.setText(consignmentDetail.getStatus());
+                        btnTracking.setClickable(false);
+                        btnTracking.setBackgroundColor(Color.GRAY);
+                        btnTracking.setTextColor(Color.WHITE);
+                    }
                 }
                 btnNote.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
@@ -513,7 +492,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                 globalVariable.getPlaces().add(consignmentDetail.getPlaces().get(i));
                             }
                         }
-                        if ( globalVariable.getPlaces() != null && globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()) {
+                        if (globalVariable.getPlaces() != null && globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()) {
 
                         }
                     }
@@ -529,22 +508,22 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }
             }
 
-        } else if (  globalVariable.getIdSchedule() > 0) {
+        } else if (globalVariable.getIdSchedule() > 0) {
             globalVariable.setConsignmentDetail(consignmentDetail);
 
             consignmentDetailPresenter.getVehicleDetailByLicense(consignmentDetail.getLicensePlates());
             if (ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.WAITING.getValue()).equals(consignmentDetail.getStatus())) {
 
             } else {
-               if(globalVariable.getPlaces() != null && globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()){
+                if (globalVariable.getPlaces() != null && globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()) {
 //                 if()
-                    if(!consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))&& consignmentDetail.getScheduleId()==globalVariable.getIdSchedule()){
+                    if (!consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())) && consignmentDetail.getScheduleId() == globalVariable.getIdSchedule()) {
                         btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                         btnTracking.setClickable(true);
                         btnTracking.setBackgroundColor(Color.GREEN);
                         btnTracking.setTextColor(Color.WHITE);
                     }
-                }else{
+                } else {
                     btnTracking.setText(consignmentDetail.getStatus());
                     btnTracking.setClickable(false);
                     btnTracking.setBackgroundColor(Color.GRAY);
@@ -592,9 +571,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
         btnNote.setEnabled(false);
         btnLocationConsignment.setEnabled(false);
         btnTracking.setEnabled(false);
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText(message)
-                .show();
+//        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+//                .setTitleText(message)
+//                .show();
     }
 
 
@@ -632,9 +611,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void updateActualTimeSuccess(Place place) {
-        if(consignmentDetail.getStatus()!=ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())){
+        if (consignmentDetail.getStatus() != ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())) {
 
-        }else{
+        } else {
             Toast.makeText(this, "Bạn sắp đến " + place.getAddress(), Toast.LENGTH_SHORT).show();
         }
 
@@ -685,7 +664,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void getFirstConsignmentSuccess(int idConsignment) {
-        if(idConsignment != consignment_id){
+        if (idConsignment != consignment_id) {
             btnTracking.setClickable(false);
             btnTracking.setBackgroundColor(Color.GRAY);
             btnTracking.setTextColor(Color.WHITE);
@@ -722,20 +701,20 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
     }
 
     private void duration(Location location) throws IOException, ExecutionException, InterruptedException {
-        if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()){
-           if(consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))){
-               ListStatusUpdate checkStatus = new ListStatusUpdate();
-               checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
-               checkStatus.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
-               checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-               detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
-           }else if(consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))){
+        if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()) {
+            if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))) {
+                ListStatusUpdate checkStatus = new ListStatusUpdate();
+                checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                checkStatus.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
+                checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+            } else if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))) {
                 ListStatusUpdate checkStatus = new ListStatusUpdate();
                 checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                 checkStatus.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
                 checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
                 detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
-           }
+            }
         }
 //        System.out.println("Cũng vô");
         Place place = new Place();
@@ -761,20 +740,21 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }
                 if (place.getType() != null) {
 //                     = -1;
-                    int me =-1;
-                    try{
+                    int me = -1;
+                    try {
                         LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
                         LatLng destination = new LatLng(place.getLatitude(), place.getLongitude());
                         String s = new FetchURL(ConsignmentDetailActivity.this, DISTANCE_MATRIX).execute(getUrl(origin, destination, MODE_DRIVING), MODE_DRIVING).get();
-                        if(s!=null){
+                        if (s != null) {
                             me = new DistanceParse(ConsignmentDetailActivity.this, MODE_DRIVING).execute(s).get();
                         }
-                    }catch (Exception e){
-                            me=-1;
+                    } catch (Exception e) {
+                        me = -1;
                     }
 
 //                    System.out.println("VALUEEEE" + me);
                     if (place.getType() == 1) {
+                        System.out.println("-------------------" + globalVariable.getPlaces().size() + " - " + places.size());
                         if (place.getActualTime() != null) {
                             globalVariable.getPlaces().add(place);
                         }
@@ -784,7 +764,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                         } else if (me >= 0 && me <= 500 && !globalVariable.getPlaces().contains(places.get(i))) {
                             if (i < places.size() - 1 && places.get(i + 1).getType() == 0) {
                                 if (globalVariable.getIdScheduleNow() == globalVariable.getConsignmentDetail().getScheduleId()) {
-
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.GRAY);
@@ -802,15 +781,24 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+//                                    consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 }
 
 
-                            } else if ( (!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
-                                System.out.println(places.get(0).getAddress() + "------------");
+                            }
+                            else if ((!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
+                                System.out.println(places.get(i).getAddress() + "------------");
+                                ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                                listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
+                                listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
+                                consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
+                                globalVariable.getPlaces().add(places.get(i));
+//                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule() && globalVariable.getPlaces().size() == places.size()) {
 
-                                if (globalVariable.getIdScheduleNow() == globalVariable.getConsignmentDetail().getScheduleId() && i == places.size()-1) {
-                                    consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
-                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                    btnTracking.setText("OK");
                                     btnTracking.setClickable(true);
                                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
                                     btnTracking.setTextColor(Color.WHITE);
@@ -831,26 +819,27 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                 @Override
                                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                                     content[0] = editText.getText().toString();
-                                                    try{
+                                                    try {
                                                         int km = Integer.parseInt(content[0]);
-                                                        if(km>0){
+                                                        if (km > 0) {
                                                             ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                                             listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
                                                             listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                             listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-                                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
+                                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
                                                             consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-                                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+
                                                             btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                                             btnTracking.setClickable(false);
                                                             btnTracking.setBackgroundColor(Color.GRAY);
                                                             btnTracking.setTextColor(Color.WHITE);
                                                             sweetAlertDialog.hide();
                                                             Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
-                                                        }else{
+                                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                                        } else {
                                                             Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                                         }
-                                                    }catch (Exception e){
+                                                    } catch (Exception e) {
                                                         Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
@@ -861,12 +850,12 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                         }
 
                                     });
-                                }else if(places.get(i + 1).getType() == 1){
+                                } else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 1) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
                                     btnTracking.setTextColor(Color.WHITE);
-                                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+//                                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
                                     listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
@@ -874,24 +863,150 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
 //                                    btnTracking.setOnClickListener(new View.OnClickListener() {
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                } else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 0) {
+                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
+                                    btnTracking.setClickable(false);
+                                    btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
+                                    btnTracking.setTextColor(Color.WHITE);
+//                                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                    listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                                    listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
+                                    listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                                    detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
+                                    consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
+//                                    btnTracking.setOnClickListener(new View.OnClickListener() {
+                                    consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 }
+                                else if (places.size() == globalVariable.getPlaces().size()) {
+                                    btnTracking.setText("BBBBB");
+//                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                    btnTracking.setClickable(true);
+                                    btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
+                                    btnTracking.setTextColor(Color.WHITE);
+                                    btnTracking.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                            final String[] content = new String[1];
+                                            editText = new EditText(ConsignmentDetailActivity.this);
+                                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                            editText.setTextColor(Color.BLACK);
+                                            editText.setPadding(20, 0, 20, 0);
+                                            sweetAlertDialog = new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                                            sweetAlertDialog.setTitleText("Số km hiện tại");
+                                            sweetAlertDialog.setConfirmText("Hoàn thành");
+                                            sweetAlertDialog.setCustomView(editText);
+                                            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    content[0] = editText.getText().toString();
+                                                    try {
+                                                        int km = Integer.parseInt(content[0]);
+                                                        if (km > 0) {
+                                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
+                                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
 
+                                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                                            btnTracking.setClickable(false);
+                                                            btnTracking.setBackgroundColor(Color.GRAY);
+                                                            btnTracking.setTextColor(Color.WHITE);
+                                                            sweetAlertDialog.hide();
+                                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                                        } else {
+                                                            Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (Exception e) {
+                                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+
+                                            sweetAlertDialog.show();
+                                        }
+
+                                    });
+                                }
                             }
+                            else if ((globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
+                                if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule() && globalVariable.getPlaces().size() == places.size()) {
+//                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                    btnTracking.setText("ZZZ");
+                                    btnTracking.setClickable(true);
+                                    btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
+                                    btnTracking.setTextColor(Color.WHITE);
+                                    btnTracking.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                            final String[] content = new String[1];
+                                            editText = new EditText(ConsignmentDetailActivity.this);
+                                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                            editText.setTextColor(Color.BLACK);
+                                            editText.setPadding(20, 0, 20, 0);
+                                            sweetAlertDialog = new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                                            sweetAlertDialog.setTitleText("Số km hiện tại");
+                                            sweetAlertDialog.setConfirmText("Hoàn thành");
+                                            sweetAlertDialog.setCustomView(editText);
+                                            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    content[0] = editText.getText().toString();
+                                                    try {
+                                                        int km = Integer.parseInt(content[0]);
+                                                        if (km > 0) {
+                                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
+                                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+                                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                                            btnTracking.setClickable(false);
+                                                            btnTracking.setBackgroundColor(Color.GRAY);
+                                                            btnTracking.setTextColor(Color.WHITE);
+                                                            sweetAlertDialog.hide();
+                                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                                        } else {
+                                                            Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (Exception e) {
+                                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+
+                                            sweetAlertDialog.show();
+                                        }
+
+                                    });
+                                }
+                            }
+
                         }
-                    } else if (0 <= me && me <= 500 && place.getType() == 0) {
+                    }
+                    else if (0 <= me && me <= 500 && place.getType() == 0) {
 //                        System.out.println(places.get(0).getAddress() + "------------");
                         if (place.getActualTime() != null) {
                             globalVariable.getPlaces().add(place);
                         }
-                        if ( !globalVariable.getPlaces().contains(places.get(i))) {
-                            if (places.size() - 1 > i && places.get(1).getType() == 1) {
+                        if (!globalVariable.getPlaces().contains(places.get(i))) {
+                            if (places.size() - 1 > i && places.get(i + 1).getType() == 1) {
 //                                System.out.println(places.get(0).getAddress() + "------------");
 
-                                if (globalVariable.getIdScheduleNow() == globalVariable.getConsignmentDetail().getScheduleId()) {
+                                if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.GRAY);
                                     btnTracking.setTextColor(Color.WHITE);
+
                                 }
                                 if (!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() == null) {
                                     globalVariable.getPlaces().add(places.get(i));
@@ -903,7 +1018,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 }
-                            }else if(places.size() - 1 > i && places.get(i+1).getType() == 0){
+                            }
+                            else if (places.size() - 1 > i && places.get(i + 1).getType() == 0) {
                                 if (globalVariable.getIdScheduleNow() == globalVariable.getConsignmentDetail().getScheduleId()) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
                                     btnTracking.setClickable(false);
@@ -969,26 +1085,26 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 if (numOfConsignmentInDay == 0) {
 //                    System.out.println("Heen");
                     int me = -1;
-                    try{
+                    try {
                         LatLng destination = new LatLng(latitudePark, longitudePark);
                         LatLng origin = new LatLng(location.getLatitude(), location.getLongitude());
                         String s = new FetchURL(ConsignmentDetailActivity.this, DISTANCE_MATRIX).execute(getUrl(origin, destination, MODE_DRIVING), MODE_DRIVING).get();
-                        if(s!=null){
+                        if (s != null) {
                             me = new DistanceParse(ConsignmentDetailActivity.this, MODE_DRIVING).execute(s).get();
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
-                    if (me>0 && me <= 100) {
+                    if (me > 0 && me <= 100) {
                         consignmentDetailPresenter.stopTracking(vehicleDetail.getId());
                         globalVariable.setIdSchedule(DEFAULT_SCHEDULE_ID);
-                    } else if (me>0 && DISTANCE_PARKING == 0) {
+                    } else if (me > 0 && DISTANCE_PARKING == 0) {
                         DISTANCE_PARKING = me;
                         timeToBackParking = System.currentTimeMillis();
-                    } else if (me>0 && DISTANCE_PARKING > me) {
+                    } else if (me > 0 && DISTANCE_PARKING > me) {
                         DISTANCE_PARKING = me;
                         timeToBackParking = System.currentTimeMillis();
-                    } else if ( me>0 &&  DISTANCE_PARKING <= me) {
+                    } else if (me > 0 && DISTANCE_PARKING <= me) {
                         if (((System.currentTimeMillis() - timeToBackParking) / (interval)) >= 1) {
                             Notification notification = new Notification();
                             notification.setVehicle_id(vehicleDetail.getId());
@@ -1037,16 +1153,91 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void updateConsDriVehSuccess(ListStatusUpdate statusUpdate) {
-        if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.COMPLETED.getValue()) {
-            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
-        } else if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.DELIVERING.getValue()) {
-            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
-        } else if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.OBTAINING.getValue()) {
-            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
+        if(globalVariable.getPlaces().size() == consignmentDetail.getPlaces().size()){
+//            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+            btnTracking.setText("PPPP");
+            btnTracking.setClickable(true);
+            btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
+            btnTracking.setTextColor(Color.WHITE);
+            btnTracking.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                    final String[] content = new String[1];
+                    editText = new EditText(ConsignmentDetailActivity.this);
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    editText.setTextColor(Color.BLACK);
+                    editText.setPadding(20, 0, 20, 0);
+                    sweetAlertDialog = new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                    sweetAlertDialog.setTitleText("Số km hiện tại");
+                    sweetAlertDialog.setConfirmText("Hoàn thành");
+                    sweetAlertDialog.setCustomView(editText);
+                    sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            content[0] = editText.getText().toString();
+                            try {
+                                int km = Integer.parseInt(content[0]);
+                                if (km > 0) {
+                                    ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                    listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                    listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                    listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                    detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
+                                    consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+
+                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                    btnTracking.setClickable(false);
+                                    btnTracking.setBackgroundColor(Color.GRAY);
+                                    btnTracking.setTextColor(Color.WHITE);
+                                    sweetAlertDialog.hide();
+                                    Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                    consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                } else {
+                                    Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+                    sweetAlertDialog.show();
+                }
+
+            });
+        }else{
+            if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.COMPLETED.getValue()) {
+                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
+            }
+
+            else if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.DELIVERING.getValue()) {
+                if( consignmentDetail.getPlaces().get(globalVariable.getPlaces().size()).getType() ==1){
+                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
+                }else{
+                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
+                }
+                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
+            } else if (statusUpdate.getConsignment_status() == ConsignmentStatusEnum.OBTAINING.getValue()) {
+                if(globalVariable.getPlaces().size()>0){
+                    if( consignmentDetail.getPlaces().get(globalVariable.getPlaces().size()).getType() ==1){
+                        btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
+                    }else{
+                        btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
+                    }
+                }else{
+                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(statusUpdate.getConsignment_status()));
+                }
+//
+            }
+            btnTracking.setClickable(false);
+            btnTracking.setBackgroundColor(Color.GRAY);
+            btnTracking.setTextColor(Color.WHITE);
         }
-        btnTracking.setClickable(false);
-        btnTracking.setBackgroundColor(Color.GRAY);
-        btnTracking.setTextColor(Color.WHITE);
+
+
+
 
     }
 
@@ -1064,7 +1255,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 btnTracking.setClickable(false);
                 btnTracking.setBackgroundColor(Color.GRAY);
                 btnTracking.setTextColor(Color.WHITE);
-            } else if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue())) ) {
+            } else if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))) {
                 btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                 btnTracking.setClickable(false);
                 btnTracking.setBackgroundColor(Color.GRAY);
@@ -1114,65 +1305,68 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                     }
                 }
                 if (globalVariable.getPlaces().size() == detailedSchedule.getPlaces().size()) {
-                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+//                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                    btnTracking.setText("ooooo");
                     if (detailedSchedule.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))) {
                         btnTracking.setClickable(false);
                     } else {
                         btnTracking.setClickable(true);
-                    }
+                        btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
+                        btnTracking.setTextColor(Color.WHITE);
+                        btnTracking.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                final String[] content = new String[1];
+                                editText = new EditText(ConsignmentDetailActivity.this);
+                                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                editText.setTextColor(Color.BLACK);
+                                editText.setPadding(20, 0, 20, 0);
+                                sweetAlertDialog = new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                                sweetAlertDialog.setTitleText("Số km hiện tại");
+                                sweetAlertDialog.setConfirmText("Hoàn thành");
+                                sweetAlertDialog.setCustomView(editText);
+                                sweetAlertDialog.show();
+                                sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        content[0] = editText.getText().toString();
+                                        try {
+                                            int km = Integer.parseInt(content[0]);
+                                            if (km > 0) {
+                                                ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
+                                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
+                                                listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
+                                                detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
+                                                consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
 
-                    btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
-                    btnTracking.setTextColor(Color.WHITE);
-                    btnTracking.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                            final String[] content = new String[1];
-                            editText = new EditText(ConsignmentDetailActivity.this);
-                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                            editText.setTextColor(Color.BLACK);
-                            editText.setPadding(20, 0, 20, 0);
-                            sweetAlertDialog = new SweetAlertDialog(ConsignmentDetailActivity.this, SweetAlertDialog.NORMAL_TYPE);
-                            sweetAlertDialog.setTitleText("Số km hiện tại");
-                            sweetAlertDialog.setConfirmText("Hoàn thành");
-                            sweetAlertDialog.setCustomView(editText);
-                            sweetAlertDialog.show();
-                            sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    content[0] = editText.getText().toString();
-                                    try{
-                                        int km = Integer.parseInt(content[0]);
-                                        if(km>0){
-                                            ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
-                                            listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
-                                            listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-                                            detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getConsignmentDetail().getScheduleId());
-                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
-                                            consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-                                            btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
-                                            btnTracking.setClickable(false);
-                                            btnTracking.setBackgroundColor(Color.GRAY);
-                                            btnTracking.setTextColor(Color.WHITE);
-                                            sweetAlertDialog.hide();
-                                            Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
-                                        }else{
+                                                btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
+                                                btnTracking.setClickable(false);
+                                                btnTracking.setBackgroundColor(Color.GRAY);
+                                                btnTracking.setTextColor(Color.WHITE);
+                                                sweetAlertDialog.hide();
+                                                Toast.makeText(ConsignmentDetailActivity.this, "Bạn đã hoàn thành lô hàng", Toast.LENGTH_SHORT).show();
+                                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+                                            } else {
+                                                Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                            }
+                                        } catch (Exception e) {
                                             Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
                                         }
-                                    }catch (Exception e){
-                                        Toast.makeText(ConsignmentDetailActivity.this, "Vui lòng nhập số km lớn hơn 0", Toast.LENGTH_SHORT).show();
+
+
                                     }
+                                });
 
 
-                                }
-                            });
-
-
-                        }
+                            }
 
 //                        }
-                    });
+                        });
+                    }
+
+
                 }
 
                 if (globalVariable.getIdSchedule() > 0) {
