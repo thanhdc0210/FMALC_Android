@@ -723,11 +723,19 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     private void duration(Location location) throws IOException, ExecutionException, InterruptedException {
         if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()){
-            ListStatusUpdate checkStatus = new ListStatusUpdate();
-            checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
-//        listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
-            checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-            detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+           if(consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))){
+               ListStatusUpdate checkStatus = new ListStatusUpdate();
+               checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+               checkStatus.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
+               checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+               detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+           }else if(consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))){
+                ListStatusUpdate checkStatus = new ListStatusUpdate();
+                checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                checkStatus.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
+                checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+           }
         }
 //        System.out.println("Cũng vô");
         Place place = new Place();
