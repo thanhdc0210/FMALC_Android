@@ -25,8 +25,10 @@ import com.demo.fmalc_android.enumType.ConsignmentStatusEnum;
 import com.demo.fmalc_android.presenter.FuelPresenter;
 import com.demo.fmalc_android.presenter.FuelTypePresenter;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -113,7 +115,7 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
                         if(!s.toString().isEmpty()) {
                             Double volume = Double.valueOf(s.toString());
                             totalPrice = volume * fuelTypeCurrent.getPrice();
-                            txtTotalPrice.setText(totalPrice + " VNĐ");
+                            txtTotalPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice )+ " VNĐ");
                         } else {
                             txtTotalPrice.setText(0 + " VNĐ");
                         }
@@ -179,11 +181,16 @@ public class FillingFuelActivity extends AppCompatActivity implements FuelTypeCo
 
     @Override
     public void saveFuelFillingSuccess(String mes) {
-        new SweetAlertDialog(FillingFuelActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+        new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                 .setTitleText("Lưu thành công")
                 .setContentText("Thông tin đổ xăng của bạn đã được ghi nhận")
+                .setConfirmButton("Trở về", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        onBackPressed();
+                    }
+                })
                 .show();
-        onBackPressed();
     }
 
     @Override
