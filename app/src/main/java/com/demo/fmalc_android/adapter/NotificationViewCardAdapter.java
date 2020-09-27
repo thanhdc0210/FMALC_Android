@@ -168,17 +168,17 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
 //        }
 
         else if (diffDays < 0){
-            s = Math.abs(diffDays) + " ngày trước ";
+            s += Math.abs(diffDays) + " ngày trước ";
             holder.txtTime.setText(s);
         }
 
         else if (diffHours < 0){
-            s = Math.abs(diffHours) + " giờ trước ";
+            s += Math.abs(diffHours) + " giờ trước ";
             holder.txtTime.setText(s);
         }
 
         else if (diffMinutes < 0){
-            s = Math.abs(diffMinutes) + " phút trước ";
+            s += Math.abs(diffMinutes) + " phút trước ";
             holder.txtTime.setText(s);
         }
         holder.txtContent.setText(notificationMobileResponse.getContent());
