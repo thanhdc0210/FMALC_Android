@@ -97,6 +97,8 @@ public class NotificationFragment extends Fragment implements NotificationMobile
 
     @Override
     public void findNotificationByUsernameSuccess(List<NotificationMobileResponse> notificationMobileResponseList) {
+        this.notificationMobileResponseList.clear();
+        this.showData.clear();
         List<ObjectToSort> objectToSortList = new ArrayList<>();
 
         if ((notificationMobileResponseList.size() > 0)) {
@@ -223,10 +225,10 @@ public class NotificationFragment extends Fragment implements NotificationMobile
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                notificationMobileResponseList.clear();
-                showData.clear();
-                List<NotificationMobileResponse> notificationMobileResponses = new ArrayList<>();
-                List<NotificationMobileResponse> showData = new ArrayList<>();
+//                List<NotificationMobileResponse> list = new ArrayList<>();
+//                list = notificationMobileResponseList;
+//                notificationMobileResponseList.clear();
+//                showData.clear();
                 notificationMobilePresenter.findNotificationByUsername(globalVariable.getUsername(), globalVariable.getToken());
                 swipeRefreshLayout.setRefreshing(false);
             }

@@ -154,10 +154,9 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
         int diffDays = (int) diff / (24 * 60 * 60 * 1000);
         int diffHours = (int) diff / (60 * 60 *1000) % 24;
         int diffMinutes = (int) diff / ( 60 * 1000) % 60 % 24;
-
         String s = "";
 
-        if (diff == 0){
+        if (-1000*60 < diff && diff <= 0){
             s += " 1 phút trước";
             holder.txtTime.setText(s);
         }
@@ -228,6 +227,10 @@ public class NotificationViewCardAdapter extends RecyclerView.Adapter<RecyclerVi
             public void onClick(View view) {
                 holder.notificationItemLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 notificationMobilePresenter.updateStatus(notificationMobileResponse.getNotificationId(), notificationMobileResponse.getUsername(), auth);
+                NotificationMobileResponse notificationMobileResponse1 = notificationMobileResponses.get(position);
+                notificationMobileResponse1.setStatus(true);
+                notificationMobileResponses.set(position, notificationMobileResponse1);
+                notifyItemChanged(position);
                 switch (type){
                     case 3:
                             String subString[] = notificationMobileResponse.getContent().split("#");
