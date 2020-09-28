@@ -474,12 +474,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     @Override
     public void updatePlannedTimeFailed(String responseBody) {
-//        ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-//        listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
-//        listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
-//        listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
-//        detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
-//        consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
+
 
     }
 
@@ -543,18 +538,20 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
     private void duration(Location location) throws IOException, ExecutionException, InterruptedException {
         if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule()) {
-            if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))) {
-                ListStatusUpdate checkStatus = new ListStatusUpdate();
-                checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
-                checkStatus.setConsignment_status(-1);
-                checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-                detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
-            } else if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))) {
-                ListStatusUpdate checkStatus = new ListStatusUpdate();
-                checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
-                checkStatus.setConsignment_status(-1);
-                checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
-                detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+            if(!consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()))){
+                if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()))) {
+                    ListStatusUpdate checkStatus = new ListStatusUpdate();
+                    checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                    checkStatus.setConsignment_status(-1);
+                    checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                    detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+                } else if (consignmentDetail.getStatus().equals(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()))) {
+                    ListStatusUpdate checkStatus = new ListStatusUpdate();
+                    checkStatus.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
+                    checkStatus.setConsignment_status(-1);
+                    checkStatus.setDriver_status(DriverStatusEnum.RUNNING.getValue());
+                    detailedSchedulePresenter.updateConsDriVeh(checkStatus, consignmentDetail.getScheduleId());
+                }
             }
         }
 //        System.out.println("Cũng vô");
@@ -934,7 +931,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                             notification.setType(NotificationTypeEnum.ODD_HOURS_ALERTS.getValue());
                             notification.setContent("Xe biển số :" + vehicleDetail.getLicensePlates() + " " + NotificationTypeEnum.getValueEnumToShow(NotificationTypeEnum.ODD_HOURS_ALERTS.getValue()) + " tại: " + locationTemp);
                             consignmentDetailPresenter.sendNotification(notification);
-//                            System.out.println("Chạy ngoài giờ làm việc");
                             timeToBackParking = System.currentTimeMillis();
                         }
                     }
@@ -950,7 +946,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 latLng.setTime(sdf.format(new Date()));
                 latLng.setSchedule(globalVariable.getIdSchedule()); //id consignment
                 latLng.setAddress(locationTemp);
-//                System.out.println("Vooooooooooooooooooooooooooo " + locationTemp);
                 consignmentDetailPresenter.trackingLocation(latLng);
                 startTie = System.currentTimeMillis();
             } else {
