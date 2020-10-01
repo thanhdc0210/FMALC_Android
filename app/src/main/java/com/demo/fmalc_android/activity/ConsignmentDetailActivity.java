@@ -343,7 +343,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     int km = Integer.parseInt(content[0]);
                                     if (km > 0) {
                                         ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                        listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                        listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                         listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                         listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                         detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, consignmentDetail.getScheduleId());
@@ -582,7 +582,6 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                     } catch (Exception e) {
                         me = -1;
                     }
-
                     if (place.getType() == 1) {
                         System.out.println("-------------------" + globalVariable.getPlaces().size() + " - " + places.size());
                         if (place.getActualTime() != null) {
@@ -649,7 +648,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                         int km = Integer.parseInt(content[0]);
                                                         if (km > 0) {
                                                             ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                                             listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                             listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                                             detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
@@ -729,7 +728,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                         int km = Integer.parseInt(content[0]);
                                                         if (km > 0) {
                                                             ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                                             listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                             listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                                             detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
@@ -784,7 +783,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                         int km = Integer.parseInt(content[0]);
                                                         if (km > 0) {
                                                             ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                            listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                                             listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                             listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                                             detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
@@ -1096,7 +1095,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                             int km = Integer.parseInt(content[0]);
                                             if (km > 0) {
                                                 ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
-                                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.AVAILABLE.getValue());
+                                                listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                                 listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                 listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                                 detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
