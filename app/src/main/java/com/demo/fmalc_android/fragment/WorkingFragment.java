@@ -100,6 +100,10 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
 
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
+        
+        this.scheduleList.clear();
+        this.showData.clear();
+
         if (scheduleList.size() == 0){
             emptyTxt.setVisibility(View.VISIBLE);
             consignmentRecyclerView.setVisibility(View.INVISIBLE);
@@ -205,8 +209,8 @@ public class WorkingFragment extends Fragment implements ScheduleContract.View {
     private void refreshList(){
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
-                scheduleList.clear();
-                showData.clear();
+//                scheduleList.clear();
+//                showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(ConsignmentStatusEnum.DELIVERING.getValue());
                 status.add(ConsignmentStatusEnum.OBTAINING.getValue());

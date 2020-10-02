@@ -101,6 +101,9 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
     @Override
     public void findByConsignmentStatusAndUsernameForSuccess(List<Schedule> scheduleList) {
 
+        this.scheduleList.clear();
+        this.showData.clear();
+
         List<ObjectToSort> objectToSortList = new ArrayList<>();
 
         if (scheduleList.size() == 0){
@@ -229,8 +232,8 @@ public class PrepareFragment extends Fragment implements ScheduleContract.View {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                scheduleList.clear();
-                showData.clear();
+//                scheduleList.clear();
+//                showData.clear();
                 List<Integer> status = new ArrayList<>();
                 status.add(ConsignmentStatusEnum.WAITING.getValue());
                 schedulePresenter.findByConsignmentStatusAndUsername(status, globalVariable.getUsername(), globalVariable.getToken());
