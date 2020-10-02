@@ -57,6 +57,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -311,7 +312,10 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 for (Place place : places) {
                     if (place.getActualTime() != null) {
                         if(!globalVariable.getPlaces().contains(place)){
-                            globalVariable.getPlaces().add(place);
+                            if(place.getActualTime()!=null){
+                                globalVariable.getPlaces().add(place);
+                            }
+
                         }
                     }
                 }
@@ -374,7 +378,10 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                 }else{
                     globalVariable.setIdSchedule(consignmentDetail.getScheduleId());
                     if (globalVariable.getPlaces() != null && globalVariable.getPlaces().size() > 0) {
-                        globalVariable.getPlaces().sort((Place p1, Place p2) -> (p1.getActualTime().compareTo(p2.getActualTime())));
+                       if(globalVariable.getPlaces().size()>1){
+//                           for(int  i =0; i< globalVariable.getPlaces().size();)
+                           globalVariable.getPlaces().sort((Place p1, Place p2) -> (p1.getActualTime().compareTo(p2.getActualTime())));
+                       }
                         if (places.get(globalVariable.getPlaces().size() - 1).getType() == 0) {
                             btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
                         } else {
@@ -593,7 +600,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                             if (i < places.size() - 1 && places.get(i + 1).getType() == 0) {
 
                                 if (!globalVariable.getPlaces().contains(places.get(i)) && places.get(i).getActualTime() == null) {
-                                    globalVariable.getPlaces().add(places.get(places.size() - 1));
+                                   if(places.get(i).getActualTime()!=null){
+                                       globalVariable.getPlaces().add(places.get(places.size() - 1));
+                                   }
                                     ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
@@ -608,11 +617,15 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.GRAY);
                                     btnTracking.setTextColor(Color.WHITE);
-                                    globalVariable.getPlaces().add(places.get(i));
+                                    if(places.get(i).getActualTime()!=null){
+                                        globalVariable.getPlaces().add(places.get(i));
+                                    }
+
                                 }
 
 
-                            } else if ((!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
+                            }
+                            else if ((!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
                                 System.out.println(places.get(i).getAddress() + "------------");
                                 ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                 listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
@@ -620,10 +633,17 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                 listStatusUpdate.setDriver_status(DriverStatusEnum.RUNNING.getValue());
                                 detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
                                 consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
-                                globalVariable.getPlaces().add(places.get(i));
+                                if(places.get(i).getActualTime()!=null){
+                                    globalVariable.getPlaces().add(places.get(i));
+                                }
+                                Place place1 = places.get(i);
+                                Date date = new Date();
+                                Timestamp ts=new Timestamp(date.getTime());
+                                place1.setActualTime(ts);
+                                globalVariable.getPlaces().add(place1);
 //                                consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
                                 if (consignmentDetail.getScheduleId() == globalVariable.getIdSchedule() && globalVariable.getPlaces().size() == places.size()) {
-                                    btnTracking.setText("OK");
+                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                     btnTracking.setClickable(true);
                                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
                                     btnTracking.setTextColor(Color.WHITE);
@@ -652,7 +672,7 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                                             listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.COMPLETED.getValue());
                                                             listStatusUpdate.setDriver_status(DriverStatusEnum.AVAILABLE.getValue());
                                                             detailedSchedulePresenter.updateConsDriVeh(listStatusUpdate, globalVariable.getIdSchedule());
-                                                            consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
+                                                                    consignmentDetailPresenter.updatePlannedTime(vehicleDetail.getId(), km);
 
                                                             btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                                             btnTracking.setClickable(false);
@@ -675,7 +695,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                         }
 
                                     });
-                                } else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 1) {
+                                }
+                                else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 1) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.DELIVERING.getValue()));
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
@@ -688,7 +709,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
 //                                    btnTracking.setOnClickListener(new View.OnClickListener() {
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-                                } else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 0) {
+                                }
+                                else if (places.size() > globalVariable.getPlaces().size() && places.get(i + 1).getType() == 0) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.OBTAINING.getValue()));
                                     btnTracking.setClickable(false);
                                     btnTracking.setBackgroundColor(Color.rgb(91, 202, 96));
@@ -701,7 +723,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     consignmentDetailPresenter.updateActualTime(places.get(i).getId(), globalVariable.getIdSchedule());
 //                                    btnTracking.setOnClickListener(new View.OnClickListener() {
                                     consignmentDetailPresenter.findByConsignmentId(globalVariable.getIdSchedule());
-                                } else if (places.size() == globalVariable.getPlaces().size()) {
+                                }
+                                else if (places.size() == globalVariable.getPlaces().size()) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
 //                                    btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                     btnTracking.setClickable(true);
@@ -756,7 +779,8 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
 
                                     });
                                 }
-                            } else if ((globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
+                            }
+                            else if ((globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() != null)) {
                                 if (globalVariable.getIdScheduleNow() == globalVariable.getIdSchedule() && globalVariable.getPlaces().size() == places.size()) {
                                     btnTracking.setText(ConsignmentStatusEnum.getValueEnumToShow(ConsignmentStatusEnum.COMPLETED.getValue()));
                                     btnTracking.setClickable(true);
@@ -820,7 +844,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                         if (!globalVariable.getPlaces().contains(places.get(i))) {
                             if (places.size() - 1 > i && places.get(i + 1).getType() == 1) {
                                 if (!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() == null) {
-                                    globalVariable.getPlaces().add(places.get(i));
+                                    if(places.get(i).getActualTime()!=null){
+                                        globalVariable.getPlaces().add(places.get(i));
+                                    }
                                     ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.DELIVERING.getValue());
@@ -844,7 +870,9 @@ public class ConsignmentDetailActivity extends AppCompatActivity implements Task
                                     btnTracking.setTextColor(Color.WHITE);
                                 }
                                 if (!globalVariable.getPlaces().contains(places.get(i)) || places.get(i).getActualTime() == null) {
-                                    globalVariable.getPlaces().add(places.get(i));
+                                    if(places.get(i).getActualTime()!=null){
+                                        globalVariable.getPlaces().add(places.get(i));
+                                    }
                                     ListStatusUpdate listStatusUpdate = new ListStatusUpdate();
                                     listStatusUpdate.setVehicle_status(VehicleStatusEnum.RUNNING.getValue());
                                     listStatusUpdate.setConsignment_status(ConsignmentStatusEnum.OBTAINING.getValue());
